@@ -1,0 +1,8 @@
+:root {
+    --primary-black-color:#121212;
+    --primary-white-color:#FFFFFF;
+    --noactive-black-color: rgba(18, 18, 18, 0.5);
+    --hover-animation-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    --hover-animation-fast: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+   }
+

@@ -1,0 +1,218 @@
+.form-section {
+
+}
+
+.form-conatainer {
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    padding: 20px;
+    width: 295px;
+    height: auto;
+    border: 2px solid var(--primary-black-color);
+    border-radius: 20px;
+}
+
+.platform-one-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.form-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-list-item {
+    width: calc((100% - 10px) / 4);
+}
+
+.form-list-item:nth-child(4n){
+    margin-right: 0;
+}
+
+.form-list-item-button {
+    border: 1px solid var(--primary-black-color);
+    background-color: var(--primary-white-color);
+    color: var(--primary-black-color);
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:5px;
+    width:66px;
+    height: 32px;
+    transition: background-color var(--hover-animation-slow), color var(--hover-animation-slow);
+}
+
+.form-list-item-button:hover,
+.form-list-item-button:focus{
+    background-color: var(--primary-black-color);
+    color: var(--primary-white-color);
+}
+
+
+.form-list-item-button.active {
+    background-color: var(--primary-black-color);
+    color: var(--primary-white-color);
+}
+
+.form-button-image {
+
+}
+/* Button Images */
+.mexc-image {
+}
+
+.lbank-image {
+}
+
+.bybit-image {
+}
+
+.kucoin-image {
+}
+
+.ourbit-image {
+}
+
+.bitunix-image {
+}
+
+
+.platform-two-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.form-trade-type-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+
+}
+
+.form-trade-list {
+    display: flex;
+    justify-content: baseline;
+    gap: 36px;
+    margin-bottom: 20px;
+}
+
+.form-trade-item {
+}
+
+.trade-item-button {
+    width: 100px;
+    height: 32px;
+    border: 1px solid var(--primary-black-color);
+    border-radius: 5px;
+    background-color: var(--primary-white-color);
+    color: var(--primary-black-color);
+    transition: background-color var(--hover-animation-slow), color var(--hover-animation-slow);
+}
+
+.trade-item-button:hover, 
+.trade-item-button:focus{
+    background-color: var(--primary-black-color);
+    color: var(--primary-white-color);
+}
+.trade-item-button.active {
+    background-color: var(--primary-black-color);
+    color: var(--primary-white-color);
+}
+
+.spot-button {
+}
+
+.futures-button {
+}
+
+.tiker-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.ticker-input {
+    padding: 0;
+    margin-bottom:20px;
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--primary-black-color);
+    border-radius: 5px;
+    background-color: var(--primary-white-color);
+}
+.ticker-input::placeholder{
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--noactive-black-color);
+
+}
+
+.quantity-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.quantity-input {
+    margin-bottom:20px;
+    padding: 0;
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--primary-black-color);
+    border-radius: 5px;
+    background-color: var(--primary-white-color);
+}
+.quantity-input::placeholder{
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--noactive-black-color);
+}
+
+.spread-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.spread-input {
+    margin-bottom:20px;
+    padding: 0;
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--primary-black-color);
+    border-radius: 5px;
+    background-color: var(--primary-white-color);
+}
+
+.spread-input::placeholder{
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--noactive-black-color);
+
+}
+
+.form-start-button {
+    margin-bottom: 0;
+    width: 180px;
+    height: 32px;
+    background-color: var(--primary-black-color);
+    color: var(--primary-white-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+}
