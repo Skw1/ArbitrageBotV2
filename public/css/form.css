@@ -55,8 +55,7 @@
     transition: background-color var(--hover-animation-slow), color var(--hover-animation-slow);
 }
 
-.form-list-item-button:hover,
-.form-list-item-button:focus{
+.form-list-item-button:hover{
     background-color: var(--primary-black-color);
     color: var(--primary-white-color);
 }
@@ -123,8 +122,7 @@
     transition: background-color var(--hover-animation-slow), color var(--hover-animation-slow);
 }
 
-.trade-item-button:hover, 
-.trade-item-button:focus{
+.trade-item-button:hover{
     background-color: var(--primary-black-color);
     color: var(--primary-white-color);
 }

@@ -1,5 +1,39 @@
 // main.js for Front-End Interaction
 
+// choosing platforms/arbitrageTypes
+const buttonsPlatform1 = document.querySelectorAll('.platform1');
+const buttonsPlatform2 = document.querySelectorAll('.platform2');
+const buttonsArbitrageType = document.querySelectorAll('.trade-item-button')
+
+let platform1;
+let platform2;
+let arbitrageType;
+
+buttonsPlatform1.forEach(btn => {
+    btn.addEventListener('click', () =>{
+        buttonsPlatform1.forEach(butn => {butn.classList.remove('active')})
+        btn.classList.add('active');
+        platform1 = btn.innerText;
+    })
+})
+
+buttonsPlatform2.forEach(btn => {
+    btn.addEventListener('click', () =>{
+        buttonsPlatform2.forEach(butn => {butn.classList.remove('active')})
+        btn.classList.add('active');
+        platform2 = btn.innerText;
+    })
+})
+
+buttonsArbitrageType.forEach(btn => {
+    btn.addEventListener('click', () =>{
+        buttonsArbitrageType.forEach(butt => {butt.classList.remove('active')})
+        btn.classList.add('active');
+        arbitrageType = btn.innerText
+    })
+})
+
+
 // Settings:
 const mexcUserApiKey = document.getElementById('mexc-apikey-input');
 const mexcUserSecretKey = document.getElementById('mexc-secretkey-input');
@@ -21,18 +55,6 @@ const biunixUserSecretKey = document.getElementById('biunix-secretkey-input');
 
 // Form:
 
-// Buttons
-const mexcButton = document.getElementById('mexc-btn');
-const lbankButton = document.getElementById('lbank-btn');
-const bybitButton = document.getElementById('bybit-btn');
-const kucoinButton = document.getElementById('kucoin-btn');
-const ourbitButton = document.getElementById('ourbit-btn');
-const bitunixButton = document.getElementById('bitunix-btn');
-
-// Spot Futures Buttons 
-const spotButton = document.getElementById('spot-btn');
-const futuresButton = document.getElementById('futures-btn');
-
 // Inputs
 const tickerInput = document.getElementById('ticker-input');
 const quantityInput = document.getElementById('quantity-input');
@@ -44,124 +66,110 @@ const startButton = document.getElementById('start-btn');
 // Result DIV for user
 const resultDiv = document.getElementById('result-div');
 
-// Spot Button
-spotButton.addEventListener('click' , async function () { // ??? need correction
-    const arbitrageBtn = spotButton; // ??? need correction
-    console.log("Spot Arbitrage"); // ??? need correction
-    
-});
-
-// Futures Button
-spotButton.addEventListener('click' , async function () { // ??? need correction
-    const arbitrageBtn = futuresButton; // ??? need correction
-    console.log("Futures Arbitrage"); // ??? need correction
-    
-});
-
 // Tiker Converter for Spot and Futures
-startButton.addEventListener('click' , async function() {
+startButton.addEventListener('click' , async(e) => {
+    e.preventDefault()
     const ticker = tickerInput.value;
     const spread = spreadInput.value;
     const quantity = quantityInput.value;
-    const arbitrageType = arbitrageBtn; // ??? need correction
 
-    // Spot Symbols 
-    const mexcSpotSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
-    const lbankSpotSymbol = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
-    const bybitSpotSymbol = ticker.toLowerCase(); // need correction
-    const kucoinSpotSymbol = ticker.toLowerCase(); // need correction
-    const ourbitSpotSymbol = ticker.toLowerCase(); // need correction
-    const bitunixSpotSymbol = ticker.toLowerCase(); // need correction
-
-    // Futures Symbols 
-    const mexcFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT');
-    const lbankFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT');
-    const bybitFuturesSymbol = ticker.toLowerCase(); // need correction
-    const kucoinFuturesSymbol = ticker.toLowerCase(); // need correction
-    const ourbitFuturesSymbol = ticker.toLowerCase(); // need correction
-    const bitunixFuturesSymbol = ticker.toLowerCase(); // need correction
-
-
-    // Result Log to users DIV 
-    resultDiv.innerHTML = 
-    '</br> MEXC Spot Ticker: ' + mexcSpotSymbol + 
-    '</br> MEXC Futures Ticker: ' + mexcFuturesSymbol +  
-    '</br> LBANK Spot Ticker: ' + lbankSpotSymbol + 
-    '</br> LBANK Futures Ticker: ' + lbankFuturesSymbol +  
-    '</br> BYBIT Spot Ticker: ' + bybitSpotSymbol + 
-    '</br> BYBIT Futures Ticker: ' + bybitFuturesSymbol +
-    '</br> KUCOIN Spot Ticker: ' + kucoinSpotSymbol + 
-    '</br> KUCOIN Futures Ticker: ' + kucoinFuturesSymbol +
-    '</br> OURBIT Spot Ticker: ' + ourbitSpotSymbol + 
-    '</br> OURBIT Futures Ticker: ' + ourbitFuturesSymbol +
-    '</br> BITUNIX Spot Ticker: ' + bitunixSpotSymbol + 
-    '</br> BITUNIX Futures Ticker: ' + bitunixFuturesSymbol;
-
-    // Form Data
-    const formData = new FormData();
-
-    // API Keys and Secret Keys
-    formData.append("mexcUserApiKey" ,  mexcUserApiKey);
-    formData.append("mexcUserSecretKey" ,  mexcUserSecretKey);
-
-    formData.append("lbankUserApiKey" ,  lbankUserApiKey);
-    formData.append("lbankUserSecretKey" ,  lbankUserSecretKey);
-
-    formData.append("bybitUserApiKey" ,  bybitUserApiKey);
-    formData.append("bybitUserSecretKey" ,  bybitUserSecretKey);
-
-    formData.append("kucoinUserApiKey" ,  kucoinUserApiKey);
-    formData.append("kucoinUserSecretKey" ,  kucoinUserSecretKey);
-
-    formData.append("ourbitUserApiKey" ,  ourbitUserApiKey);
-    formData.append("ourbitUserSecretKey" ,  ourbitUserSecretKey);
-
-    formData.append("biunixUserApiKey" ,  biunixUserApiKey);
-    formData.append("biunixUserSecretKey" ,  biunixUserSecretKey);
-
-    // Symbols 
-    formData.append("mexcSpotSymbol" ,  mexcSpotSymbol);
-    formData.append("mexcFuturesSymbol" ,  mexcFuturesSymbol);
-
-    formData.append("lbankSpotSymbol" ,  lbankSpotSymbol);
-    formData.append("lbankFuturesSymbol" ,  lbankFuturesSymbol);
-
-    formData.append("bybitSpotSymbol" ,  bybitSpotSymbol);
-    formData.append("bybitFuturesSymbol" ,  bybitFuturesSymbol);
-
-    formData.append("kucoinSpotSymbol" ,  kucoinSpotSymbol);
-    formData.append("kucoinFuturesSymbol" ,  kucoinFuturesSymbol);
-
-    formData.append("ourbitSpotSymbol" ,  ourbitSpotSymbol);
-    formData.append("ourbitFuturesSymbol" ,  ourbitFuturesSymbol);
-
-    formData.append("bitunixSpotSymbol" ,  bitunixSpotSymbol);
-    formData.append("bitunixFuturesSymbol" ,  bitunixFuturesSymbol);
-
-    // Inputs
-    formData.append("userSpread" , userSpread);
-    formData.append("userQuantity" , userQuantity);
-
-    // Buttons
-    formData.append("mexcButton" , mexcButton);
-    formData.append("lbankButton" , lbankButton);
-    formData.append("bybitButton" , bybitButton);
-    formData.append("kucoinButton" , kucoinButton);
-    formData.append("ourbitButton" , ourbitButton);
-    formData.append("bitunixButton" , bitunixButton);
-
-    // Market Buttons (Spot, Futures)
-    formData.append("spotButton" , spotButton); // need correction
-    formData.append("futuresButton" , futuresButton); // need correction
-
-
-    try{
-        const response = await fetch('/sendingInfo', {
-            method: "POST",
-            body: formData
-        })
+    if(platform1 == platform2) {
+        alert('you can`t use same')
     }
-    catch(e){
-        console.log(e);
+    else if (!arbitrageType) {
+        alert('you haven`t choosed type yet')
     }
+    else {
+        // Symbols 
+        let symbol1;
+        switch (platform1) {
+            case 'MEXC':
+                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                break;
+            case 'LBANK':
+                symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
+                break;
+            case 'BYBIT':
+                symbol1 = ticker.toLowerCase(); // need correction
+                break;
+            case 'KUCOIN':
+                symbol1 = ticker.toLowerCase();
+                break;
+            case 'OURBIT':
+                symbol1 = ticker.toLowerCase();
+                break;
+            case 'BITUNIX':
+                symbol1 = ticker.toLowerCase();
+                break;
+        }
+
+        let symbol2
+        switch (platform2) {
+            case 'MEXC':
+                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                break;
+            case 'LBANK':
+                symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
+                break;
+            case 'BYBIT':
+                symbol2 = ticker.toLowerCase(); // need correction
+                break;
+            case 'KUCOIN':
+                symbol2 = ticker.toLowerCase();
+                break;
+            case 'OURBIT':
+                symbol2 = ticker.toLowerCase();
+                break;
+            case 'BITUNIX':
+                symbol2 = ticker.toLowerCase();
+                break;
+        }
+
+        // Form Data
+        const formData = new FormData();
+
+        // API Keys and Secret Keys
+        formData.append("mexcUserApiKey" ,  mexcUserApiKey);
+        formData.append("mexcUserSecretKey" ,  mexcUserSecretKey);
+
+        formData.append("lbankUserApiKey" ,  lbankUserApiKey);
+        formData.append("lbankUserSecretKey" ,  lbankUserSecretKey);
+
+        formData.append("bybitUserApiKey" ,  bybitUserApiKey);
+        formData.append("bybitUserSecretKey" ,  bybitUserSecretKey);
+
+        formData.append("kucoinUserApiKey" ,  kucoinUserApiKey);
+        formData.append("kucoinUserSecretKey" ,  kucoinUserSecretKey);
+
+        formData.append("ourbitUserApiKey" ,  ourbitUserApiKey);
+        formData.append("ourbitUserSecretKey" ,  ourbitUserSecretKey);
+
+        formData.append("biunixUserApiKey" ,  biunixUserApiKey);
+        formData.append("biunixUserSecretKey" ,  biunixUserSecretKey);
+
+        
+        // Symbols 
+        formData.append('symbol1', symbol1)
+        formData.append('symbol2', symbol2)
+
+        // Inputs
+        formData.append("userSpread" , spread);
+        formData.append("userQuantity" , quantity);
+
+        // Arbitrage Type
+        formData.append('arbitrageType', arbitrageType)
+      
+        // platforms
+        formData.append('platform1', platform1)
+        formData.append('platform2', platform2)
+        try{
+            const response = await fetch('/sendingInfo', {
+                method: 'post',
+                body: formData
+            })
+        }
+        catch(e){
+            console.log(e);
+        }
+        }
 });
