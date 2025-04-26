@@ -14,7 +14,7 @@
           <label class="platform-one-label">Платформа 1:</label>
           <ul class="form-list">
             <li class="form-list-item">
-              <button class="form-list-item-button platform1" type="button">
+              <button class="form-list-item-button platform1" type="button" id="mexc">
                 <img
                   class="form-button-image mexc-image"
                   src="/img/mexc-icon.png"
@@ -24,7 +24,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform1" type="button">
+              <button class="form-list-item-button platform1" type="button" id="lbank">
                 <img
                   class="form-button-image lbank-image"
                   src="/img/lbank-icon.png"
@@ -34,7 +34,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform1" type="button">
+              <button class="form-list-item-button platform1" type="button" id="bybit">
                 <img
                   class="form-button-image bybit-image"
                   src="/img/bybit-icon.png"
@@ -44,7 +44,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform1" type="button">
+              <button class="form-list-item-button platform1" type="button" id="kucoin">
                 <img
                   class="form-button-image kucoin-image"
                   src="/img/kucoin-icon.png"
@@ -54,7 +54,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform1" type="button">
+              <button class="form-list-item-button platform1" type="button" id="ourbit">
                 <img
                   class="form-button-image ourbit-image"
                   src="/img/ourbit-icon.png"
@@ -64,7 +64,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform1" type="button">
+              <button class="form-list-item-button platform1" type="button" id="bitunix"> 
                 <img
                   class="form-button-image bitunix-image"
                   src="/img/bitunix-icon.png"
@@ -77,7 +77,7 @@
           <label class="platform-two-label">Платформа 2:</label>
           <ul class="form-list">
             <li class="form-list-item">
-              <button class="form-list-item-button platform2" type="button">
+              <button class="form-list-item-button platform2" type="button" id="mexc">
                 <img
                   class="form-button-image mexc-image"
                   src="/img/mexc-icon.png"
@@ -87,7 +87,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform2" type="button">
+              <button class="form-list-item-button platform2" type="button" id="lbank">
                 <img
                   class="form-button-image lbank-image"
                   src="/img/lbank-icon.png"
@@ -97,7 +97,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform2" type="button">
+              <button class="form-list-item-button platform2" type="button" id="bybit">
                 <img
                   class="form-button-image bybit-image"
                   src="/img/bybit-icon.png"
@@ -107,7 +107,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform2" type="button">
+              <button class="form-list-item-button platform2" type="button" id="kucoin">
                 <img
                   class="form-button-image kucoin-image"
                   src="/img/kucoin-icon.png"
@@ -117,7 +117,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform2" type="button">
+              <button class="form-list-item-button platform2" type="button" id="ourbit">
                 <img
                   class="form-button-image ourbit-image"
                   src="/img/ourbit-icon.png"
@@ -127,7 +127,7 @@
               </button>
             </li>
             <li class="form-list-item">
-              <button class="form-list-item-button platform2" type="button">
+              <button class="form-list-item-button platform2" type="button" id="bitunix">
                 <img
                   class="form-button-image bitunix-image"
                   src="/img/bitunix-icon.png"
@@ -155,21 +155,24 @@
             class="ticker-input"
             type="name"
             id="ticker-input"
-            placeholder="Введите тикер, например BTCUSDT"
+            placeholder=" Введите тикер, например BTCUSDT"
+            required
           />
           <label class="quantity-label">Количество:</label>
           <input
             class="quantity-input"
             type="number"
             id="quantity-input"
-            placeholder="Введите количество"
+            placeholder=" Введите количество"
+            required
           />
           <label class="spread-label">Порог входа:</label>
           <input
             class="spread-input"
             type="name"
             id="spread-input"
-            placeholder="Введите порог входа, например 2% "
+            placeholder=" Введите порог входа, например 2% "
+            required
           />
           <button type="submit" id="start-btn" class="form-start-button">Запустить</button>
         </form>

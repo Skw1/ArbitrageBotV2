@@ -67,7 +67,7 @@
 }
 
 .form-button-image {
-
+ height: 12px;
 }
 /* Button Images */
 .mexc-image {
@@ -82,7 +82,15 @@
 .kucoin-image {
 }
 
+/* OurBit No Active */
 .ourbit-image {
+    opacity: 50%;
+}
+
+#ourbit{
+    border-color: var(--noactive-black-color);
+    color: var(--noactive-black-color);
+    pointer-events: none;
 }
 
 .bitunix-image {
