@@ -1,0 +1,39 @@
+
+.header{
+    padding: 20px 0px;
+}
+    
+.header-container{
+        
+}
+
+.header-navbar{
+    padding: 15px;  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+    border: 2px solid var(--primary-black-color);
+    border-radius: 10px;
+}
+
+.header-title{
+    color: var(--primary-black-color);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.header-logo{
+    width: 20px;
+    height: 20px;
+}
+    
+.header-settings-button{
+    padding: 0;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: transparent;
+}
+
+    

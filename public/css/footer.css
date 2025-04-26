@@ -1,0 +1,20 @@
+.footer{
+    width: 100%;
+    height: 60px;
+    background-color: var(--primary-black-color);
+}
+.footer-container{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer-band-link{
+    color: var(--primary-white-color);
+    font-size: 10px;
+}
+.footer-brand-link-span{
+    color: var(--primary-white-color);
+    font-size: 10px;
+    text-decoration: underline
+}
