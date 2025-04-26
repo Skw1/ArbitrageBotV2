@@ -1,9 +1,10 @@
 .footer{
-    width: 100%;
+    width: 100vw;
     height: 60px;
     background-color: var(--primary-black-color);
 }
 .footer-container{
+    margin: 0 auto;
     height: 100%;
     display: flex;
     align-items: center;
@@ -17,4 +18,11 @@
     color: var(--primary-white-color);
     font-size: 10px;
     text-decoration: underline
+}
+
+@media only screen and (min-width: 768px) {
+    .footer{
+        height: 159px;
+    }
+
 }

@@ -223,3 +223,37 @@
     font-weight: 700;
 }
 
+/* Tablet */
+
+@media only screen and (min-width: 768px) {
+    .form{
+        margin-top: 32px;
+        margin-bottom: 32px;
+        justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .section {
+        width: calc((100% - 74px) / 2);
+    }
+    
+    .section:nth-child(4n){
+        margin-right: 0;
+    }
+}
+@media only screen and (min-width: 1280px) {
+    .form{
+        margin-top: 100px;
+        margin-bottom: 100px;
+        justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .section {
+        width: calc((100% - 77px) / 3);
+    }
+    
+    .section:nth-child(4n){
+        margin-right: 0;
+    }
+}
