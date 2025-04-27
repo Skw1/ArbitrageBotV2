@@ -17,6 +17,15 @@ body{
     max-width: 375px;
 }
 
+.btn {
+    background-color: var(--primary-black-color);
+    color: var(--primary-white-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
 
 @media screen and (min-width:768px){
     .container{
