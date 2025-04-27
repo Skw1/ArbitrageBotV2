@@ -25,13 +25,92 @@
       </div>
     </header>
     <section class="settings-section">
-     
+      <div class="container">
+          <form method="post" class="settings-form form">
+            <h3>Platform</h3>
+            <ul class="form-list">
+              <li class="form-list-item">
+                <button class="form-list-item-button active" type="button" id="mexc">
+                  <img
+                    class="form-button-image mexc-image"
+                    src="/img/mexc-icon.png"
+                    width="17"
+                  />
+                  MEXC
+                </button>
+              </li>
+              <li class="form-list-item">
+                <button class="form-list-item-button" type="button" id="lbank">
+                  <img
+                    class="form-button-image lbank-image"
+                    src="/img/lbank-icon.png"
+                    width="12"
+                  />
+                  LBANK
+                </button>
+              </li>
+              <li class="form-list-item">
+                <button class="form-list-item-button" type="button" id="bybit">
+                  <img
+                    class="form-button-image bybit-image"
+                    src="/img/bybit-icon.png"
+                    width="12"
+                  />
+                  BYBIT
+                </button>
+              </li>
+              <li class="form-list-item">
+                <button class="form-list-item-button " type="button" id="kucoin">
+                  <img
+                    class="form-button-image kucoin-image"
+                    src="/img/kucoin-icon.png"
+                    width="12"
+                  />
+                  KUCOIN
+                </button>
+              </li>
+              <li class="form-list-item">
+                <button class="form-list-item-button " type="button" id="ourbit">
+                  <img
+                    class="form-button-image ourbit-image"
+                    src="/img/ourbit-icon.png"
+                    width="12"
+                  />
+                  OURBIT
+                </button>
+              </li>
+              <li class="form-list-item">
+                <button class="form-list-item-button " type="button" id="bitunix"> 
+                  <img
+                    class="form-button-image bitunix-image"
+                    src="/img/bitunix-icon.png"
+                    width="12"
+                  />
+                  BITUNIX
+                </button>
+              </li>
+            </ul>
+
+            <label for="api">Api:</label>
+            <input type="text" id="api" placeholder="api">
+            
+            <label for="key">Key:</label>
+            <input type="text" id="key" placeholder="key">
+          
+            <div class="buttons">
+              <button type="submit" class="save-btn btn">Сохранить</button>
+              <button type="button" id="clear-btn" class="сlear-btn btn">Очистить</button>
+            </div>
+          </form>
+          <p class="result-message"></p>
+      </div>
     </section>
     <footer class="footer footer-section">
       <div class="container footer-container">
         <a class="footer-band-link" href="https://coduretech.dev/" target="_blank">Developed by: <span class="footer-brand-link-span">CodureTech Development</span></a>
       </div>
     </footer>
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/settings.js"></script>
+    <!-- <script type="module" src="js/main.js"></script> -->
   </body>
 </html>

@@ -8,6 +8,7 @@ const zlib = require('zlib'); // для распаковки бинарных д
 const PORT = 3000;
 const app = express();
 
+app.use('/', require('./src/routes/settings'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 const storage = multer.diskStorage({
@@ -30,6 +31,10 @@ let platform2
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+app.get("/settings", (req,res) => {
+    res.sendFile(path.join(__dirname , "public","settings.html"))
+})
 
 app.post('/sendingInfo', upload.none(), async (req, res) => {
 
@@ -67,6 +72,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
 
 });
+
 
 async function isMEXCSymbolAvailable(symbol) {
     try {

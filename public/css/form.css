@@ -230,12 +230,6 @@
     margin-bottom: 0;
     width: 180px;
     height: 32px;
-    background-color: var(--primary-black-color);
-    color: var(--primary-white-color);
-    border: none;
-    border-radius: 5px;
-    font-size: 10px;
-    font-weight: 700;
 }
 
 /* Tablet */
