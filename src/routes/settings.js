@@ -7,9 +7,10 @@ const fs = require('fs')
 const multer = require('multer')
 
 const app = express()
+app.use(express.json())
 // reading .env file
-let envContent = fs.readFileSync('.env', 'utf-8');
-let envPath = path.resolve(__dirname,'..', '..', '.env');
+let envPath = path.resolve(__dirname,'..', 'userData', '.env');
+let envContent = fs.readFileSync(envPath, 'utf-8');
 
 // settings storage
 const storage = multer.diskStorage({
@@ -78,5 +79,55 @@ app.post('/deleting', upload.none(), (req,res) => {
     res.json({message:`${platform} api/key has just been deleted`})
 })  
 
+app.post('/get-keys', async(req,res) => {
+    let platform = req.body.service;
+    let lines = envContent.split('\n');
+
+    let ApiLine
+    let KeyLine
+
+    let Api;
+    let Key;
+
+    switch (platform) {
+        case 'MEXC':
+            ApiLine = lines.find(line => line.startsWith('MEXC_Api='))
+            KeyLine = lines.find(line => line.startsWith('MEXC_Key='))
+            Api = ApiLine.split('=')[1].trim()
+            Key = KeyLine.split('=')[1].trim()
+            break;
+        case 'LBANK':
+            ApiLine = lines.find(line => line.startsWith('LBANK_Api='))
+            KeyLine = lines.find(line => line.startsWith('LBANK_Key='))
+            Api = ApiLine.split('=')[1].trim()
+            Key = KeyLine.split('=')[1].trim()
+            break;
+        case 'BYBIT':
+            ApiLine = lines.find(line => line.startsWith('BYBIT_Api='))
+            KeyLine = lines.find(line => line.startsWith('BYBIT_Key='))
+            Api = ApiLine.split('=')[1].trim()
+            Key = KeyLine.split('=')[1].trim()
+            break;
+        case 'KUCOIN':
+            ApiLine = lines.find(line => line.startsWith('KUCOIN_Api='))
+            KeyLine = lines.find(line => line.startsWith('KUCOIN_Key='))
+            Api = ApiLine.split('=')[1].trim()
+            Key = KeyLine.split('=')[1].trim()
+            break;
+        case 'OURBIT':
+            ApiLine = lines.find(line => line.startsWith('OURBIT_Api='))
+            KeyLine = lines.find(line => line.startsWith('OURBIT_Key='))
+            Api = ApiLine.split('=')[1].trim()
+            Key = KeyLine.split('=')[1].trim()
+            break;
+        case 'BITUNIX':
+            ApiLine = lines.find(line => line.startsWith('BITUNIX_Api='))
+            KeyLine = lines.find(line => line.startsWith('BITUNIX_Key='))
+            Api = ApiLine.split('=')[1].trim()
+            Key = KeyLine.split('=')[1].trim()
+            break;
+    }
+    res.json({api:Api, key:Key})
+})
 
 module.exports = app
