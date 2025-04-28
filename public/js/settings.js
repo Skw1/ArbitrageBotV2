@@ -2,13 +2,71 @@
 
 let platform = 'MEXC';
 
+window.addEventListener('DOMContentLoaded', async() => {
+    try {
+        const response = await fetch('/get-keys', {
+            method:'post',
+            body:JSON.stringify({service: 'MEXC'}),
+            headers: {'Content-Type': 'application/json'},
+        })
+
+        const data = await response.json()
+
+        if (data) {
+            if (data.api == '') {
+                document.querySelector('#api').value = 'you haven`t added yet';
+            }
+            else {
+                document.querySelector('#api').value = data.api;
+            }
+            if(data.key == '') {
+                document.querySelector('#key').value = 'you haven`t added yet';
+            }
+            else {
+                document.querySelector('#key').value = data.key;
+            }
+    }
+    }
+    catch(e) {
+        console.log(e)
+    }})
+
 let platformsOption = document.querySelectorAll('.form-list-item-button');
 
 platformsOption.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async() => {
         platformsOption.forEach(buttons => {buttons.classList.remove('active')})
         platform = btn.innerText;
         btn.classList.add('active')
+
+        try {
+            const response = await fetch('/get-keys', {
+                method:'post', 
+                body:JSON.stringify({service: platform}),
+                headers: {'Content-Type': 'application/json'},
+            });
+
+            const data = await response.json();
+            
+            if (data) {
+               if(data.api == '') {
+                    document.querySelector('#api').value = 'you haven`t added yet';
+               }
+               else {
+                    document.querySelector('#api').value = data.api
+               }
+               if (data.key == '') {
+                    document.querySelector('#key').value = 'you haven`t added yet';
+               }
+               else {
+                    document.querySelector('#key').value = data.key
+               }
+            }
+
+        }
+        catch(e) {
+            console.log(e)
+        }
     })
 })
 
