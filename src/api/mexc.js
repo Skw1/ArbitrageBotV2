@@ -1,40 +1,47 @@
 // MEXC Parsing
 
-
 // MEXC Spot Order Book
-async function getMEXCOrderBook(type = 'spot') {
+async function getMEXCSpotOrderBook(symbol) {
     try {
-        const endpoint = type === 'spot'
-            ? `https://api.mexc.com/api/v3/depth?symbol=${mexcSpotSymbol}&limit=5`
-            : `https://contract.mexc.com/api/v1/contract/depth/${mexcSpotSymbol}`;
+        const res = await axios.get(`https://api.mexc.com/api/v3/depth`, {
+            params: {
+                symbol: symbol.toUpperCase(),
+                limit: 5
+            }
+        });
 
-        const res = await axios.get(endpoint);
-
-        console.log(res.data.data || res.data);
+        const data = res.data;
+        if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
+            console.log('=== 📈 MEXC SPOT Order Book ===');
+            console.log('Bids:', data.bids);
+            console.log('Asks:', data.asks);
+        } else {
+            console.error('⚠️ Некорректный формат данных от MEXC Spot:', data);
+        }
     } catch (err) {
-        console.error(`MEXC ${type} error:`, err.response?.status, err.response?.data, err.message);
-        return null;
+        console.error('❌ MEXC Spot ошибка:', err.response?.status, err.response?.data, err.message);
     }
 }
 
 // MEXC Futures Order Book
-async function getMEXCFuturesOrderBook() {
+async function getMEXCFuturesOrderBook(symbol) {
     try {
-        const endpoint = `https://contract.mexc.com/api/v1/contract/depth/${mexcFuturesSymbol}`;
-        const res = await axios.get(endpoint);
+        const res = await axios.get(`https://contract.mexc.com/api/v1/contract/depth/${symbol}`);
         const data = res.data?.data;
 
         if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
-            mexcOrderBook = {
-                bids: data.bids,
-                asks: data.asks,
-                timestamp: Date.now()
-            };
-            comparePrices();
+            console.log('=== 📈 MEXC FUTURES Order Book ===');
+            console.log('Bids:', data.bids);
+            console.log('Asks:', data.asks);
         } else {
-            console.error('⚠️ Некорректный формат данных от MEXC:', res.data);
+            console.error('⚠️ Некорректный формат данных от MEXC Futures:', res.data);
         }
     } catch (err) {
-        console.error("❌ MEXC futures error:", err.message);
+        console.error('❌ MEXC Futures ошибка:', err.response?.status, err.response?.data, err.message);
     }
 }
+
+module.exports = {
+    getMEXCSpotOrderBook,
+    getMEXCFuturesOrderBook
+};
