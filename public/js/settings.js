@@ -14,13 +14,13 @@ window.addEventListener('DOMContentLoaded', async() => {
 
         if (data) {
             if (data.api == '') {
-                document.querySelector('#api').value = 'you haven`t added yet';
+                document.querySelector('#api').value = '';
             }
             else {
                 document.querySelector('#api').value = data.api;
             }
             if(data.key == '') {
-                document.querySelector('#key').value = 'you haven`t added yet';
+                document.querySelector('#key').value = '';
             }
             else {
                 document.querySelector('#key').value = data.key;
@@ -50,13 +50,13 @@ platformsOption.forEach(btn => {
             
             if (data) {
                if(data.api == '') {
-                    document.querySelector('#api').value = 'you haven`t added yet';
+                    document.querySelector('#api').value = '';
                }
                else {
                     document.querySelector('#api').value = data.api
                }
                if (data.key == '') {
-                    document.querySelector('#key').value = 'you haven`t added yet';
+                    document.querySelector('#key').value = '';
                }
                else {
                     document.querySelector('#key').value = data.key
