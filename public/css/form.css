@@ -1,6 +1,5 @@
 
 .form-section {
-    padding-bottom: 20px;
 }
 
 .form-conatainer {
@@ -76,8 +75,17 @@
 .lbank-image {
 }
 
+/* Bybit No Active */
 .bybit-image {
+    opacity: 0.5;
 }
+
+#bybit{
+    border-color: var(--noactive-black-color);
+    color: var(--noactive-black-color);
+    pointer-events: none;
+}
+/* --- */
 
 .kucoin-image {
 }
@@ -92,6 +100,7 @@
     color: var(--noactive-black-color);
     pointer-events: none;
 }
+/* --- */
 
 .bitunix-image {
 }

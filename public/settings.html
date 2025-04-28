@@ -20,17 +20,22 @@
             <svg class="header-settings-icon" width="20" height="20">
               <use href="/img/icons.svg#icon-settings"></use>
             </svg>
-        </a>
+          </a>
         </nav>
       </div>
     </header>
-    <section class="settings-section">
-      <div class="container">
+      <section class="settings-section">
+        <div class="container">
           <form method="post" class="settings-form form">
-            <h3>Platform</h3>
+            <h3 class="settings-title">Your API keys:</h3>
+            <label class="settings-platform-label">Platform:</label>
             <ul class="form-list">
               <li class="form-list-item">
-                <button class="form-list-item-button active" type="button" id="mexc">
+                <button
+                  class="form-list-item-button active"
+                  type="button"
+                  id="mexc"
+                >
                   <img
                     class="form-button-image mexc-image"
                     src="/img/mexc-icon.png"
@@ -60,7 +65,7 @@
                 </button>
               </li>
               <li class="form-list-item">
-                <button class="form-list-item-button " type="button" id="kucoin">
+                <button class="form-list-item-button" type="button" id="kucoin">
                   <img
                     class="form-button-image kucoin-image"
                     src="/img/kucoin-icon.png"
@@ -70,7 +75,7 @@
                 </button>
               </li>
               <li class="form-list-item">
-                <button class="form-list-item-button " type="button" id="ourbit">
+                <button class="form-list-item-button" type="button" id="ourbit">
                   <img
                     class="form-button-image ourbit-image"
                     src="/img/ourbit-icon.png"
@@ -80,7 +85,11 @@
                 </button>
               </li>
               <li class="form-list-item">
-                <button class="form-list-item-button " type="button" id="bitunix"> 
+                <button
+                  class="form-list-item-button"
+                  type="button"
+                  id="bitunix"
+                >
                   <img
                     class="form-button-image bitunix-image"
                     src="/img/bitunix-icon.png"
@@ -91,23 +100,47 @@
               </li>
             </ul>
 
-            <label for="api">Api:</label>
-            <input type="text" id="api" placeholder="api">
-            
-            <label for="key">Key:</label>
-            <input type="text" id="key" placeholder="key">
-          
-            <div class="buttons">
-              <button type="submit" class="save-btn btn">Сохранить</button>
-              <button type="button" id="clear-btn" class="сlear-btn btn">Очистить</button>
+            <label for="api" class="settings-input-label">Api key:</label>
+            <input
+              class="settings-input"
+              type="text"
+              id="api"
+              placeholder="Enter your api key"
+            />
+
+            <label for="key" class="settings-input-label">Secret key:</label>
+            <input
+              class="settings-input"
+              type="text"
+              id="key"
+              placeholder="Enter your secret key"
+            />
+
+            <div class="settings-buttons">
+              <button type="submit" class="save-btn settings-btn">
+                Сохранить
+              </button>
+              <button
+                type="button"
+                id="clear-btn"
+                class="сlear-btn settings-btn"
+              >
+                Очистить
+              </button>
             </div>
           </form>
           <p class="result-message"></p>
-      </div>
-    </section>
+        </div>
+      </section>
     <footer class="footer footer-section">
       <div class="container footer-container">
-        <a class="footer-band-link" href="https://coduretech.dev/" target="_blank">Developed by: <span class="footer-brand-link-span">CodureTech Development</span></a>
+        <a
+          class="footer-band-link"
+          href="https://coduretech.dev/"
+          target="_blank"
+          >Developed by:
+          <span class="footer-brand-link-span">CodureTech Development</span></a
+        >
       </div>
     </footer>
     <script type="module" src="js/settings.js"></script>

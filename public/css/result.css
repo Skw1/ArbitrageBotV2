@@ -1,0 +1,17 @@
+.result-messages-section{
+    padding: 20px 0px;
+}
+
+.result-container{
+
+}
+
+.result{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    height: 335px;
+    border: 2px solid var(--primary-black-color);
+    border-radius: 20px;
+}
