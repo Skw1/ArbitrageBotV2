@@ -20,9 +20,8 @@
     text-decoration: underline
 }
 
-@media only screen and (min-width: 768px) {
-    .footer{
-        height: 159px;
-    }
 
+.footer-settings{
+    position: absolute;
+    bottom: 0;
 }
