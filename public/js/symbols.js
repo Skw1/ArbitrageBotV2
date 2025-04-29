@@ -14,7 +14,7 @@
   const mexcFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
   const lbankFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
   const bybitFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-  const kucoinFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
+  const kucoinFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDTM'); // BTCUSDTM
   const ourbitFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
   const bitunixFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
 
