@@ -1,5 +1,7 @@
 // MEXC Parsing
 
+const axios = require('axios');
+
 // MEXC Spot Order Book
 async function getMEXCSpotOrderBook(symbol) {
     try {

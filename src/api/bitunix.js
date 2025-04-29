@@ -1,5 +1,6 @@
 // BITUNIX Parsing
 
+const axios = require('axios');
 
 // Bitunix Spot Order Book
 async function getBitunixSpotOrderBook(symbol) {

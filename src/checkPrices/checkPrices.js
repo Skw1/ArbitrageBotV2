@@ -59,3 +59,39 @@ module.exports = async function checkPrices({
         console.error('❌ Ошибка при проверке цен:', err.message);
     }
 }
+
+
+//====================================================================//
+
+let spread; 
+
+// Обработка цен
+function comparePrices() {
+    const now = Date.now();
+    if (!mexcOrderBook || !lbankOrderBook || now - lastComparisonTime < 1000) return;
+
+    lastComparisonTime = now;
+
+    const mexcBestBid = parseFloat(mexcOrderBook.bids[0][0]);
+    const mexcBestAsk = parseFloat(mexcOrderBook.asks[0][0]);
+    const lbankBestBid = parseFloat(lbankOrderBook.bids[0][0]);
+    const lbankBestAsk = parseFloat(lbankOrderBook.asks[0][0]);
+
+    console.log('\n=== 📊 Сравнение цен ===');
+    console.log(`MEXC: Bid ${mexcBestBid} | Ask ${mexcBestAsk}`);
+    console.log(`LBank: Bid ${lbankBestBid} | Ask ${lbankBestAsk}`);
+
+    if (lbankBestAsk > mexcBestBid) {
+        spread = ((lbankBestAsk - mexcBestBid) / mexcBestBid) * 100;
+        console.log(`🔴 Арбитраж! Spread: ${spread.toFixed(2)}%`);
+        console.log('→ SHORT на LBank по', lbankBestAsk);
+        console.log('→ LONG на MEXC по', mexcBestBid);
+    }
+
+    if (lbankBestBid < mexcBestAsk) {
+        spread = ((mexcBestAsk - lbankBestBid) / lbankBestBid) * 100;
+        console.log(`🟢 Закрытие позиции! Spread: ${spread.toFixed(2)}%`);
+        console.log('→ BUY на LBank по', lbankBestBid);
+        console.log('→ SELL на MEXC по', mexcBestAsk);
+    }
+}

@@ -1,5 +1,7 @@
 // BYBIT Parsing
 
+const axios = require('axios');
+
 // Bybit Spot Order Book
 async function getBybitSpotOrderBook(symbol) {
     try {

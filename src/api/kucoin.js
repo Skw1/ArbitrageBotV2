@@ -1,5 +1,7 @@
 // KUCOIN Parsing
 
+const axios = require('axios');
+
 // KuCoin Spot Order Book
 async function getKucoinSpotOrderBook(symbol) {
     try {

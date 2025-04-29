@@ -1,7 +1,8 @@
 // OURBIT Parsing
+/*
+const axios = require('axios');
 
-
-function connectOurbitSpot(symbol) {
+function getOurbitSpotOrderBook(symbol) {
     return new Promise((resolve, reject) => {
         const ws = new WebSocket('wss://api.ourbit.com/market/ws');
 
@@ -33,7 +34,7 @@ function connectOurbitSpot(symbol) {
     });
 }
 
-function connectOurbitFutures(symbol) {
+function getOurbitFuturesOrderBook(symbol) {
     return new Promise((resolve, reject) => {
         const ws = new WebSocket('wss://contract.ourbit.com/ws');
 
@@ -66,6 +67,7 @@ function connectOurbitFutures(symbol) {
 }
 
 module.exports = {
-    getOurbitSpotOrderBook: connectOurbitSpot,
-    getOurbitFuturesOrderBook: connectOurbitFutures
+    getOurbitSpotOrderBook,
+    getOurbitFuturesOrderBook
 };
+*/

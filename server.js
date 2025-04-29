@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const zlib = require('zlib'); // для распаковки бинарных данных, если они сжаты
 
+
 const PORT = 3000;
 const app = express();
 
@@ -16,6 +17,74 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => cb(null, file.originalname)
 });
 const upload = multer({ storage });
+
+
+// Test Mexc Price Parsing
+const { getMEXCSpotOrderBook, getMEXCFuturesOrderBook, } = require('./src/api/mexc.js');
+async function mexcTest() {
+    const spotSymbol = 'CETUSUSDT';
+    const futuresSymbol = 'CETUS_USDT'; 
+    console.log(await getMEXCSpotOrderBook(spotSymbol));
+    console.log(await getMEXCFuturesOrderBook(futuresSymbol));
+}
+console.log("MEXC");
+mexcTest();
+
+// Test LBank Price Parsing
+const { getLBankSpotOrderBook, connectLBankFuturesOrderBook } = require('./src/api/lbank.js');
+async function lbankTest() {
+    const spotSymbol = 'cetus_usdt';
+    const futuresSymbol = 'CETUS_USDT'; 
+    console.log(await getLBankSpotOrderBook(spotSymbol));
+    console.log(await connectLBankFuturesOrderBook(futuresSymbol));
+}
+console.log("LBANK");
+lbankTest();
+
+// Test ByBit Price Parsing
+const { getBybitSpotOrderBook, getBybitFuturesOrderBook } = require('./src/api/bybit.js');
+async function bybitTest() {
+    const spotSymbol = 'CETUSUSDT';
+    const futuresSymbol = 'CETUSUSDT'; 
+    console.log(await getBybitSpotOrderBook(spotSymbol));
+    console.log(await getBybitFuturesOrderBook(futuresSymbol));
+}
+console.log("BYBIT");
+bybitTest();
+
+// Test KuCoin Price Parsing
+const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api/kucoin.js');
+async function kucoinTest() {
+    const spotSymbol = 'CETUS-USDT';
+    const futuresSymbol = 'CETUSUSDTM'; // для фьючерсов на Kucoin нужно в конце добавлять M (BTCUSDTM почему то нету)
+    console.log(await getKucoinSpotOrderBook(spotSymbol));
+    console.log(await getKucoinFuturesOrderBook(futuresSymbol));
+}
+console.log("KUCOIN");
+kucoinTest();
+
+// Test OurBit Price Parsing
+/*
+const { getOurbitSpotOrderBook, getOurbitFuturesOrderBook } = require('./src/api/ourbit.js');
+async function ourbitTest() {
+    const spotSymbol = 'CETUSUSDT';
+    const futuresSymbol = 'CETUSUSDT'; 
+    console.log(await getOurbitSpotOrderBook(spotSymbol));
+    console.log(await getOurbitFuturesOrderBook(futuresSymbol));
+}
+console.log("OURBIT");
+ourbitTest();
+*/
+// Test Bitunix Price Parsing
+const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
+async function bitunixTest() {
+    const spotSymbol = 'CETUSUSDT';
+    const futuresSymbol = 'CETUSUSDT'; 
+    console.log(await getBitunixSpotOrderBook(spotSymbol));
+    console.log(await getBitunixFuturesOrderBook(futuresSymbol));
+}
+console.log("BITUNIX");
+bitunixTest();
 
 let userQuantity;
 let userSpread;
@@ -73,158 +142,6 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
 });
 
-
-async function isMEXCSymbolAvailable(symbol) {
-    try {
-        const res = await axios.get("https://contract.mexc.com/api/v1/contract/detail");
-        return res.data.data.some(contract => contract.symbol === symbol);
-    } catch (e) {
-        console.error("Ошибка при получении контрактов MEXC:", e.message);
-        return false;
-    }
-}
-
-async function getMEXCFuturesOrderBook() {
-    try {
-        const endpoint = `https://contract.mexc.com/api/v1/contract/depth/${mexcFuturesSymbol}`;
-        const res = await axios.get(endpoint);
-        const data = res.data?.data;
-
-        if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
-            mexcOrderBook = {
-                bids: data.bids,
-                asks: data.asks,
-                timestamp: Date.now()
-            };
-            comparePrices();
-        } else {
-            console.error('⚠️ Некорректный формат данных от MEXC:', res.data);
-        }
-    } catch (err) {
-        console.error("❌ MEXC futures error:", err.message);
-    }
-}
-
-function connectLBankFutures() {
-    const ws = new WebSocket('wss://www.lbkex.net/ws/V2/');
-
-    ws.on('open', () => {
-        const subscribeMsg = {
-            action: "subscribe",
-            subscribe: "depth",
-            pair: lbankFuturesSymbol.toLowerCase(),
-            depth: "60",
-            binary: true
-        };
-        ws.send(JSON.stringify(subscribeMsg));
-    });
-
-    ws.on('message', (data) => {
-        // Если бинарь — возможно сжат, попытаемся его распаковать
-        if (Buffer.isBuffer(data)) {
-            try {
-                const decompressed = zlib.gunzipSync(data).toString('utf-8');
-                parseLBankMessage(decompressed);
-            } catch (e) {
-                try {
-                    // если не gzip, может быть обычная строка
-                    const fallback = data.toString('utf-8');
-                    parseLBankMessage(fallback);
-                } catch (e2) {
-                    console.error('❌ Ошибка при обработке бинарных данных LBank:', e2.message);
-                }
-            }
-        } else if (typeof data === 'string') {
-            parseLBankMessage(data);
-        } else {
-            console.warn('⚠️ Неизвестный формат сообщения от LBank:', data);
-        }
-    });
-
-    ws.on('error', (err) => {
-        console.error("❌ WebSocket ошибка:", err.message);
-    });
-
-    ws.on('close', () => {
-        console.warn("⚠️ LBank WebSocket закрыт. Переподключение через 5 сек...");
-        setTimeout(connectLBankFutures, 5000);
-    });
-}
-
-function parseLBankMessage(rawData) {
-    try {
-        const message = JSON.parse(rawData);
-
-        if (message.depth && Array.isArray(message.depth.bids) && Array.isArray(message.depth.asks)) {
-            lbankOrderBook = {
-                bids: message.depth.bids,
-                asks: message.depth.asks,
-                timestamp: Date.now()
-            };
-            comparePrices();
-        } else if (message.ping) {
-            // обработка ping
-            ws.send(JSON.stringify({ action: "pong", pong: message.ping }));
-        } else {
-            console.log('ℹ️ Сообщение от LBank:', message);
-        }
-    } catch (e) {
-        console.error("❌ Ошибка при парсинге сообщения от LBank:", e.message);
-        console.error("Сырые данные:", rawData);
-    }
-}
-
-let spread; 
-
-// Обработка цен
-function comparePrices() {
-    const now = Date.now();
-    if (!mexcOrderBook || !lbankOrderBook || now - lastComparisonTime < 1000) return;
-
-    lastComparisonTime = now;
-
-    const mexcBestBid = parseFloat(mexcOrderBook.bids[0][0]);
-    const mexcBestAsk = parseFloat(mexcOrderBook.asks[0][0]);
-    const lbankBestBid = parseFloat(lbankOrderBook.bids[0][0]);
-    const lbankBestAsk = parseFloat(lbankOrderBook.asks[0][0]);
-
-    console.log('\n=== 📊 Сравнение цен ===');
-    console.log(`MEXC: Bid ${mexcBestBid} | Ask ${mexcBestAsk}`);
-    console.log(`LBank: Bid ${lbankBestBid} | Ask ${lbankBestAsk}`);
-
-    if (lbankBestAsk > mexcBestBid) {
-        spread = ((lbankBestAsk - mexcBestBid) / mexcBestBid) * 100;
-        console.log(`🔴 Арбитраж! Spread: ${spread.toFixed(2)}%`);
-        console.log('→ SHORT на LBank по', lbankBestAsk);
-        console.log('→ LONG на MEXC по', mexcBestBid);
-    }
-
-    if (lbankBestBid < mexcBestAsk) {
-        spread = ((mexcBestAsk - lbankBestBid) / lbankBestBid) * 100;
-        console.log(`🟢 Закрытие позиции! Spread: ${spread.toFixed(2)}%`);
-        console.log('→ BUY на LBank по', lbankBestBid);
-        console.log('→ SELL на MEXC по', mexcBestAsk);
-    }
-}
-
-// Открытие и закрытие ордеров
-function createOrder(){
-    if(spread == userSpread || spread > 2){
-      console.log(spread);
-      console.log('→ SHORT на LBank по', lbankBestAsk);
-      console.log('→ LONG на MEXC по', mexcBestBid); 
-
-    }
-    else if(spread == userSpread || spread < 2 ){
-        console.log('→ BUY на LBank по', lbankBestBid);
-        console.log('→ SELL на MEXC по', mexcBestAsk);
-    }
-    else{
-        console.log('Ошибка создания ордеров');
-    }
-
-
-}
 
 app.listen(PORT, () => {
     console.log(`🚀 Сервер запущен: http://localhost:${PORT}`);

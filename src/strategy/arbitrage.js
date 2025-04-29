@@ -85,3 +85,24 @@ await placeLBankFuturesOrder({
     amount: 1,
     orderType: 'market'
 });
+
+
+
+// Открытие и закрытие ордеров
+function createOrder(){
+    if(spread == userSpread || spread > 2){
+      console.log(spread);
+      console.log('→ SHORT на LBank по', lbankBestAsk);
+      console.log('→ LONG на MEXC по', mexcBestBid); 
+
+    }
+    else if(spread == userSpread || spread < 2 ){
+        console.log('→ BUY на LBank по', lbankBestBid);
+        console.log('→ SELL на MEXC по', mexcBestAsk);
+    }
+    else{
+        console.log('Ошибка создания ордеров');
+    }
+
+
+}

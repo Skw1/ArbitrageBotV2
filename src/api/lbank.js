@@ -1,11 +1,14 @@
 // LBANK Parsing
-
+const WebSocket = require('ws');
+const axios = require('axios');
+const path = require('path');
+const zlib = require('zlib'); // для распаковки бинарных данных, если они сжаты
 // LBank Spot Order Book
 async function getLBankSpotOrderBook(symbol) {
     try {
         const res = await axios.get(`https://api.lbkex.com/v2/depth.do`, {
             params: {
-                symbol: symbol.toLowerCase(),
+               // symbol: symbol.toLowerCase(),
                 size: 5,
                 depth: 60
             }
@@ -25,7 +28,7 @@ async function getLBankSpotOrderBook(symbol) {
 }
 
 // LBank Futures Order Book (WebSocket)
-function connectLBankFuturesOrderBook(symbol) {
+async function connectLBankFuturesOrderBook(symbol) {
     const ws = new WebSocket('wss://www.lbkex.net/ws/V2/');
 
     ws.on('open', () => {
