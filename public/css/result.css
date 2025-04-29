@@ -25,7 +25,10 @@
 }
 
 .result{
+    width: 100%;
     height: 335px; /* Высота контейнера для вывода информации (Логов) пользователю*/
+    border: 1px solid var(--noactive-black-color);
+    border-radius: 5px;
 }
 
 .clear-logs-button{
