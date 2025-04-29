@@ -1,10 +1,12 @@
+/* FORM */
 
+/*
 .form-section {
 }
 
 .form-conatainer {
 }
-
+*/
 .form {
     padding: 20px;
     display: flex;
@@ -71,12 +73,13 @@
  height: 12px;
 }
 /* Button Images */
+/*
 .mexc-image {
 }
 
 .lbank-image {
 }
-
+*/
 /* Bybit No Active */
 .bybit-image {
     opacity: 0.5;
@@ -89,9 +92,10 @@
 }
 /* --- */
 
+/*
 .kucoin-image {
 }
-
+*/
 /* OurBit No Active */
 .ourbit-image {
     opacity: 0.5;
@@ -103,10 +107,10 @@
     pointer-events: none;
 }
 /* --- */
-
+/*
 .bitunix-image {
 }
-
+*/
 
 .platform-two-label {
     font-size: 10px;
@@ -127,10 +131,10 @@
     gap: 36px;
     margin-bottom: 20px;
 }
-
+/*
 .form-trade-item {
 }
-
+*/
 .trade-item-button {
     width: 100px;
     height: 32px;
@@ -149,13 +153,13 @@
     background-color: var(--primary-black-color);
     color: var(--primary-white-color);
 }
-
+/*
 .spot-button {
 }
 
 .futures-button {
 }
-
+*/
 .ticker-section{
     display: flex;
     width:100%;
