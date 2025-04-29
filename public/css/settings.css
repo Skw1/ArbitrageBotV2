@@ -1,9 +1,8 @@
 .settings-input {
-    display: block;
+    display:block;
+    padding: 0px;
     padding-left: 10px;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    width: 280px;
+    width: calc(100% - 10px);
     height: 32px;
     border: 1px solid var(--primary-black-color);
     border-radius: 5px;
@@ -45,6 +44,21 @@
 .settings-section{
     margin-bottom: 20px;
     
+}
+.settings-api-key-section{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    gap:4px;
+    margin-bottom: 20px;
+
+}
+.settings-secret-key-section{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    gap:4px;
+    margin-bottom: 20px;
 }
 /*
 .result-message {
