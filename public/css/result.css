@@ -1,5 +1,5 @@
 .result-messages-section{
-    padding: 20px 0px;
+   /* padding: 20px 0px; */
 }
 
 .result-div-container{
@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: space-between;
     gap:20px;
-    height: auto; /* Тут высота auto для всего блока */
+    height: 550px; /* Тут высота auto для всего блока */
     border: 2px solid var(--primary-black-color);
     border-radius: 20px;
 }

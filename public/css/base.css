@@ -26,21 +26,44 @@ body{
     font-weight: 700;
 }
 
-/*
-
+.container-fix-list{
+    padding: 20px 0;
+    row-gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+/*  Если что "ВЕРСИЯ АДАПТИВ" начинаеться здесь */
+.fix-list-item{
+    width:100%
+}
 @media screen and (min-width:768px){
-    .container{
+    .container{   
         padding: 0 32px;
         max-width: 768px; 
     }
-    
-
+    .container-fix-list{
+        width: 100%; 
+        flex-direction: row;
+        gap: 32px;
+        justify-content: center;
+        align-items: baseline;
+        
+    }
+    .fix-list-item{
+        width: calc((100% - 32px) /2); 
+    }
 }
 @media screen and (min-width:1280px){
     .container{
         padding: 0 100px;
         max-width: 1280px; 
     }
+    .container-fix-list{
+        padding: 20px 0;
+    }
+    .fix-list-item{
+        width: calc((100% - 410px) /2); 
+    }
+    
 }
 
-*/
