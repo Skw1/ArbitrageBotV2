@@ -2,16 +2,40 @@
     padding: 20px 0px;
 }
 
-.result-container{
-
-}
-
-.result{
+.result-div-container{
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: baseline;
-    height: 335px;
+    align-items: center;
+    justify-content: space-between;
+    gap:20px;
+    height: auto; /* Тут высота auto для всего блока */
     border: 2px solid var(--primary-black-color);
     border-radius: 20px;
+}
+
+.result-div-title{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap:10px;
+    align-items: center;
+    font-size: 16px;
+    
+}
+
+.result{
+    height: 335px; /* Высота контейнера для вывода информации (Логов) пользователю*/
+}
+
+.clear-logs-button{
+    width: calc((100% - 50px) / 2);
+    height: 32px;
+    background-color: var(--primary-black-color);
+    color: var(--primary-white-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+
 }
