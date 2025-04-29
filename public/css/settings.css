@@ -32,7 +32,7 @@
 }
 
 .settings-btn{
-    width: calc((100% - 35px) / 2);
+    width: calc((100% - 50px) / 2);
     height: 32px;
     background-color: var(--primary-black-color);
     color: var(--primary-white-color);

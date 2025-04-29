@@ -26,11 +26,13 @@
     flex-direction: row;
     flex-wrap: wrap;
     row-gap: 10px;
+    column-gap: 10px;
     margin-bottom: 20px;
 }
 
 .form-list-item {
-    width: calc((100% - 10px) / 4);
+    width: calc((100% - 30px)/4);
+    
 }
 
 .form-list-item:nth-child(4n){
@@ -49,7 +51,7 @@
     align-items: center;
     justify-content: center;
     gap:5px;
-    width:66px;
+    width:100%;
     height: 32px;
     transition: background-color var(--hover-animation-slow), color var(--hover-animation-slow);
 }
@@ -154,93 +156,110 @@
 .futures-button {
 }
 
+.ticker-section{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    gap:4px;
+    margin-bottom: 20px;
+}
 .tiker-label {
     font-size: 10px;
     font-weight: 600;
-    margin-bottom: 4px;
 }
 
 .ticker-input {
     display:block;
+    padding: 0px;
     padding-left: 10px;
-    line-height: 1.2;
-    margin-bottom:20px;
-    width: 280px;
+    width: calc(100% - 10px);
     height: 32px;
     border: 1px solid var(--primary-black-color);
     border-radius: 5px;
     background-color: var(--primary-white-color);
 }
 .ticker-input::placeholder{
-    padding: 0;
     font-size: 10px;
     font-weight: 500;
-    line-height: 1.3;
     color: var(--noactive-black-color);
 
 }
 
+.quantity-section{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    gap:4px;
+    margin-bottom: 20px;
+}
 .quantity-label {
     font-size: 10px;
     font-weight: 600;
-    margin-bottom: 4px;
 }
 
 .quantity-input {
     display:block;
+    padding: 0px;
     padding-left: 10px;
-    line-height: 1.2;
-    margin-bottom:20px;
-    width: 280px;
-    margin-bottom:20px;
+    width: calc(100% - 10px);
     height: 32px;
     border: 1px solid var(--primary-black-color);
     border-radius: 5px;
     background-color: var(--primary-white-color);
 }
 .quantity-input::placeholder{
-    padding: 0;
     font-size: 10px;
     font-weight: 500;
-    line-height: 1.3;
     color: var(--noactive-black-color);
 
 }
-
+.spread-section{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    gap:4px;
+    margin-bottom: 20px;
+}
 .spread-label {
     font-size: 10px;
     font-weight: 600;
-    margin-bottom: 4px;
 }
 
 .spread-input {
     display:block;
+    padding: 0px;
     padding-left: 10px;
-    line-height: 1.2;
-    margin-bottom:20px;
-    width: 280px;
+    width: calc(100% - 10px);
     height: 32px;
     border: 1px solid var(--primary-black-color);
     border-radius: 5px;
     background-color: var(--primary-white-color);
+    
 }
 
 .spread-input::placeholder{
-    padding: 0;
     font-size: 10px;
     font-weight: 500;
-    line-height: 1.3;
     color: var(--noactive-black-color);
 
 
-}
 
+}
+.form-buttons-section{
+    display: flex;
+    justify-content: space-between;
+}
 .form-start-button {
     margin-bottom: 0;
-    width: 180px;
+    width: calc((100% - 32px) /2);
     height: 32px;
 }
 
+.form-stop-button{
+    margin-bottom: 0;
+    width: calc((100% - 32px) /2);
+    height: 32px;
+}
 /* Tablet */
 /*
 @media only screen and (min-width: 768px) {

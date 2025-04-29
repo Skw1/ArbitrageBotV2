@@ -172,7 +172,7 @@
             </li>
           </ul>
         </section>
-        <section class="section">
+        <section class="section ticker-section">
           <label class="tiker-label">Тикер:</label>
           <input
             class="ticker-input"
@@ -182,7 +182,7 @@
             required
           />
         </section>
-        <section class="section">
+        <section class="section quantity-section">
           <label class="quantity-label">Количество:</label>
           <input
             class="quantity-input"
@@ -192,7 +192,7 @@
             required
           />
         </section>
-        <section class="section">
+        <section class="section spread-section">
           <label class="spread-label">Порог входа:</label>
           <input
             class="spread-input"
@@ -202,16 +202,17 @@
             required
           />
         </section>
+        <section class="form-buttons-section">
           <button type="submit" id="start-btn" class="form-start-button btn">Запустить</button>
+          <button type="submit" id="stop-btn" class="form-stop-button btn">Остановить</button>
+        </section>
         </form>
-        <div id="result-div">
-          
-        </div>
+      
       </div>
     </section>
     <section class="result-messages-section">
       <div class="container result-container">
-        <div class="result result-div">
+        <div class="result result-div" id="result-div">
 
         </div>
       </div>
