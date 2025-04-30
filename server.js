@@ -21,7 +21,7 @@ const { getMEXCSpotOrderBook, getMEXCFuturesOrderBook, } = require('./src/api/me
 async function mexcTest() {
     const spotSymbol = 'CETUSUSDT';
     const futuresSymbol = 'CETUS_USDT'; 
-    console.log(await getMEXCSpotOrderBook(spotSymbol));
+   // console.log(await getMEXCSpotOrderBook(spotSymbol));
     console.log(await getMEXCFuturesOrderBook(futuresSymbol));
 }
 console.log("MEXC");
@@ -32,7 +32,7 @@ const { getLBankSpotOrderBook, connectLBankFuturesOrderBook } = require('./src/a
 async function lbankTest() {
     const spotSymbol = 'cetus_usdt';
     const futuresSymbol = 'CETUS_USDT'; 
-    console.log(await getLBankSpotOrderBook(spotSymbol));
+   // console.log(await getLBankSpotOrderBook(spotSymbol));
     console.log(await connectLBankFuturesOrderBook(futuresSymbol));
 }
 console.log("LBANK");
@@ -43,7 +43,7 @@ const { getBybitSpotOrderBook, getBybitFuturesOrderBook } = require('./src/api/b
 async function bybitTest() {
     const spotSymbol = 'CETUSUSDT';
     const futuresSymbol = 'CETUSUSDT'; 
-    console.log(await getBybitSpotOrderBook(spotSymbol));
+   // console.log(await getBybitSpotOrderBook(spotSymbol));
     console.log(await getBybitFuturesOrderBook(futuresSymbol));
 }
 console.log("BYBIT");
@@ -54,7 +54,7 @@ const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api
 async function kucoinTest() {
     const spotSymbol = 'CETUS-USDT';
     const futuresSymbol = 'CETUSUSDTM'; // для фьючерсов на Kucoin нужно в конце добавлять M (BTCUSDTM почему то нету)
-    console.log(await getKucoinSpotOrderBook(spotSymbol));
+   // console.log(await getKucoinSpotOrderBook(spotSymbol));
     console.log(await getKucoinFuturesOrderBook(futuresSymbol));
 }
 console.log("KUCOIN");
@@ -77,7 +77,7 @@ const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/a
 async function bitunixTest() {
     const spotSymbol = 'CETUSUSDT';
     const futuresSymbol = 'CETUSUSDT'; 
-    console.log(await getBitunixSpotOrderBook(spotSymbol));
+   // console.log(await getBitunixSpotOrderBook(spotSymbol));
     console.log(await getBitunixFuturesOrderBook(futuresSymbol));
 }
 console.log("BITUNIX");

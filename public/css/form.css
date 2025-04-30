@@ -153,10 +153,13 @@
     background-color: var(--primary-black-color);
     color: var(--primary-white-color);
 }
-/*
+/* Spot не активен, пока что */
 .spot-button {
+    border-color: var(--noactive-black-color);
+    color: var(--noactive-black-color);
+    pointer-events: none;
 }
-
+/*
 .futures-button {
 }
 */
