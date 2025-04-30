@@ -72,6 +72,7 @@ async function ourbitTest() {
 console.log("OURBIT");
 ourbitTest();
 */
+
 // Test Bitunix Price Parsing
 const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
 async function bitunixTest() {
