@@ -48,6 +48,7 @@ async function placeLBankFuturesOrder({
     }
 }
 
+/*
 // Открыть LONG лимитным ордером:
 await placeLBankFuturesOrder({
     symbol: 'btc_usdt',
@@ -106,3 +107,4 @@ function createOrder(){
 
 
 }
+    */
