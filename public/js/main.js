@@ -82,49 +82,92 @@ startButton.addEventListener('click' , async(e) => {
     else {
         // Symbols 
         let symbol1;
-        switch (platform1) {
-            case 'MEXC':
-                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
-                break;
-            case 'LBANK':
-                symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
-                break;
-            case 'BYBIT':
-                symbol1 = ticker.toLowerCase(); // need correction
-                break;
-            case 'KUCOIN':
-                symbol1 = ticker.toLowerCase();
-                break;
-            case 'OURBIT':
-                symbol1 = ticker.toLowerCase();
-                break;
-            case 'BITUNIX':
-                symbol1 = ticker.toLowerCase();
-                break;
-        }
+        let symbol2;
+        if (arbitrageType == 'Spot') {
 
-        let symbol2
-        switch (platform2) {
-            case 'MEXC':
-                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
-                break;
-            case 'LBANK':
-                symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
-                break;
-            case 'BYBIT':
-                symbol2 = ticker.toLowerCase(); // need correction
-                break;
-            case 'KUCOIN':
-                symbol2 = ticker.toLowerCase();
-                break;
-            case 'OURBIT':
-                symbol2 = ticker.toLowerCase();
-                break;
-            case 'BITUNIX':
-                symbol2 = ticker.toLowerCase();
-                break;
+            switch (platform1) {
+                case 'MEXC':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                    break;
+                case 'LBANK':
+                    symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
+                    break;
+                case 'BYBIT':
+                    symbol1 = ticker.toLowerCase(); // need correction
+                    break;
+                case 'KUCOIN':
+                    symbol1 = ticker.toLowerCase();
+                    break;
+                case 'OURBIT':
+                    symbol1 = ticker.toLowerCase();
+                    break;
+                case 'BITUNIX':
+                    symbol1 = ticker.toLowerCase();
+                    break;
+            }
+            switch (platform2) {
+                case 'MEXC':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                    break;
+                case 'LBANK':
+                    symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
+                    break;
+                case 'BYBIT':
+                    symbol2 = ticker.toLowerCase(); // need correction
+                    break;
+                case 'KUCOIN':
+                    symbol2 = ticker.toLowerCase();
+                    break;
+                case 'OURBIT':
+                    symbol2 = ticker.toLowerCase();
+                    break;
+                case 'BITUNIX':
+                    symbol2 = ticker.toLowerCase();
+                    break;
+            }
         }
-
+        else {
+            switch (platform1) {
+                case 'MEXC':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); 
+                    break;
+                case 'LBANK':
+                    symbol1 =ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT');
+                    break;
+                case 'BYBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); 
+                    break;
+                case 'KUCOIN':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDTM');
+                    break;
+                case 'OURBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); 
+                    break;
+                case 'BITUNIX':
+                    symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); 
+                    break;
+            }
+            switch (platform2) {
+                case 'MEXC':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                    break;
+                case 'LBANK':
+                    symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
+                    break;
+                case 'BYBIT':
+                    symbol2 = ticker.toLowerCase(); // need correction
+                    break;
+                case 'KUCOIN':
+                    symbol2 = ticker.toLowerCase();
+                    break;
+                case 'OURBIT':
+                    symbol2 = ticker.toLowerCase();
+                    break;
+                case 'BITUNIX':
+                    symbol2 = ticker.toLowerCase();
+                    break;
+            }
+        }
         // Form Data
         const formData = new FormData();
 
