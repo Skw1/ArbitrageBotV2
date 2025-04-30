@@ -15,50 +15,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-
-// Test Mexc Price Parsing
+// getting prices functions
 const { getMEXCSpotOrderBook, getMEXCFuturesOrderBook, } = require('./src/api/mexc.js');
-async function mexcTest() {
-    const spotSymbol = 'CETUSUSDT';
-    const futuresSymbol = 'CETUS_USDT'; 
-   // console.log(await getMEXCSpotOrderBook(spotSymbol));
-    console.log(await getMEXCFuturesOrderBook(futuresSymbol));
-}
-console.log("MEXC");
-mexcTest();
-
-// Test LBank Price Parsing
 const { getLBankSpotOrderBook, connectLBankFuturesOrderBook } = require('./src/api/lbank.js');
-async function lbankTest() {
-    const spotSymbol = 'cetus_usdt';
-    const futuresSymbol = 'CETUS_USDT'; 
-   // console.log(await getLBankSpotOrderBook(spotSymbol));
-    console.log(await connectLBankFuturesOrderBook(futuresSymbol));
-}
-console.log("LBANK");
-lbankTest();
-
-// Test ByBit Price Parsing
 const { getBybitSpotOrderBook, getBybitFuturesOrderBook } = require('./src/api/bybit.js');
-async function bybitTest() {
-    const spotSymbol = 'CETUSUSDT';
-    const futuresSymbol = 'CETUSUSDT'; 
-   // console.log(await getBybitSpotOrderBook(spotSymbol));
-    console.log(await getBybitFuturesOrderBook(futuresSymbol));
-}
-console.log("BYBIT");
-bybitTest();
-
-// Test KuCoin Price Parsing
 const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api/kucoin.js');
-async function kucoinTest() {
-    const spotSymbol = 'CETUS-USDT';
-    const futuresSymbol = 'CETUSUSDTM'; // для фьючерсов на Kucoin нужно в конце добавлять M (BTCUSDTM почему то нету)
-   // console.log(await getKucoinSpotOrderBook(spotSymbol));
-    console.log(await getKucoinFuturesOrderBook(futuresSymbol));
-}
-console.log("KUCOIN");
-kucoinTest();
+const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
+
+
+
 
 // Test OurBit Price Parsing
 /*
@@ -73,16 +38,7 @@ console.log("OURBIT");
 ourbitTest();
 */
 
-// Test Bitunix Price Parsing
-const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
-async function bitunixTest() {
-    const spotSymbol = 'CETUSUSDT';
-    const futuresSymbol = 'CETUSUSDT'; 
-   // console.log(await getBitunixSpotOrderBook(spotSymbol));
-    console.log(await getBitunixFuturesOrderBook(futuresSymbol));
-}
-console.log("BITUNIX");
-bitunixTest();
+
 
 let userQuantity;
 let userSpread;
@@ -112,30 +68,85 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
     symbol2 = req.body.symbol2
     platform1 = req.body.platform1
     platform2 = req.body.platform2
-    
+    console.log(symbol1,symbol2,platform1,platform2, arbitrageType)
     switch (arbitrageType) {
         case 'Spot':
             
             switch (platform1) {
+                case 'MEXC':
+                    getMEXCSpotOrderBook(symbol1)
+                    break;
+                case 'LBANK':
+                    getLBankSpotOrderBook(symbol1)
+                case 'BYBIT':
+                    getBybitSpotOrderBook(symbol1)
+                    break;
+                case 'KUCION':
+                    getKucoinSpotOrderBook(symbol1)
+                    break;
+                case 'BITUNIX':
+                    getBitunixSpotOrderBook(symbol1);
+                    break;
                 
             }
 
             switch (platform2) {
-                
+                case 'MEXC':
+                    getMEXCSpotOrderBook(symbol2)
+                    break;
+                case 'LBANK':
+                    getLBankSpotOrderBook(symbol2)
+                case 'BYBIT':
+                    getBybitSpotOrderBook(symbol2)
+                    break;
+                case 'KUCION':
+                    getKucoinSpotOrderBook(symbol2)
+                    break;
+                case 'BITUNIX':
+                    getBitunixSpotOrderBook(symbol2);
+                    break;
             }
 
             break;
         case 'Futures':
             
-            switch (platform1) {
-                
-            }
-
-            switch (platform2) {
-                
-            }
+        switch (platform1) {
+            case 'MEXC':
+                getMEXCFuturesOrderBook(symbol1)
             break;
-    }
+            case 'LBANK':
+                connectLBankFuturesOrderBook(symbol1)
+            case 'BYBIT':
+                getBybitFuturesOrderBook(symbol1)
+                break;
+            case 'KUCION':
+                getKucoinFuturesOrderBook(symbol1)
+                break;
+            case 'BITUNIX':
+                getBitunixFuturesOrderBook(symbol1);
+                break;
+                
+        }
+
+        switch (platform2) {
+            case 'MEXC':
+                getMEXCFuturesOrderBook(symbol2)
+            break;
+            case 'LBANK':
+                connectLBankFuturesOrderBook(symbol2)
+            case 'BYBIT':
+                getBybitFuturesOrderBook(symbol2)
+                break;
+            case 'KUCION':
+                getKucoinFuturesOrderBook(symbol2)
+                break;
+            case 'BITUNIX':
+                getBitunixFuturesOrderBook(symbol2);
+                break;
+    }}
+
+    // compare price here
+    // functiontocompare(firstprice, second);
 
 
 });
