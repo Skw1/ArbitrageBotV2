@@ -22,6 +22,8 @@ const { getBybitSpotOrderBook, getBybitFuturesOrderBook } = require('./src/api/b
 const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api/kucoin.js');
 const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
 
+// checking prices function
+const checkPrices = require('./src/checkPrices/checkPrices.js')
 
 
 
@@ -50,6 +52,8 @@ let symbol1
 let symbol2
 let platform1
 let platform2
+let orderBook1
+let orderBook2
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -69,6 +73,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
     platform1 = req.body.platform1
     platform2 = req.body.platform2
     console.log(symbol1,symbol2,platform1,platform2, arbitrageType)
+    
     switch (arbitrageType) {
         case 'Spot':
             
@@ -112,43 +117,52 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             
         switch (platform1) {
             case 'MEXC':
-                getMEXCFuturesOrderBook(symbol1)
-            break;
+                orderBook1 = await getMEXCFuturesOrderBook(symbol1)
+                break;
             case 'LBANK':
-                connectLBankFuturesOrderBook(symbol1)
+                orderBook1 = await connectLBankFuturesOrderBook(symbol1)
             case 'BYBIT':
-                getBybitFuturesOrderBook(symbol1)
+                orderBook1 = await getBybitFuturesOrderBook(symbol1)
                 break;
             case 'KUCION':
-                getKucoinFuturesOrderBook(symbol1)
+                orderBook1 = await getKucoinFuturesOrderBook(symbol1)
                 break;
             case 'BITUNIX':
-                getBitunixFuturesOrderBook(symbol1);
+                orderBook1 = await getBitunixFuturesOrderBook(symbol1);
                 break;
                 
         }
 
         switch (platform2) {
             case 'MEXC':
-                getMEXCFuturesOrderBook(symbol2)
-            break;
+                orderBook2 = await getMEXCFuturesOrderBook(symbol2)
+                break;
             case 'LBANK':
-                connectLBankFuturesOrderBook(symbol2)
+                orderBook2 = await connectLBankFuturesOrderBook(symbol2)
+                break;
             case 'BYBIT':
-                getBybitFuturesOrderBook(symbol2)
+                orderBook2 = await getBybitFuturesOrderBook(symbol2)
                 break;
             case 'KUCION':
-                getKucoinFuturesOrderBook(symbol2)
+                orderBook2 = await getKucoinFuturesOrderBook(symbol2)
                 break;
             case 'BITUNIX':
-                getBitunixFuturesOrderBook(symbol2);
+                orderBook2 = await getBitunixFuturesOrderBook(symbol2);
                 break;
     }}
-
     // compare price here
     // functiontocompare(firstprice, second);
-
-
+    if (orderBook1 && orderBook2) {
+        console.log(orderBook1, orderBook2)
+       await checkPrices({
+        platform1, 
+        platform2, 
+        orderBook1, 
+        orderBook2, 
+        userSpread, 
+        arbitrageType
+    }) 
+    }
 });
 
 
