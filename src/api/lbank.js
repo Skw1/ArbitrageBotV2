@@ -20,6 +20,10 @@ async function getLBankSpotOrderBook(symbol) {
             console.log('=== 📈 LBank SPOT Order Book ===');
             console.log('Bids:', data.bids);
             console.log('Asks:', data.asks);
+            return {
+                bids: data.bids,
+                asks: data.asks
+            }
         } else {
             console.error('⚠️ Некорректный формат данных от LBank Spot:', data);
         }
@@ -75,9 +79,13 @@ function parseLBankFuturesMessage(rawData) {
         const message = JSON.parse(rawData);
 
         if (message.depth && Array.isArray(message.depth.bids) && Array.isArray(message.depth.asks)) {
-            console.log('=== 📈 LBank FUTURES Order Book ===');
-            console.log('Bids:', message.depth.bids);
-            console.log('Asks:', message.depth.asks);
+            // console.log('=== 📈 LBank FUTURES Order Book ===');
+            // console.log('Bids:', message.depth.bids);
+            // console.log('Asks:', message.depth.asks);
+            return {
+                bids: message.depth.bids,
+                asks: message.depth.asks
+            }
         } else if (message.ping) {
             
             if (ws && ws.readyState === WebSocket.OPEN) {

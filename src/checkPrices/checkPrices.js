@@ -13,7 +13,7 @@ module.exports = async function checkPrices({
             console.error('❌ Ордербуки отсутствуют');
             return;
         }
-
+        console.log('works')
         // Проверка, на каком типе работаем
         console.log(`=== 📈 Arbitrage Type: ${arbitrageType.toUpperCase()} ===`);
 

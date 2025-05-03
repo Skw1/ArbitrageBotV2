@@ -14,9 +14,13 @@ async function getMEXCSpotOrderBook(symbol) {
 
         const data = res.data;
         if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
-            console.log('=== 📈 MEXC SPOT Order Book ===');
-            console.log('Bids:', data.bids);
-            console.log('Asks:', data.asks);
+            // console.log('=== 📈 MEXC SPOT Order Book ===');
+            // console.log('Bids:', data.bids);
+            // console.log('Asks:', data.asks);
+            return {
+                bids: data.bids,
+                asks: data.asks
+            }
         } else {
             console.error('⚠️ Некорректный формат данных от MEXC Spot:', data);
         }
@@ -35,6 +39,10 @@ async function getMEXCFuturesOrderBook(symbol) {
             console.log('=== 📈 MEXC FUTURES Order Book ===');
             console.log('Bids:', data.bids);
             console.log('Asks:', data.asks);
+            return {
+                bids: data.bids,
+                asks: data.asks
+            }
         } else {
             console.error('⚠️ Некорректный формат данных от MEXC Futures:', res.data);
         }
