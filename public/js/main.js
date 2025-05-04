@@ -1,5 +1,5 @@
 // main.js for Front-End Interaction
-
+import { Notify } from 'https://unpkg.com/clean-toasts?module';
 // choosing platforms/arbitrageTypes
 const buttonsPlatform1 = document.querySelectorAll('.platform1');
 const buttonsPlatform2 = document.querySelectorAll('.platform2');
@@ -72,14 +72,16 @@ startButton.addEventListener('click' , async(e) => {
     const ticker = tickerInput.value;
     const spread = spreadInput.value;
     const quantity = quantityInput.value;
-
     if(platform1 == platform2) {
-        alert('you can`t use same')
+        //alert('you can`t use same')
+        Notify.warning('You can`t use same');
     }
     else if (!arbitrageType) {
-        alert('you haven`t choosed type yet')
+        //alert('you haven`t choosed type yet')
+        Notify.warning('You haven`t choosed type yet');
     }
     else {
+        Notify.success('Bot Started!');
         // Symbols 
         let symbol1;
         let symbol2;

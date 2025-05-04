@@ -1,5 +1,5 @@
 // valuables
-
+import { Notify } from 'https://unpkg.com/clean-toasts?module';
 let platform = 'MEXC';
 
 window.addEventListener('DOMContentLoaded', async() => {
@@ -28,7 +28,8 @@ window.addEventListener('DOMContentLoaded', async() => {
     }
     }
     catch(e) {
-        console.log(e)
+        Notify.error('Ошибка!');
+        console.log(e);
     }})
 
 let platformsOption = document.querySelectorAll('.form-list-item-button');
@@ -37,7 +38,7 @@ platformsOption.forEach(btn => {
     btn.addEventListener('click', async() => {
         platformsOption.forEach(buttons => {buttons.classList.remove('active')})
         platform = btn.innerText;
-        btn.classList.add('active')
+        btn.classList.add('active');
 
         try {
             const response = await fetch('/get-keys', {
@@ -65,7 +66,8 @@ platformsOption.forEach(btn => {
 
         }
         catch(e) {
-            console.log(e)
+            Notify.error('Ошибка!');
+            console.log(e);
         }
     })
 })
@@ -78,7 +80,8 @@ document.querySelector('.save-btn').addEventListener('click', async(e)=> {
     let api = document.querySelector('#api').value;
     let key = document.querySelector('#key').value;
     if (api == '' || key == '') {
-        alert('fill all fields')
+        //alert('fill all fields');
+        Notify.warning('Заполните все поля!');
     }
 
     else {
@@ -96,14 +99,16 @@ document.querySelector('.save-btn').addEventListener('click', async(e)=> {
             const result = await response.json();
 
             if (result) {
-                document.querySelector('.result-message').innerText = result.message
-                document.querySelector('.result-message').style.opacity = '1'
+                Notify.success('Ваши ключи сохранены!');
+               // document.querySelector('.result-message').innerText = result.message
+               // document.querySelector('.result-message').style.opacity = '1'
                 document.querySelector('#api').value = '';
                 document.querySelector('#key').value = '';
             }
        }
        catch(e) {
-        console.log(e)
+        console.log(e);
+        Notify.error('Ошибка!');
        }
 }})
   
@@ -122,11 +127,13 @@ document.querySelector('#clear-btn').addEventListener('click', async(e) => {
        const result = await response.json();
 
        if (result) {
-        document.querySelector('.result-message').innerText = result.message
-        document.querySelector('.result-message').style.opacity = '1'
+        Notify.success('Ваши ключи удалены!');
+        //document.querySelector('.result-message').innerText = result.message
+       // document.querySelector('.result-message').style.opacity = '1'
     }
     }
     catch(e) {
-        console.log(e)
+        console.log(e);
+        Notify.error('Ошибка!');
     }
 })
