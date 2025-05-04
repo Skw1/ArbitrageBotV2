@@ -101,7 +101,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 case 'BYBIT':
                     getBybitSpotOrderBook(symbol1)
                     break;
-                case 'KUCION':
+                case 'KUCOIN':
                     getKucoinSpotOrderBook(symbol1)
                     break;
                 case 'BITUNIX':
@@ -119,7 +119,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 case 'BYBIT':
                     getBybitSpotOrderBook(symbol2)
                     break;
-                case 'KUCION':
+                case 'KUCOIN':
                     getKucoinSpotOrderBook(symbol2)
                     break;
                 case 'BITUNIX':
@@ -139,7 +139,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             case 'BYBIT':
                 orderBook1 = await getBybitFuturesOrderBook(symbol1)
                 break;
-            case 'KUCION':
+            case 'KUCOIN':
                 orderBook1 = await getKucoinFuturesOrderBook(symbol1)
                 break;
             case 'BITUNIX':
@@ -158,7 +158,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             case 'BYBIT':
                 orderBook2 = await getBybitFuturesOrderBook(symbol2)
                 break;
-            case 'KUCION':
+            case 'KUCOIN':
                 orderBook2 = await getKucoinFuturesOrderBook(symbol2)
                 break;
             case 'BITUNIX':

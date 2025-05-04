@@ -62,7 +62,7 @@ module.exports = async function checkPrices({
 
 
 //====================================================================//
-
+/*
 let spread; 
 
 // Обработка цен
@@ -95,3 +95,4 @@ function comparePrices() {
         console.log('→ SELL на MEXC по', mexcBestAsk);
     }
 }
+    */

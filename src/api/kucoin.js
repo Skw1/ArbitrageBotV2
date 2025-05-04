@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-// Получить книгу ордеров KuCoin Spot
+//  KuCoin Spot
 async function getKucoinSpotOrderBook(symbol) {
     try {
         const endpoint = `https://api.kucoin.com/api/v1/market/orderbook/level2_100?symbol=${symbol}`;
@@ -25,22 +25,30 @@ async function getKucoinSpotOrderBook(symbol) {
     }
 }
 
-// Получить книгу ордеров KuCoin Futures
+
+// KuCoin Futures Order Book
 async function getKucoinFuturesOrderBook(symbol) {
     try {
         const endpoint = `https://api-futures.kucoin.com/api/v1/level2/depth20?symbol=${symbol}`;
-        const res = await axios.get(endpoint);
         
-        console.log("KuCoin Futures Response:", res.data); // Логируем ответ от KuCoin API для Futures
+        console.log(`Запрос к API KuCoin Futures: ${endpoint}`); // Логируем запрос для отладки
+        
+        const res = await axios.get(endpoint);
 
+        // Логируем полный ответ от API
+        console.log("KuCoin Futures Response:", res.data);
+
+        // Проверка на наличие кода успеха
         if (res.data?.code !== '200000') {
-            console.error(`⚠️ Ошибка KuCoin Futures API: ${res.data.msg}`, res.data);
+            console.error(`⚠️ Ошибка KuCoin Futures API: ${res.data.msg}`);
             return null;
         }
 
         const data = res.data?.data;
 
+        // Проверка на наличие данных и их корректность
         if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
+            console.log('=== 📈 KuCoin Futures Order Book ===');
             return {
                 bids: data.bids,
                 asks: data.asks,
@@ -51,10 +59,13 @@ async function getKucoinFuturesOrderBook(symbol) {
             return null;
         }
     } catch (err) {
+        // Логируем детальную ошибку, если что-то пошло не так
         console.error("❌ KuCoin Futures error:", err.response?.status, err.response?.data, err.message);
         return null;
     }
 }
+
+
 
 // Пример вызова (Работает)
 /*
@@ -67,4 +78,3 @@ module.exports = {
     getKucoinFuturesOrderBook
 };
 
-// Через бота не работает

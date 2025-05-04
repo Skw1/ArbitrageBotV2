@@ -1,5 +1,4 @@
 
-
 // Funding
 function getTimeUntilNextFunding() {
     const now = new Date();
