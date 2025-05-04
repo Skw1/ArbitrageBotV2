@@ -40,7 +40,7 @@ async function connectLBankFuturesOrderBook(symbol) {
         const subscribeMsg = {
             action: "subscribe",
             subscribe: "depth",
-            pair: symbol.toLowerCase(),
+            pair: symbol,
             depth: "60",
             binary: true
         };
@@ -61,7 +61,7 @@ async function connectLBankFuturesOrderBook(symbol) {
                 }
             }
         } else if (typeof data === 'string') {
-            parseLBankFuturesMessage(data);
+            parseLBankFuturesMessage(data, ws);
         }
     });
 
@@ -79,9 +79,9 @@ function parseLBankFuturesMessage(rawData) {
         const message = JSON.parse(rawData);
 
         if (message.depth && Array.isArray(message.depth.bids) && Array.isArray(message.depth.asks)) {
-            // console.log('=== 📈 LBank FUTURES Order Book ===');
-            // console.log('Bids:', message.depth.bids);
-            // console.log('Asks:', message.depth.asks);
+             console.log('=== 📈 LBank FUTURES Order Book ===');
+             console.log('Bids:', message.depth.bids);
+             console.log('Asks:', message.depth.asks);
             return {
                 bids: message.depth.bids,
                 asks: message.depth.asks

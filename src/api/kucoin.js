@@ -1,13 +1,13 @@
-// KUCOIN Parsing
-
 const axios = require('axios');
 
-// KuCoin Spot Order Book
+// Получить книгу ордеров KuCoin Spot
 async function getKucoinSpotOrderBook(symbol) {
     try {
         const endpoint = `https://api.kucoin.com/api/v1/market/orderbook/level2_100?symbol=${symbol}`;
         const res = await axios.get(endpoint);
         const data = res.data?.data;
+
+        console.log("KuCoin Spot Response:", res.data); // Логируем ответ от KuCoin API для Spot
 
         if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
             return {
@@ -25,11 +25,19 @@ async function getKucoinSpotOrderBook(symbol) {
     }
 }
 
-// KuCoin Futures Order Book
+// Получить книгу ордеров KuCoin Futures
 async function getKucoinFuturesOrderBook(symbol) {
     try {
-        const endpoint = `https://api-futures.kucoin.com/api/v1/level2/depth100?symbol=${symbol}`;
+        const endpoint = `https://api-futures.kucoin.com/api/v1/level2/depth20?symbol=${symbol}`;
         const res = await axios.get(endpoint);
+        
+        console.log("KuCoin Futures Response:", res.data); // Логируем ответ от KuCoin API для Futures
+
+        if (res.data?.code !== '200000') {
+            console.error(`⚠️ Ошибка KuCoin Futures API: ${res.data.msg}`, res.data);
+            return null;
+        }
+
         const data = res.data?.data;
 
         if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
@@ -48,7 +56,15 @@ async function getKucoinFuturesOrderBook(symbol) {
     }
 }
 
+// Пример вызова (Работает)
+/*
+getKucoinSpotOrderBook('BTC-USDT').then(console.log);
+getKucoinFuturesOrderBook('XBTUSDM').then(console.log);
+*/
+
 module.exports = {
     getKucoinSpotOrderBook,
     getKucoinFuturesOrderBook
 };
+
+// Через бота не работает

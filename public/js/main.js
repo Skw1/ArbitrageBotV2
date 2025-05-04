@@ -87,84 +87,84 @@ startButton.addEventListener('click' , async(e) => {
 
             switch (platform1) {
                 case 'MEXC':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
                 case 'LBANK':
-                    symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
+                    symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
                     break;
                 case 'BYBIT':
-                    symbol1 = ticker.toLowerCase(); // need correction
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
                 case 'KUCOIN':
-                    symbol1 = ticker.toLowerCase();
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
                     break;
                 case 'OURBIT':
-                    symbol1 = ticker.toLowerCase();
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
                     break;
                 case 'BITUNIX':
-                    symbol1 = ticker.toLowerCase();
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
             }
             switch (platform2) {
                 case 'MEXC':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
                 case 'LBANK':
-                    symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
-                    break;
+                    symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
                 case 'BYBIT':
-                    symbol2 = ticker.toLowerCase(); // need correction
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
                 case 'KUCOIN':
-                    symbol2 = ticker.toLowerCase();
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
                     break;
                 case 'OURBIT':
-                    symbol2 = ticker.toLowerCase();
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
                     break;
                 case 'BITUNIX':
-                    symbol2 = ticker.toLowerCase();
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
             }
         }
+        // Futures
         else {
             switch (platform1) {
                 case 'MEXC':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT 
                     break;
                 case 'LBANK':
-                    symbol1 =ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT');
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'BYBIT':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
                     break;
                 case 'KUCOIN':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDTM');
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
                     break;
                 case 'OURBIT':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
                     break;
                 case 'BITUNIX':
-                    symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); 
+                    symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
                     break;
             }
             switch (platform2) {
                 case 'MEXC':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX');
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'LBANK':
-                    symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx');
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'BYBIT':
-                    symbol2 = ticker.toLowerCase(); // need correction
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
                 case 'KUCOIN':
-                    symbol2 = ticker.toLowerCase();
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
                     break;
                 case 'OURBIT':
-                    symbol2 = ticker.toLowerCase();
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
                 case 'BITUNIX':
-                    symbol2 = ticker.toLowerCase();
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
             }
         }

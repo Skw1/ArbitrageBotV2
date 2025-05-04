@@ -40,7 +40,22 @@ console.log("OURBIT");
 ourbitTest();
 */
 
+// Test BitUnix
+/*
+const axios = require('axios');
 
+async function getBitunixFuturesSymbols() {
+    try {
+        const endpoint = 'https://fapi.bitunix.com/api/v1/futures/market/trading_pairs';
+        const res = await axios.get(endpoint);
+        console.log('✅ Контракты Bitunix Futures:', res.data);
+    } catch (err) {
+        console.error("❌ Ошибка при получении контрактов Bitunix Futures:", err.response?.status, err.response?.data, err.message);
+    }
+}
+
+getBitunixFuturesSymbols();
+*/
 
 let userQuantity;
 let userSpread;
@@ -150,10 +165,11 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 orderBook2 = await getBitunixFuturesOrderBook(symbol2);
                 break;
     }}
+    
     // compare price here
     // functiontocompare(firstprice, second);
     if (orderBook1 && orderBook2) {
-        console.log(orderBook1, orderBook2)
+        console.log(orderBook1, orderBook2);
        await checkPrices({
         platform1, 
         platform2, 

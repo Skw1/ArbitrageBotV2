@@ -28,10 +28,10 @@ async function getBitunixSpotOrderBook(symbol) {
 // Bitunix Futures Order Book
 async function getBitunixFuturesOrderBook(symbol) {
     try {
-        const endpoint = `https://api.bitunix.com/futures/open/api/market_depth?symbol=${symbol}&size=5`;
+        const endpoint = `https://fapi.bitunix.com/api/v1/futures/market/depth?symbol=${symbol}&limit=5`;
         const res = await axios.get(endpoint);
         const data = res.data?.data;
-
+        console.log(`https://fapi.bitunix.com/api/v1/futures/market/depth?symbol=${symbol}&limit=5`);
         if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
             return {
                 bids: data.bids,
@@ -47,6 +47,7 @@ async function getBitunixFuturesOrderBook(symbol) {
         return null;
     }
 }
+
 
 module.exports = {
     getBitunixSpotOrderBook,
