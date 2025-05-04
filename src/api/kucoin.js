@@ -31,7 +31,7 @@ async function getKucoinFuturesOrderBook(symbol) {
     try {
         const endpoint = `https://api-futures.kucoin.com/api/v1/level2/depth20?symbol=${symbol}`;
         
-        console.log(`Запрос к API KuCoin Futures: ${endpoint}`); // Логируем запрос для отладки
+       // console.log(`Запрос к API KuCoin Futures: ${endpoint}`); // Логируем запрос для отладки
         
         const res = await axios.get(endpoint);
 
