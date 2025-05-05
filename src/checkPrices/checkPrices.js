@@ -41,10 +41,10 @@ module.exports = async function checkPrices({
         }
 
         if (profit1 >= userSpread) {
-            result += `</br>✅ Возможность: </br> Купить на ${platform1} по ${bestAsk1}, </br> Продать на ${platform2} по ${bestBid2},</br> </br> профит: ${profit1.toFixed(2)}%\n`;
+            result += `</br>✅ Возможность: </br> Купить на ${platform1} по ${bestAsk1}, </br> Продать на ${platform2} по ${bestBid2},</br> </br> Профит: ${profit1.toFixed(2)}%\n`;
         } 
         else if (profit2 >= userSpread) {
-            result += `</br>✅ Возможность: </br> Купить на ${platform2} по ${bestAsk2}, </br> Продать на ${platform1} по ${bestBid1},</br> </br> профит: ${profit2.toFixed(2)}%\n`;
+            result += `</br>✅ Возможность: </br> Купить на ${platform2} по ${bestAsk2}, </br> Продать на ${platform1} по ${bestBid1},</br> </br> Профит: ${profit2.toFixed(2)}%\n`;
         } 
         else {
             result += `</br>❌ Нет подходящего спреда. </br> Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
