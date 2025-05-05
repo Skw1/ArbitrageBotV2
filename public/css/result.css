@@ -24,11 +24,50 @@
     
 }
 
-.result{
+.result {
     width: 100%;
-    height: 335px; /* Высота контейнера для вывода информации (Логов) пользователю*/
+    height: 335px; /* Высота контейнера для вывода информации (Логов) пользователю */
     border: 1px solid var(--noactive-black-color);
     border-radius: 5px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    overflow-y: auto; /* Для прокрутки */
+    background-color: #f4f4f9; /* Цвет фона контейнера */
+}
+
+.result .log-message {
+    font-size: 14px;
+    color: #333;
+}
+
+.result .highlight {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.result .error {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.result .success {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.result .info {
+    color: #f39c12;
+}
+
+.result .separator {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
 }
 
 .clear-logs-button{

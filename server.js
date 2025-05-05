@@ -166,18 +166,23 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 break;
     }}
     
-    // compare price here
-    // functiontocompare(firstprice, second);
-    if (orderBook1 && orderBook2) {
+     // compare price here
+     if (orderBook1 && orderBook2) {
         console.log(orderBook1, orderBook2);
-       await checkPrices({
-        platform1, 
-        platform2, 
-        orderBook1, 
-        orderBook2, 
-        userSpread, 
-        arbitrageType
-    }) 
+        await checkPrices({
+            platform1, 
+            platform2, 
+            orderBook1, 
+            orderBook2, 
+            userSpread, 
+            arbitrageType
+        }).then((message) => {
+            res.json({ message }); // Отправляем сообщение на фронтенд
+        }).catch((err) => {
+            res.status(500).json({ message: 'Ошибка при проверке цен.' });
+        });
+    } else {
+        res.status(400).json({ message: 'Ошибка при получении данных ордербуков.' });
     }
 });
 

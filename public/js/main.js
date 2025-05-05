@@ -68,23 +68,21 @@ const resultDiv = document.getElementById('result-div');
 
 // Tiker Converter for Spot and Futures
 startButton.addEventListener('click' , async(e) => {
-    e.preventDefault()
+    e.preventDefault();
     const ticker = tickerInput.value;
     const spread = spreadInput.value;
     const quantity = quantityInput.value;
-    if(platform1 == platform2) {
-        //alert('you can`t use same')
-        Notify.warning('You can`t use same');
-    }
-    else if (!arbitrageType) {
-        //alert('you haven`t choosed type yet')
-        Notify.warning('You haven`t choosed type yet');
-    }
-    else {
-        Notify.success('Bot Started!');
-        // Symbols 
-        let symbol1;
-        let symbol2;
+    resultDiv.innerHTML = '<p>Загрузка...</p>'; // Подготовка, выводим индикатор загрузки
+
+    if (platform1 == platform2) {
+        Notify.warning('Вы не можете выбрать одинаковые платформы');
+    } else if (!arbitrageType) {
+        Notify.warning('Вы не выбрали тип торговли');
+    } else {
+        Notify.success('Бот запущен!');
+        // Символы для платформ
+        let symbol1, symbol2;
+
         if (arbitrageType == 'Spot') {
 
             switch (platform1) {
@@ -170,51 +168,41 @@ startButton.addEventListener('click' , async(e) => {
                     break;
             }
         }
-        // Form Data
-        const formData = new FormData();
+   // Формируем FormData
+   const formData = new FormData();
+   formData.append('symbol1', symbol1);
+   formData.append('symbol2', symbol2);
+   formData.append('userSpread', spread);
+   formData.append('userQuantity', quantity);
+   formData.append('arbitrageType', arbitrageType);
+   formData.append('platform1', platform1);
+   formData.append('platform2', platform2);
 
-        // API Keys and Secret Keys
-        formData.append("mexcUserApiKey" ,  mexcUserApiKey);
-        formData.append("mexcUserSecretKey" ,  mexcUserSecretKey);
+   try {
+       const response = await fetch('/sendingInfo', {
+           method: 'POST',
+           body: formData
+       });
 
-        formData.append("lbankUserApiKey" ,  lbankUserApiKey);
-        formData.append("lbankUserSecretKey" ,  lbankUserSecretKey);
+       if (!response.ok) {
+           throw new Error('Не удалось получить данные');
+       }
 
-        formData.append("bybitUserApiKey" ,  bybitUserApiKey);
-        formData.append("bybitUserSecretKey" ,  bybitUserSecretKey);
+       const data = await response.json();
 
-        formData.append("kucoinUserApiKey" ,  kucoinUserApiKey);
-        formData.append("kucoinUserSecretKey" ,  kucoinUserSecretKey);
-
-        formData.append("ourbitUserApiKey" ,  ourbitUserApiKey);
-        formData.append("ourbitUserSecretKey" ,  ourbitUserSecretKey);
-
-        formData.append("biunixUserApiKey" ,  biunixUserApiKey);
-        formData.append("biunixUserSecretKey" ,  biunixUserSecretKey);
-
+       // Создаем HTML-разметку для красивого вывода
+       resultDiv.innerHTML = `
+           <div class="log-message">
+               <p>📈 <span class="highlight">Arbitrage Type:</span> ${arbitrageType.toUpperCase()}</p>
+               <p>🔍 <span class="highlight">Лучшая цена покупки и продажи:</span></p>
+               <p>${data.message}</p>
+               <p class="separator">❌ Нет подходящего спреда. Профит макс: -0.00%</p>
+           </div>
+       `;
+   } catch (error) {
+       console.error('Ошибка:', error);
+       resultDiv.innerHTML = `<p class="error">Произошла ошибка. Попробуйте снова.</p>`;
+   }
+}
         
-        // Symbols 
-        formData.append('symbol1', symbol1)
-        formData.append('symbol2', symbol2)
-
-        // Inputs
-        formData.append("userSpread" , spread);
-        formData.append("userQuantity" , quantity);
-
-        // Arbitrage Type
-        formData.append('arbitrageType', arbitrageType)
-      
-        // platforms
-        formData.append('platform1', platform1)
-        formData.append('platform2', platform2)
-        try{
-            const response = await fetch('/sendingInfo', {
-                method: 'post',
-                body: formData
-            })
-        }
-        catch(e){
-            console.log(e);
-        }
-        }
 });
