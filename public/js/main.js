@@ -193,10 +193,7 @@ startButton.addEventListener('click' , async(e) => {
        // Создаем HTML-разметку для красивого вывода
        resultDiv.innerHTML = `
            <div class="log-message">
-               <p>📈 <span class="highlight">Arbitrage Type:</span> ${arbitrageType.toUpperCase()}</p>
-               <p>🔍 <span class="highlight">Лучшая цена покупки и продажи:</span></p>
                <p>${data.message}</p>
-               <p class="separator">❌ Нет подходящего спреда. Профит макс: -0.00%</p>
            </div>
        `;
    } catch (error) {

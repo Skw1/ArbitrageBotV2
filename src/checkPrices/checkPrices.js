@@ -10,20 +10,20 @@ module.exports = async function checkPrices({
     let result = '';
     try {
         if (!orderBook1 || !orderBook2) {
-            result += '❌ Ордербуки отсутствуют\n';
+            result += '❌ Ордербуки отсутствуют\n</br>';
             return result;
         }
-        result += 'works\n'; // добавляем сообщение
-        result += `📈 Arbitrage Type: ${arbitrageType.toUpperCase()}\n`;
+        
+        result += `📈 Arbitrage Type: ${arbitrageType.toUpperCase()}\n</br>`;
 
         const bestAsk1 = parseFloat(orderBook1.asks[0][0]);
         const bestBid1 = parseFloat(orderBook1.bids[0][0]);
         const bestAsk2 = parseFloat(orderBook2.asks[0][0]);
         const bestBid2 = parseFloat(orderBook2.bids[0][0]);
 
-        result += `🔍 Лучшая цена покупки и продажи\n`;
-        result += `${platform1}: Ask ${bestAsk1} / Bid ${bestBid1}\n`;
-        result += `${platform2}: Ask ${bestAsk2} / Bid ${bestBid2}\n`;
+        result += `</br>🔍 Лучшая цена покупки и продажи:\n </br>`;
+        result += `${platform1}: Ask ${bestAsk1} / Bid ${bestBid1}\n</br>`;
+        result += `${platform2}: Ask ${bestAsk2} / Bid ${bestBid2}\n</br>`;
 
         let profit1, profit2;
 
@@ -36,21 +36,21 @@ module.exports = async function checkPrices({
             profit2 = (bestBid1 - bestAsk2) / bestAsk2 * 100;
         } 
         else {
-            result += '❌ Неверный тип арбитража\n';
+            result += '</br>❌ Неверный тип арбитража\n';
             return result;
         }
 
         if (profit1 >= userSpread) {
-            result += `✅ Возможность: Купить на ${platform1} по ${bestAsk1}, продать на ${platform2} по ${bestBid2}, профит: ${profit1.toFixed(2)}%\n`;
+            result += `</br>✅ Возможность: </br> Купить на ${platform1} по ${bestAsk1}, </br> Продать на ${platform2} по ${bestBid2},</br> </br> профит: ${profit1.toFixed(2)}%\n`;
         } 
         else if (profit2 >= userSpread) {
-            result += `✅ Возможность: Купить на ${platform2} по ${bestAsk2}, продать на ${platform1} по ${bestBid1}, профит: ${profit2.toFixed(2)}%\n`;
+            result += `</br>✅ Возможность: </br> Купить на ${platform2} по ${bestAsk2}, </br> Продать на ${platform1} по ${bestBid1},</br> </br> профит: ${profit2.toFixed(2)}%\n`;
         } 
         else {
-            result += `❌ Нет подходящего спреда. Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
+            result += `</br>❌ Нет подходящего спреда. </br> Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
         }
     } catch (err) {
-        result += `❌ Ошибка при проверке цен: ${err.message}\n`;
+        result += `</br>❌ Ошибка при проверке цен: ${err.message}\n`;
     }
     return result;
 }
