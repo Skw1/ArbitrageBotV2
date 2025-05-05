@@ -50,7 +50,7 @@ module.exports = async function checkPrices({
             result += `</br>❌ Нет подходящего спреда. </br> Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
         }
     } catch (err) {
-        result += `</br>❌ Ошибка при проверке цен: ${err.message}\n`;
+        result += `</br>❌ Ошибка при проверке цен: </br> ${err.message}\n`;
     }
     return result;
 }

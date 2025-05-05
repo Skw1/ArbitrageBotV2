@@ -37,7 +37,7 @@
     gap: 10px;
     text-align: center;
     overflow-y: auto; /* Для прокрутки */
-    background-color: #f4f4f9; /* Цвет фона контейнера */
+    background-color: #F9F9F9; 
 }
 
 .result .log-message {

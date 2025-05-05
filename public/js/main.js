@@ -198,7 +198,7 @@ startButton.addEventListener('click' , async(e) => {
        `;
    } catch (error) {
        console.error('Ошибка:', error);
-       resultDiv.innerHTML = `<p class="error">Произошла ошибка. Попробуйте снова.</p>`;
+       resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
    }
 }
         
