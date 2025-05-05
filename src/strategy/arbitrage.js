@@ -1,7 +1,7 @@
 // Create Orders 
 // Нам надо: лимитный ордер с плечом 1х
 
-// LBANK
+// LBANK Orders Example
 async function placeLBankFuturesOrder({
     symbol,
     side,        // 'long' или 'short'
@@ -112,10 +112,84 @@ function createOrder(){
 
 
 
-// Commissions
+// KUCOIN Example 
+/*
+// Открытие лимитного ордера с отменой через 2 секунды
+async function placeLimitOrderWithTimeout(symbol, side, price, size) {
+    const clientOid = uuidv4(); // Уникальный идентификатор заказа
+    const orderData = {
+      symbol,
+      side, // 'buy' или 'sell'
+      type: 'limit',
+      price: price.toString(),
+      size: size.toString(),
+      timeInForce: 'GTT',
+      cancelAfter: 2000, // Отмена через 2000 миллисекунд (2 секунды)
+      clientOid
+    };
+  
+    try {
+      const response = await kucoinRequest('POST', '/api/v1/orders', orderData);
+      console.log('Лимитный ордер размещен:', response.data.orderId);
+      return response.data.orderId;
+    } catch (error) {
+      console.error('Ошибка при размещении лимитного ордера:', error.message);
+      return null;
+    }
+  }
 
+//  Симуляция закрытия позиции маркет-ордером с учетом стакана (PnL)
+function calculateAveragePrice(orderBookSide, amount) {
+    let remaining = amount;
+    let totalCost = 0;
+  
+    for (const [priceStr, qtyStr] of orderBookSide) {
+      const price = parseFloat(priceStr);
+      const qty = parseFloat(qtyStr);
+      const tradeQty = Math.min(remaining, qty);
+      totalCost += tradeQty * price;
+      remaining -= tradeQty;
+      if (remaining <= 0) break;
+    }
+  
+    if (remaining > 0) {
+      console.warn('Недостаточно ликвидности в стакане для полного закрытия позиции.');
+      return null;
+    }
+  
+    return totalCost / amount;
+  }
 
+// Подключение WebSocket для обновления ордербуков
+const WebSocket = require('ws');
 
+function connectOrderBook(symbol, onUpdate) {
+  const ws = new WebSocket('wss://futures.kucoin.com/endpoint');
 
+  ws.on('open', () => {
+    const subscribeMessage = {
+      id: Date.now(),
+      type: 'subscribe',
+      topic: `/contractMarket/level2:${symbol}`,
+      response: true
+    };
+    ws.send(JSON.stringify(subscribeMessage));
+  });
 
-  //
+  ws.on('message', (data) => {
+    const message = JSON.parse(data);
+    if (message.topic && message.data) {
+      onUpdate(message.data);
+    }
+  });
+
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error);
+  });
+
+  ws.on('close', () => {
+    console.log('WebSocket connection closed. Reconnecting...');
+    setTimeout(() => connectOrderBook(symbol, onUpdate), 1000);
+  });
+}
+*/

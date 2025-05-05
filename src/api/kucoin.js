@@ -65,13 +65,12 @@ async function getKucoinFuturesOrderBook(symbol) {
     }
 }
 
-
-
 // Пример вызова (Работает)
 /*
 getKucoinSpotOrderBook('BTC-USDT').then(console.log);
 getKucoinFuturesOrderBook('XBTUSDM').then(console.log);
 */
+
 
 module.exports = {
     getKucoinSpotOrderBook,
