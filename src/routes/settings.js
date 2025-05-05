@@ -28,22 +28,22 @@ app.post('/settings', upload.none(), (req,res) => {
 
     switch (platform) {
         case 'MEXC':
-            envContent = envContent.replace(/^MEXC_Api=.*/m, `MEXC_Api=${api}`).replace(/^MEXC_Key=.*/m, `MEXC_Key=${key}`)
+            envContent = envContent.replace(/^MEXC_ApiKey=.*/m, `MEXC_ApiKey=${api}`).replace(/^MEXC_SecretKey=.*/m, `MEXC_SecretKey=${key}`)
             break;
         case 'LBANK':
-            envContent = envContent.replace(/^LBANK_Api=.*/m, `LBANK_Api=${api}`).replace(/^LBANK_Key=.*/m, `LBANK_Key=${key}`)
+            envContent = envContent.replace(/^LBANK_ApiKey=.*/m, `LBANK_ApiKey=${api}`).replace(/^LBANK_SecretKey=.*/m, `LBANK_SecretKey=${key}`)
             break;
         case 'BYBIT':
-            envContent = envContent.replace(/^BYBIT_Api=.*/m, `BYBIT_Api=${api}`).replace(/^BYBIT_Key=.*/m, `BYBIT_Key=${key}`)
+            envContent = envContent.replace(/^BYBIT_ApiKey=.*/m, `BYBIT_ApiKey=${api}`).replace(/^BYBIT_SecretKey=.*/m, `BYBIT_SecretKey=${key}`)
             break;
         case 'KUCOIN':
-            envContent = envContent.replace(/^KUCOIN_Api=.*/m, `KUCOIN_Api=${api}`).replace(/^KUCOIN_Key=.*/m, `KUCOIN_Key=${key}`)
+            envContent = envContent.replace(/^KUCOIN_ApiKey=.*/m, `KUCOIN_ApiKey=${api}`).replace(/^KUCOIN_SecretKey=.*/m, `KUCOIN_SecretKey=${key}`)
             break;
         case 'OURBIT':
-            envContent = envContent.replace(/^OURBIT_Api=.*/m, `OURBIT_Api=${api}`).replace(/^OURBIT_Key=.*/m, `OURBIT_Key=${key}`)
+            envContent = envContent.replace(/^OURBIT_ApiKey=.*/m, `OURBIT_ApiKey=${api}`).replace(/^OURBIT_SecretKey=.*/m, `OURBIT_SecretKey=${key}`)
             break;
         case 'BITUNIX':
-            envContent = envContent.replace(/^BITUNIX_Api=.*/m, `BITUNIX_Api=${api}`).replace(/^BITUNIX_Key=.*/m, `BITUNIX_Key=${key}`)
+            envContent = envContent.replace(/^BITUNIX_ApiKey=.*/m, `BITUNIX_ApiKey=${api}`).replace(/^BITUNIX_SecretKey=.*/m, `BITUNIX_SecretKey=${key}`)
             break;
     }       
     fs.writeFileSync(envPath, envContent);
@@ -57,22 +57,22 @@ app.post('/deleting', upload.none(), (req,res) => {
 
     switch (platform) {
         case 'MEXC':
-            envContent = envContent.replace(/^MEXC_Api=.*/m, `MEXC_Api=`).replace(/^MEXC_Key=.*/m, `MEXC_Key=`)
+            envContent = envContent.replace(/^MEXC_ApiKey=.*/m, `MEXC_ApiKey=`).replace(/^MEXC_SecretKey=.*/m, `MEXC_SecretKey=`)
             break;
         case 'LBANK':
-            envContent = envContent.replace(/^LBANK_Api=.*/m, `LBANK_Api=`).replace(/^LBANK_Key=.*/m, `LBANK_Key=`)
+            envContent = envContent.replace(/^LBANK_ApiKey=.*/m, `LBANK_ApiKey=`).replace(/^LBANK_SecretKey=.*/m, `LBANK_SecretKey=`)
             break;
         case 'BYBIT':
-            envContent = envContent.replace(/^BYBIT_Api=.*/m, `BYBIT_Api=`).replace(/^BYBIT_Key=.*/m, `BYBIT_Key=`)
+            envContent = envContent.replace(/^BYBIT_ApiKey=.*/m, `BYBIT_ApiKey=`).replace(/^BYBIT_SecretKey=.*/m, `BYBIT_SecretKey=`)
             break;
         case 'KUCOIN':
-            envContent = envContent.replace(/^KUCOIN_Api=.*/m, `KUCOIN_Api=`).replace(/^KUCOIN_Key=.*/m, `KUCOIN_Key=`)
+            envContent = envContent.replace(/^KUCOIN_ApiKey=.*/m, `KUCOIN_ApiKey=`).replace(/^KUCOIN_SecretKey=.*/m, `KUCOIN_SecretKey=`)
             break;
         case 'OURBIT':
-            envContent = envContent.replace(/^OURBIT_Api=.*/m, `OURBIT_Api=`).replace(/^OURBIT_Key=.*/m, `OURBIT_Key=`)
+            envContent = envContent.replace(/^OURBIT_ApiKey=.*/m, `OURBIT_ApiKey=`).replace(/^OURBIT_SecretKey=.*/m, `OURBIT_SecretKey=`)
             break;
         case 'BITUNIX':
-            envContent = envContent.replace(/^BITUNIX_Api=.*/m, `BITUNIX_Api=`).replace(/^BITUNIX_Key=.*/m, `BITUNIX_Key=`)
+            envContent = envContent.replace(/^BITUNIX_ApiKey=.*/m, `BITUNIX_ApiKey=`).replace(/^BITUNIX_SecretKey=.*/m, `BITUNIX_SecretKey=`)
             break;
     }       
     fs.writeFileSync(envPath, envContent)
@@ -91,38 +91,38 @@ app.post('/get-keys', async(req,res) => {
 
     switch (platform) {
         case 'MEXC':
-            ApiLine = lines.find(line => line.startsWith('MEXC_Api='))
-            KeyLine = lines.find(line => line.startsWith('MEXC_Key='))
+            ApiLine = lines.find(line => line.startsWith('MEXC_ApiKey='))
+            KeyLine = lines.find(line => line.startsWith('MEXC_SecretKey='))
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;
         case 'LBANK':
-            ApiLine = lines.find(line => line.startsWith('LBANK_Api='))
-            KeyLine = lines.find(line => line.startsWith('LBANK_Key='))
+            ApiLine = lines.find(line => line.startsWith('LBANK_ApiKey='))
+            KeyLine = lines.find(line => line.startsWith('LBANK_SecretKey='))
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;
         case 'BYBIT':
-            ApiLine = lines.find(line => line.startsWith('BYBIT_Api='))
-            KeyLine = lines.find(line => line.startsWith('BYBIT_Key='))
+            ApiLine = lines.find(line => line.startsWith('BYBIT_ApiKey='))
+            KeyLine = lines.find(line => line.startsWith('BYBIT_SecretKey='))
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;
         case 'KUCOIN':
-            ApiLine = lines.find(line => line.startsWith('KUCOIN_Api='))
-            KeyLine = lines.find(line => line.startsWith('KUCOIN_Key='))
+            ApiLine = lines.find(line => line.startsWith('KUCOIN_ApiKey='))
+            KeyLine = lines.find(line => line.startsWith('KUCOIN_SecretKey='))
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;
         case 'OURBIT':
-            ApiLine = lines.find(line => line.startsWith('OURBIT_Api='))
-            KeyLine = lines.find(line => line.startsWith('OURBIT_Key='))
+            ApiLine = lines.find(line => line.startsWith('OURBIT_ApiKey='))
+            KeyLine = lines.find(line => line.startsWith('OURBIT_SecretKey='))
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;
         case 'BITUNIX':
-            ApiLine = lines.find(line => line.startsWith('BITUNIX_Api='))
-            KeyLine = lines.find(line => line.startsWith('BITUNIX_Key='))
+            ApiLine = lines.find(line => line.startsWith('BITUNIX_ApiKey='))
+            KeyLine = lines.find(line => line.startsWith('BITUNIX_SecretKey='))
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;

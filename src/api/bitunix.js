@@ -31,7 +31,7 @@ async function getBitunixFuturesOrderBook(symbol) {
         const endpoint = `https://fapi.bitunix.com/api/v1/futures/market/depth?symbol=${symbol}&limit=5`;
         const res = await axios.get(endpoint);
         const data = res.data?.data;
-        console.log(`https://fapi.bitunix.com/api/v1/futures/market/depth?symbol=${symbol}&limit=5`);
+        //console.log(`https://fapi.bitunix.com/api/v1/futures/market/depth?symbol=${symbol}&limit=5`);
         if (data && Array.isArray(data.bids) && Array.isArray(data.asks)) {
             return {
                 bids: data.bids,
