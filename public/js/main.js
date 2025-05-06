@@ -1,9 +1,26 @@
 // main.js for Front-End Interaction
+
 import { Notify } from 'https://unpkg.com/clean-toasts?module';
+
 // choosing platforms/arbitrageTypes
 const buttonsPlatform1 = document.querySelectorAll('.platform1');
 const buttonsPlatform2 = document.querySelectorAll('.platform2');
-const buttonsArbitrageType = document.querySelectorAll('.trade-item-button')
+const buttonsArbitrageType = document.querySelectorAll('.trade-item-button');
+
+// Inputs
+const tickerInput = document.getElementById('ticker-input');
+const quantityInput = document.getElementById('quantity-input');
+const spreadInput = document.getElementById('spread-input');
+
+// Start Button
+const startButton = document.getElementById('start-btn');
+
+// Clear Logs Button
+const clearLogsBtn = document.querySelector('.clear-logs-button');
+
+// Result DIV for user
+const resultDiv = document.getElementById('result-div');
+
 
 let platform1;
 let platform2;
@@ -33,6 +50,11 @@ buttonsArbitrageType.forEach(btn => {
     })
 })
 
+// Clear Logs
+clearLogsBtn.addEventListener('click', () => {
+    resultDiv.innerHTML = 'No Data';
+    Notify.warning('⚠️ Logs Cleared');
+});
 
 // Settings:
 const mexcUserApiKey = document.getElementById('mexc-apikey-input');
@@ -53,18 +75,6 @@ const ourbitUserSecretKey = document.getElementById('ourbit-secretkey-input');
 const biunixUserApiKey = document.getElementById('biunix-apikey-input');
 const biunixUserSecretKey = document.getElementById('biunix-secretkey-input');
 
-// Form:
-
-// Inputs
-const tickerInput = document.getElementById('ticker-input');
-const quantityInput = document.getElementById('quantity-input');
-const spreadInput = document.getElementById('spread-input');
-
-// Start Button
-const startButton = document.getElementById('start-btn');
-
-// Result DIV for user
-const resultDiv = document.getElementById('result-div');
 
 // Tiker Converter for Spot and Futures
 startButton.addEventListener('click' , async(e) => {
@@ -196,11 +206,12 @@ startButton.addEventListener('click' , async(e) => {
                <p>${data.message}</p>
            </div>
        `;
+       resultDiv.scrollTop = resultDiv.scrollHeight;
    } catch (error) {
        console.error('Ошибка:', error);
        Notify.error('Ошибка');
        resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
    }
-}
-        
+}   
+
 });
