@@ -56,7 +56,7 @@ module.exports = {
     getMEXCFuturesOrderBook
 };
 
-
+/*
 // MEXC Orders
 const ccxt = require('ccxt'); // библиотека cctx
 
