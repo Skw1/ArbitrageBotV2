@@ -32,62 +32,20 @@ async function getLBankSpotOrderBook(symbol) {
     }
 }
 
-// LBank Futures Order Book (WebSocket)
-async function connectLBankFuturesOrderBook(symbol) {
-    const ws = new WebSocket('wss://www.lbkex.net/ws/V2/');
 
-    ws.on('open', () => {
-        const subscribeMsg = {
-            action: "subscribe",
-            subscribe: "depth",
-            pair: symbol,
-            depth: "60",
-            binary: true
-        };
-        ws.send(JSON.stringify(subscribeMsg));
-    });
-
-    ws.on('message', (data) => {
-        if (Buffer.isBuffer(data)) {
-            try {
-                const decompressed = zlib.gunzipSync(data).toString('utf-8');
-                parseLBankFuturesMessage(decompressed);
-            } catch (e) {
-                try {
-                    const fallback = data.toString('utf-8');
-                    parseLBankFuturesMessage(fallback);
-                } catch (e2) {
-                    console.error('❌ Ошибка обработки бинарных данных LBank Futures:', e2.message);
-                }
-            }
-        } else if (typeof data === 'string') {
-            parseLBankFuturesMessage(data, ws);
-        }
-    });
-
-    ws.on('error', (err) => {
-        console.error('❌ WebSocket ошибка LBank Futures:', err.message);
-    });
-
-    ws.on('close', () => {
-        console.warn('⚠️ LBank Futures WebSocket закрыт.');
-    });
-}
-
-function parseLBankFuturesMessage(rawData) {
+function parseLBankFuturesMessage(rawData, ws) {
     try {
         const message = JSON.parse(rawData);
 
         if (message.depth && Array.isArray(message.depth.bids) && Array.isArray(message.depth.asks)) {
-             console.log('=== 📈 LBank FUTURES Order Book ===');
-             console.log('Bids:', message.depth.bids);
-             console.log('Asks:', message.depth.asks);
+            console.log('=== 📈 LBank FUTURES Order Book ===');
+            console.log('Bids:', message.depth.bids);
+            console.log('Asks:', message.depth.asks);
             return {
                 bids: message.depth.bids,
                 asks: message.depth.asks
-            }
+            };
         } else if (message.ping) {
-            
             if (ws && ws.readyState === WebSocket.OPEN) {
                 ws.send(JSON.stringify({ action: "pong", pong: message.ping }));
             }
@@ -95,6 +53,53 @@ function parseLBankFuturesMessage(rawData) {
     } catch (e) {
         console.error('❌ Ошибка парсинга сообщения LBank Futures:', e.message);
     }
+
+    return null;
+}
+
+// LBank Futures Order Book (WebSocket)
+function connectLBankFuturesOrderBook(symbol) {
+    return new Promise((resolve, reject) => {
+        const ws = new WebSocket('wss://www.lbkex.net/ws/V2/');
+
+        ws.on('open', () => {
+            const subscribeMsg = {
+                action: "subscribe",
+                subscribe: "depth",
+                pair: symbol,
+                depth: "60",
+                binary: true // сервер может посылать gzip, но мы пробуем парсить как JSON
+            };
+            ws.send(JSON.stringify(subscribeMsg));
+        });
+
+        ws.on('message', (data) => {
+            let raw;
+            try {
+                raw = Buffer.isBuffer(data) ? data.toString('utf-8') : data;
+                const orderBook = parseLBankFuturesMessage(raw, ws);
+                if (orderBook) {
+                    resolve(orderBook);
+                    ws.close();
+                }
+            } catch (e) {
+                reject(`Ошибка обработки сообщения: ${e.message}`);
+            }
+        });
+
+        ws.on('error', (err) => {
+            reject(`WebSocket ошибка: ${err.message}`);
+        });
+
+        ws.on('close', () => {
+            console.warn('⚠️ LBank Futures WebSocket закрыт.');
+        });
+
+        setTimeout(() => {
+            reject('⏳ Таймаут ожидания LBank Futures Order Book');
+            ws.close();
+        }, 5000);
+    });
 }
 
 module.exports = {

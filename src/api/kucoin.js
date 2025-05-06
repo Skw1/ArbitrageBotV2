@@ -1,5 +1,4 @@
 const axios = require('axios');
-
 //  KuCoin Spot
 async function getKucoinSpotOrderBook(symbol) {
     try {
@@ -62,7 +61,7 @@ async function getKucoinFuturesOrderBook(symbol) {
         // Логируем детальную ошибку, если что-то пошло не так
         console.error("❌ KuCoin Futures error:", err.response?.status, err.response?.data, err.message);
         return null;
-    }
+    } 
 }
 
 // Пример вызова (Работает)
@@ -74,6 +73,6 @@ getKucoinFuturesOrderBook('XBTUSDM').then(console.log);
 
 module.exports = {
     getKucoinSpotOrderBook,
-    getKucoinFuturesOrderBook
+    getKucoinFuturesOrderBook   
 };
 
