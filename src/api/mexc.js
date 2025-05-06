@@ -73,7 +73,7 @@ const exchange = new ccxt.mexc({
 });
 
 // Пример Открытие позиции (long/short)
-async function openPosition(symbol, side, amount, type = 'market', price = null) {
+async function openLimitPosition(symbol, side, amount, price) {
     try {
         const params = {
             positionSide: side === 'buy' ? 'long' : 'short'
@@ -81,19 +81,20 @@ async function openPosition(symbol, side, amount, type = 'market', price = null)
 
         const order = await exchange.createOrder(
             symbol,
-            type,
-            side,
-            amount,
-            price,
+            'limit',      // Тип ордера
+            side,         // buy или sell
+            amount,       // Кол-во
+            price,        // Цена (лимит)
             params
         );
 
-        console.log(`✅ ${side.toUpperCase()} order placed:`, order);
+        console.log(`✅ LIMIT ${side.toUpperCase()} order placed:`, order);
         return order;
     } catch (err) {
-        console.error('❌ Ошибка открытия позиции:', err.message);
+        console.error('❌ Ошибка размещения лимитного ордера:', err.message);
     }
 }
+
 
 // Пример Закрытие позиции (по маркету)
 async function closePosition(symbol, side, amount) {
