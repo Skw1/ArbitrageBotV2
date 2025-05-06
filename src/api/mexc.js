@@ -57,7 +57,7 @@ module.exports = {
 };
 
 
-// MEXC Create Order
+// MEXC Orders
 const ccxt = require('ccxt'); // библиотека cctx
 
 const apiKey = 'YOUR_API_KEY'; // сюда нужно передавать Api ключ 
@@ -72,33 +72,76 @@ const exchange = new ccxt.mexc({
     }
 });
 
-async function createMEXCOrder(symbol, side, amount, price = null, type = 'market') {
+// Пример Открытие позиции (long/short)
+async function openPosition(symbol, side, amount, type = 'market', price = null) {
     try {
-        const market = await exchange.loadMarkets();
-        const marketInfo = exchange.market(symbol);
-
-        // Сторона: 'buy' → long, 'sell' → short
         const params = {
-            positionSide: side === 'buy' ? 'long' : 'short' // опционально (нужно узнать)
+            positionSide: side === 'buy' ? 'long' : 'short'
         };
 
-        let order;
-        if (type === 'limit') {
-            order = await exchange.createOrder(symbol, 'limit', side, amount, price, params);
-        } else {
-            order = await exchange.createOrder(symbol, 'market', side, amount, undefined, params);
-        }
+        const order = await exchange.createOrder(
+            symbol,
+            type,
+            side,
+            amount,
+            price,
+            params
+        );
 
         console.log(`✅ ${side.toUpperCase()} order placed:`, order);
         return order;
     } catch (err) {
-        console.error('❌ Ошибка создания ордера:', err.message, err);
+        console.error('❌ Ошибка открытия позиции:', err.message);
+    }
+}
+
+// Пример Закрытие позиции (по маркету)
+async function closePosition(symbol, side, amount) {
+    try {
+        const oppositeSide = side === 'buy' ? 'sell' : 'buy'; // Закрываем в противоположную сторону
+        const params = {
+            positionSide: side === 'buy' ? 'long' : 'short'
+        };
+
+        const order = await exchange.createOrder(
+            symbol,
+            'market',
+            oppositeSide,
+            amount,
+            null,
+            params
+        );
+
+        console.log(`✅ Position closed:`, order);
+        return order;
+    } catch (err) {
+        console.error('❌ Ошибка закрытия позиции:', err.message);
+    }
+}
+
+// Пример Получение открытых ордеров
+async function getOpenOrders(symbol) {
+    try {
+        const orders = await exchange.fetchOpenOrders(symbol);
+        console.log(`📋 Открытые ордера для ${symbol}:`);
+        console.dir(orders, { depth: null });
+        return orders;
+    } catch (err) {
+        console.error('❌ Ошибка получения открытых ордеров:', err.message);
     }
 }
 
 // Примеры вызова:
-//createMEXCOrder('BTC/USDT:USDT', 'buy', 0.01);  // Long (market)
-//createMEXCOrder('BTC/USDT:USDT', 'sell', 0.01); // Short (market)
+// Открыть LONG
+//openPosition('BTC/USDT:USDT', 'buy', 0.01);
+
+// Закрыть LONG (продать)
+//closePosition('BTC/USDT:USDT', 'buy', 0.01);
+
+// Получить открытые ордера
+//getOpenOrders('BTC/USDT:USDT');
+
+
 
 // Узнать все символы для Futures
 /*
