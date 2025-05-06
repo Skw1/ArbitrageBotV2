@@ -57,3 +57,57 @@ module.exports = {
 };
 
 
+// MEXC Create Order
+const ccxt = require('ccxt'); // библиотека cctx
+
+const apiKey = 'YOUR_API_KEY'; // сюда нужно передавать Api ключ 
+const secret = 'YOUR_SECRET'; // сюда нужно передавать Secret ключ
+
+const exchange = new ccxt.mexc({
+    apiKey,
+    secret,
+    enableRateLimit: true,
+    options: {
+        defaultType: 'swap' //  обязательно для фьючерсов
+    }
+});
+
+async function createMEXCOrder(symbol, side, amount, price = null, type = 'market') {
+    try {
+        const market = await exchange.loadMarkets();
+        const marketInfo = exchange.market(symbol);
+
+        // Сторона: 'buy' → long, 'sell' → short
+        const params = {
+            positionSide: side === 'buy' ? 'long' : 'short' // опционально (нужно узнать)
+        };
+
+        let order;
+        if (type === 'limit') {
+            order = await exchange.createOrder(symbol, 'limit', side, amount, price, params);
+        } else {
+            order = await exchange.createOrder(symbol, 'market', side, amount, undefined, params);
+        }
+
+        console.log(`✅ ${side.toUpperCase()} order placed:`, order);
+        return order;
+    } catch (err) {
+        console.error('❌ Ошибка создания ордера:', err.message, err);
+    }
+}
+
+// Примеры вызова:
+//createMEXCOrder('BTC/USDT:USDT', 'buy', 0.01);  // Long (market)
+//createMEXCOrder('BTC/USDT:USDT', 'sell', 0.01); // Short (market)
+
+// Узнать все символы для Futures
+/*
+(async () => {
+    const markets = await exchange.loadMarkets();
+    for (const symbol in markets) {
+        if (markets[symbol].type === 'swap') {
+            console.log(symbol);
+        }
+    }
+})();
+*/
