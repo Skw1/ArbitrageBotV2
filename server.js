@@ -98,6 +98,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                     break;
                 case 'LBANK':
                     getLBankSpotOrderBook(symbol1)
+                    break;
                 case 'BYBIT':
                     getBybitSpotOrderBook(symbol1)
                     break;
@@ -116,6 +117,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                     break;
                 case 'LBANK':
                     getLBankSpotOrderBook(symbol2)
+                    break;
                 case 'BYBIT':
                     getBybitSpotOrderBook(symbol2)
                     break;
@@ -136,6 +138,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 break;
             case 'LBANK':
                 orderBook1 = await connectLBankFuturesOrderBook(symbol1)
+                break;
             case 'BYBIT':
                 orderBook1 = await getBybitFuturesOrderBook(symbol1)
                 break;
