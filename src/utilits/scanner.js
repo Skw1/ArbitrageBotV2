@@ -1,0 +1,1 @@
+// Сode for scanner arbitration and notifications can be added
