@@ -25,6 +25,10 @@ const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/a
 // checking prices function
 const checkPrices = require('./src/checkPrices/checkPrices.js')
 
+// Funding Analysis
+const { runFundingAnalysis } = require('./src/utilits/funding');
+
+
 
 let userQuantity;
 let userSpread;
@@ -141,6 +145,16 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
      // compare price here
      if (orderBook1 && orderBook2) {
         console.log(orderBook1, orderBook2);
+/*
+        if (
+            arbitrageType === 'Futures' &&
+            ((platform1 === 'MEXC' && platform2 === 'KUCOIN') || (platform1 === 'KUCOIN' && platform2 === 'MEXC'))
+          ) {
+            const fundingInfo = await runFundingAnalysis({ symbol: symbol1, spread: userSpread });
+            console.log('📊 Funding info:', fundingInfo);
+            userSpread = fundingInfo.adjustedSpread;
+          }
+*/
         await checkPrices({
             platform1, 
             platform2, 
