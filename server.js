@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const zlib = require('zlib'); // для распаковки бинарных данных, если они сжаты
+const zlib = require('zlib'); 
 
 const PORT = 3000;
 const app = express();
@@ -25,37 +25,6 @@ const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/a
 // checking prices function
 const checkPrices = require('./src/checkPrices/checkPrices.js')
 
-
-
-// Test OurBit Price Parsing
-/*
-const { getOurbitSpotOrderBook, getOurbitFuturesOrderBook } = require('./src/api/ourbit.js');
-async function ourbitTest() {
-    const spotSymbol = 'CETUSUSDT';
-    const futuresSymbol = 'CETUSUSDT'; 
-    console.log(await getOurbitSpotOrderBook(spotSymbol));
-    console.log(await getOurbitFuturesOrderBook(futuresSymbol));
-}
-console.log("OURBIT");
-ourbitTest();
-*/
-
-// Test BitUnix
-/*
-const axios = require('axios');
-
-async function getBitunixFuturesSymbols() {
-    try {
-        const endpoint = 'https://fapi.bitunix.com/api/v1/futures/market/trading_pairs';
-        const res = await axios.get(endpoint);
-        console.log('✅ Контракты Bitunix Futures:', res.data);
-    } catch (err) {
-        console.error("❌ Ошибка при получении контрактов Bitunix Futures:", err.response?.status, err.response?.data, err.message);
-    }
-}
-
-getBitunixFuturesSymbols();
-*/
 
 let userQuantity;
 let userSpread;
@@ -180,7 +149,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             userSpread, 
             arbitrageType
         }).then((message) => {
-            res.json({ message }); // Отправляем сообщение на фронтенд
+            res.json({ message });
         }).catch((err) => {
             res.status(500).json({ message: 'Ошибка при проверке цен.' });
         });

@@ -1,5 +1,5 @@
 // Create Orders 
-// Нам надо: лимитный ордер с плечом 1х
+// LImit order 1x
 
 // LBANK Orders Example
 async function placeLBankFuturesOrder({

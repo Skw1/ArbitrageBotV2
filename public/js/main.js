@@ -82,7 +82,7 @@ startButton.addEventListener('click' , async(e) => {
     const ticker = tickerInput.value;
     const spread = spreadInput.value;
     const quantity = quantityInput.value;
-    resultDiv.innerHTML = '<p>Загрузка...</p>'; // Подготовка, выводим индикатор загрузки
+    resultDiv.innerHTML = '<p>Загрузка...</p>'; 
 
     if (platform1 == platform2) {
         Notify.warning('Вы не можете выбрать одинаковые платформы');
@@ -90,7 +90,7 @@ startButton.addEventListener('click' , async(e) => {
         Notify.warning('Вы не выбрали тип торговли');
     } else {
         Notify.success('Бот запущен!');
-        // Символы для платформ
+
         let symbol1, symbol2;
 
         if (arbitrageType == 'Spot') {
@@ -178,7 +178,7 @@ startButton.addEventListener('click' , async(e) => {
                     break;
             }
         }
-   // Формируем FormData
+   // FormData
    const formData = new FormData();
    formData.append('symbol1', symbol1);
    formData.append('symbol2', symbol2);
@@ -200,7 +200,7 @@ startButton.addEventListener('click' , async(e) => {
 
        const data = await response.json();
 
-       // Создаем HTML-разметку для красивого вывода
+      
        resultDiv.innerHTML = `
            <div class="log-message">
                <p>${data.message}</p>

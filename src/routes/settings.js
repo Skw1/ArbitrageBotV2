@@ -3,11 +3,12 @@ const path = require('path');
 const { execArgv } = require('process');
 const dotenv = require('dotenv')
 const { env } = require('process');
-const fs = require('fs')
-const multer = require('multer')
+const fs = require('fs');
+const multer = require('multer');
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
+
 // reading .env file
 let envPath = path.resolve(__dirname,'..', 'userData', '.env');
 let envContent = fs.readFileSync(envPath, 'utf-8');
@@ -75,8 +76,8 @@ app.post('/deleting', upload.none(), (req,res) => {
             envContent = envContent.replace(/^BITUNIX_ApiKey=.*/m, `BITUNIX_ApiKey=`).replace(/^BITUNIX_SecretKey=.*/m, `BITUNIX_SecretKey=`)
             break;
     }       
-    fs.writeFileSync(envPath, envContent)
-    res.json({message:`${platform} api/key has just been deleted`})
+    fs.writeFileSync(envPath, envContent);
+    res.json({message:`${platform} api/key has just been deleted`});
 })  
 
 app.post('/get-keys', async(req,res) => {
@@ -127,7 +128,7 @@ app.post('/get-keys', async(req,res) => {
             Key = KeyLine.split('=')[1].trim()
             break;
     }
-    res.json({api:Api, key:Key})
+    res.json({api:Api, key:Key});
 })
 
 module.exports = app
