@@ -21,6 +21,8 @@ const clearLogsBtn = document.querySelector('.clear-logs-button');
 // Result DIV for user
 const resultDiv = document.getElementById('result-div');
 
+// Stop Button
+const stopButton = document.getElementById('stop-btn');
 
 let platform1;
 let platform2;
@@ -54,6 +56,11 @@ buttonsArbitrageType.forEach(btn => {
 clearLogsBtn.addEventListener('click', () => {
     resultDiv.innerHTML = 'No Data';
     Notify.warning('⚠️ Logs Cleared');
+});
+
+// Stop Button
+stopButton.addEventListener('click', () => {
+    Notify.error('Бот Остановлен');
 });
 
 // Settings:
