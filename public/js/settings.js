@@ -25,6 +25,12 @@ window.addEventListener('DOMContentLoaded', async() => {
             else {
                 document.querySelector('#key').value = data.key;
             }
+            if(data.pass == ''){
+                document.querySelector('#pass').value = '';
+               }
+               else{
+                document.querySelector('#pass').value = data.passphrase
+               }
     }
     }
     catch(e) {
@@ -39,6 +45,12 @@ platformsOption.forEach(btn => {
         platformsOption.forEach(buttons => {buttons.classList.remove('active')})
         platform = btn.innerText;
         btn.classList.add('active');
+        if (platform == 'KUCOIN'){
+            document.querySelector('.settings-pass-section').classList.add('kucoin-active-pass-section');
+        } 
+        else{
+            document.querySelector('.settings-pass-section').classList.remove('kucoin-active-pass-section');
+        }
 
         try {
             const response = await fetch('/get-keys', {
@@ -62,6 +74,12 @@ platformsOption.forEach(btn => {
                else {
                     document.querySelector('#key').value = data.key
                }
+               if(data.pass == ''){
+                document.querySelector('#pass').value = '';
+               }
+               else{
+                document.querySelector('#pass').value = data.passphrase
+               }
             }
 
         }
@@ -79,6 +97,7 @@ document.querySelector('.save-btn').addEventListener('click', async(e)=> {
     e.preventDefault();
     let api = document.querySelector('#api').value;
     let key = document.querySelector('#key').value;
+    let passphrase = document.querySelector('#pass').value;
     if (api == '' || key == '') {
         //alert('fill all fields');
         Notify.warning('Заполните все поля!');
@@ -89,7 +108,9 @@ document.querySelector('.save-btn').addEventListener('click', async(e)=> {
         formData.append('api', api)
         formData.append('key', key)
         formData.append('platform', platform)
-
+        if(platform == 'KUCOIN'){
+            formData.append('passphrase', passphrase)
+        } 
        try {
             const response = await fetch('/settings', {
                 method: 'POST',
@@ -104,6 +125,9 @@ document.querySelector('.save-btn').addEventListener('click', async(e)=> {
                // document.querySelector('.result-message').style.opacity = '1'
                 document.querySelector('#api').value = '';
                 document.querySelector('#key').value = '';
+                if(platform == 'KUCOIN'){
+                 document.querySelector('#pass').value = '';
+                 }
             }
        }
        catch(e) {

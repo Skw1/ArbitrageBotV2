@@ -65,6 +65,18 @@
     gap:4px;
     margin-bottom: 20px;
 }
+
+.settings-pass-section{
+   display: none;
+}
+
+.kucoin-active-pass-section{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    gap:4px;
+    margin-bottom: 20px;
+}
 /*
 .result-message {
     margin-top: 20px;

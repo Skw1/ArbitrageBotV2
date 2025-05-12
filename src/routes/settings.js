@@ -20,12 +20,17 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// changing api/key
+// changing api/key and passphrase
 
 app.post('/settings', upload.none(), (req,res) => {
     let api = req.body.api;
     let key = req.body.key;
     let platform = req.body.platform;
+    let passphrase = req.body.passphrase;
+   if(platform == 'KUCOIN'){
+        //let passphrase = req.body.passphrase;
+        //console.log(passphrase);
+    }
 
     switch (platform) {
         case 'MEXC':
@@ -38,7 +43,7 @@ app.post('/settings', upload.none(), (req,res) => {
             envContent = envContent.replace(/^BYBIT_ApiKey=.*/m, `BYBIT_ApiKey=${api}`).replace(/^BYBIT_SecretKey=.*/m, `BYBIT_SecretKey=${key}`)
             break;
         case 'KUCOIN':
-            envContent = envContent.replace(/^KUCOIN_ApiKey=.*/m, `KUCOIN_ApiKey=${api}`).replace(/^KUCOIN_SecretKey=.*/m, `KUCOIN_SecretKey=${key}`)
+            envContent = envContent.replace(/^KUCOIN_ApiKey=.*/m, `KUCOIN_ApiKey=${api}`).replace(/^KUCOIN_SecretKey=.*/m, `KUCOIN_SecretKey=${key}`).replace(/^KUCOIN_Passphrase=.*/m, `KUCOIN_Passphrase=${passphrase}`)
             break;
         case 'OURBIT':
             envContent = envContent.replace(/^OURBIT_ApiKey=.*/m, `OURBIT_ApiKey=${api}`).replace(/^OURBIT_SecretKey=.*/m, `OURBIT_SecretKey=${key}`)
@@ -55,7 +60,7 @@ app.post('/settings', upload.none(), (req,res) => {
 
 app.post('/deleting', upload.none(), (req,res) => {
     let platform = req.body.platform;
-
+ 
     switch (platform) {
         case 'MEXC':
             envContent = envContent.replace(/^MEXC_ApiKey=.*/m, `MEXC_ApiKey=`).replace(/^MEXC_SecretKey=.*/m, `MEXC_SecretKey=`)
@@ -67,7 +72,7 @@ app.post('/deleting', upload.none(), (req,res) => {
             envContent = envContent.replace(/^BYBIT_ApiKey=.*/m, `BYBIT_ApiKey=`).replace(/^BYBIT_SecretKey=.*/m, `BYBIT_SecretKey=`)
             break;
         case 'KUCOIN':
-            envContent = envContent.replace(/^KUCOIN_ApiKey=.*/m, `KUCOIN_ApiKey=`).replace(/^KUCOIN_SecretKey=.*/m, `KUCOIN_SecretKey=`)
+            envContent = envContent.replace(/^KUCOIN_ApiKey=.*/m, `KUCOIN_ApiKey=`).replace(/^KUCOIN_SecretKey=.*/m, `KUCOIN_SecretKey=`).replace(/^KUCOIN_Passphrase=.*/m, `KUCOIN_Passphrase=`)
             break;
         case 'OURBIT':
             envContent = envContent.replace(/^OURBIT_ApiKey=.*/m, `OURBIT_ApiKey=`).replace(/^OURBIT_SecretKey=.*/m, `OURBIT_SecretKey=`)
@@ -84,9 +89,11 @@ app.post('/get-keys', async(req,res) => {
     let platform = req.body.service;
     let lines = envContent.split('\n');
 
+    let PassphraseLine
     let ApiLine
     let KeyLine
 
+    let Passphrase;
     let Api;
     let Key;
 
@@ -112,6 +119,8 @@ app.post('/get-keys', async(req,res) => {
         case 'KUCOIN':
             ApiLine = lines.find(line => line.startsWith('KUCOIN_ApiKey='))
             KeyLine = lines.find(line => line.startsWith('KUCOIN_SecretKey='))
+            PassphraseLine = lines.find(line => line.startsWith('KUCOIN_Passphrase='))
+            Passphrase = PassphraseLine.split('=')[1].trim()
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;
@@ -128,7 +137,7 @@ app.post('/get-keys', async(req,res) => {
             Key = KeyLine.split('=')[1].trim()
             break;
     }
-    res.json({api:Api, key:Key});
+    res.json({api:Api, key:Key, passphrase:Passphrase});
 })
 
 module.exports = app

@@ -15,12 +15,19 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// getting prices functions
+// getting prices bids/asks functions
 const { getMEXCSpotOrderBook, getMEXCFuturesOrderBook, } = require('./src/api/mexc.js');
 const { getLBankSpotOrderBook, connectLBankFuturesOrderBook } = require('./src/api/lbank.js');
 const { getBybitSpotOrderBook, getBybitFuturesOrderBook } = require('./src/api/bybit.js');
 const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api/kucoin.js');
 const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
+
+// getting market prices functions
+// const { getMEXCFuturesOrderBook, } = require('./src/market/mexc.js');
+// const { connectLBankFuturesOrderBook } = require('./src/market/lbank.js');
+// const { getBybitFuturesOrderBook } = require('./src/market/bybit.js');
+// const { getKucoinFuturesOrderBook } = require('./src/market/kucoin.js');
+// const { getBitunixFuturesOrderBook } = require('./src/market/bitunix.js');
 
 // checking prices function
 const checkPrices = require('./src/checkPrices/checkPrices.js')
