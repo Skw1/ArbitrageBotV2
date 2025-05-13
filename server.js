@@ -364,7 +364,7 @@ app.post('/checking-keys', async(req,res) => {
                     Keyservice2 = KeyLineservice2.split('=')[1].trim()
                     break;
             }
-        console.log({service1Api: Apiservice1, service1Key:Keyservice1, service2Api: Apiservice2, service2Key: Keyservice2, service1Pass: Passphrase1, service2Pass:Passphrase2})
+        //console.log({service1Api: Apiservice1, service1Key:Keyservice1, service2Api: Apiservice2, service2Key: Keyservice2, service1Pass: Passphrase1, service2Pass:Passphrase2})
         return res.json({service1Api: Apiservice1, service1Key:Keyservice1, service2Api: Apiservice2, service2Key: Keyservice2, service1Pass: Passphrase1, service2Pass:Passphrase2})
     }
     catch(e) {

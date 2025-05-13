@@ -1,41 +1,20 @@
-const axios = require('axios');
-const crypto = require('crypto');
+const ccxt = require('ccxt');
 
-const API_KEY = 'your_api_key'; // Cюда передаем API ключ для LBank
-const SECRET_KEY = 'your_secret_key'; // Cюда передаем Secret ключ для LBank
-const BASE_URL = 'https://api.lbank.info';
+const mexc = new ccxt.mexc({
+    apiKey: 'your_api_key',
+    secret: 'your_secret_key',
+    options: { defaultType: 'swap' },
+    enableRateLimit: true,
+});
 
-function getTimestamp() {
-  return Date.now();
+async function openMarketMEXC(symbol, side, amount) {
+    try {
+        const order = await mexc.createMarketOrder(symbol, side, amount);
+        console.log('✅ Opened market order on MEXC:', order);
+        return order;
+    } catch (e) {
+        console.error('❌ Open Market Error on MEXC:', e.message);
+    }
 }
 
-function sign(params, secretKey) {
-  const sortedParams = Object.keys(params).sort().map(key => `${key}=${params[key]}`).join('&');
-  return crypto.createHmac('sha256', secretKey).update(sortedParams).digest('hex');
-}
-
-async function openMarketOrder(symbol, side, amount) {
-  const endpoint = '/v2/futures/order/create';
-  const timestamp = getTimestamp();
-
-  const params = {
-    api_key: API_KEY, // Cюда передаем API ключ для LBank
-    symbol: symbol, // Cюда передаем Symbol
-    side: 'buy', // 'buy' or 'sell'
-    type: 'market',
-    size: amount.toString(),
-    timestamp: timestamp
-  };
-
-  params.sign = sign(params, SECRET_KEY); // Cюда передаем Secret ключ для LBank
-
-  try {
-    const response = await axios.post(`${BASE_URL}${endpoint}`, null, { params });
-    console.log('✅ Открытие позиции:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('❌ Ошибка при открытии позиции:', error.response ? error.response.data : error.message);
-  }
-}
-
-module.exports = openMarketOrder;
+module.exports = openMarketMEXC;

@@ -1,25 +1,20 @@
 const ccxt = require('ccxt');
 
-const exchange = new ccxt.mexc({
-    apiKey: 'your_api_key', // Cюда передаем API ключ для MEXC
-    secret: 'your_secret_key', // Cюда передаем Secret ключ для MEXC
+const mexc = new ccxt.mexc({
+    apiKey: 'your_api_key',
+    secret: 'your_secret_key',
     options: { defaultType: 'swap' },
     enableRateLimit: true,
 });
 
-async function openMarketMexc(symbol, side, amount) {
-    const params = {
-        positionSide: side === 'buy' ? 'long' : 'short',
-        leverage: 1,
-    };
-
+async function openMarketMEXC(symbol, side, amount) {
     try {
-        const order = await exchange.createOrder(symbol, 'market', side, amount, undefined, params);
-        console.log('✅ MEXC Market Open:', order);
+        const order = await mexc.createMarketOrder(symbol, side, amount);
+        console.log('✅ Opened market order on MEXC:', order);
         return order;
     } catch (e) {
-        console.error('❌ MEXC Open Error:', e.message);
+        console.error('❌ Open Market Error on MEXC:', e.message);
     }
 }
 
-module.exports = openMarketMexc;
+module.exports = openMarketMEXC;
