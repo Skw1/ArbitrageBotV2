@@ -18,6 +18,7 @@ module.exports = async function checkPrices({
     symbol2,
     amount,
 }) {
+    userSpread = (userSpread == null || isNaN(userSpread)) ? 2 : userSpread;
      console.log(platform1, platform2, marketPrice1, marketPrice2, arbitrageType,userSpread, orderType, symbol1, symbol2, amount,)
     let result = '';
     try {
