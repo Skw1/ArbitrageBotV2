@@ -309,6 +309,7 @@ startButton.addEventListener('click' , async(e) => {
                     break;
             }
         }
+    }
 
    // FormData
    const formData = new FormData();
@@ -345,9 +346,9 @@ startButton.addEventListener('click' , async(e) => {
        Notify.error('Ошибка');
        resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
    }
-  catch(e) {
-                Notify.error(e)
-            }
-
-}   
+}
+catch(e) {
+    Notify.error(e)
+}
+    }
 });
