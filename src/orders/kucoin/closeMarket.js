@@ -1,9 +1,15 @@
 const ccxt = require('ccxt');
+const dotenv = require('dotenv')
+const path = require('path')
+
+
+const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
+dotenv.config(envPath)
 
 const kucoin = new ccxt.kucoin({
-    apiKey: 'your_api_key',
-    secret: 'your_secret_key',
-    password: 'your_api_passphrase',
+    apiKey: process.env.KUCOIN_ApiKey,
+    secret: process.env.KUCOIN_SecretKey,
+    password: process.env.KUCOIN_Passphrase,
     enableRateLimit: true,
 });
 

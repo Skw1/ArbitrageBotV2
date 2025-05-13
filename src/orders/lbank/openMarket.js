@@ -1,8 +1,13 @@
 const ccxt = require('ccxt');
+const dotenv = require('dotenv')
+const path = require('path')
 
+
+const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
+dotenv.config(envPath)
 const mexc = new ccxt.mexc({
-    apiKey: 'your_api_key',
-    secret: 'your_secret_key',
+    apiKey: process.env.LBANK_ApiKey,
+    secret: process.env.LBANK_SecretKey,
     options: { defaultType: 'swap' },
     enableRateLimit: true,
 });
