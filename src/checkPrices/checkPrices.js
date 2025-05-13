@@ -18,7 +18,7 @@ module.exports = async function checkPrices({
     symbol2,
     amount,
 }) {
- console.log(platform1, platform2, marketPrice1, marketPrice2, arbitrageType,userSpread, orderType, symbol1, symbol2, amount,)
+     console.log(platform1, platform2, marketPrice1, marketPrice2, arbitrageType,userSpread, orderType, symbol1, symbol2, amount,)
     let result = '';
     try {
         result += `📈 Arbitrage Type: ${arbitrageType.toUpperCase()}</br></br>Order Type: ${orderType.toUpperCase()}\n</br>`;
@@ -85,33 +85,47 @@ module.exports = async function checkPrices({
 
             const { profit1, profit2 } = calculateProfit(mp1Ask, mp1Bid, mp2Ask, mp2Bid);
 
+            // Логика открытия ордера, когда разница в цене >= userSpread
             if (profit1 >= userSpread) {
                 result += `</br>✅ Возможность:\n</br> Купить на ${platform1} по ${mp1Ask}, </br> Продать на ${platform2} по ${mp2Bid},\n</br></br>Профит: ${profit1.toFixed(2)}%\n`;
-                await openOrder(platform1, symbol1, 'buy', amount);
-                await openOrder(platform2, symbol2, 'sell', amount);
+                await openOrder(platform1, symbol1, 'buy', amount);  // Открываем на MEXC
+                await openOrder(platform2, symbol2, 'sell', amount); // Открываем на LBank
                 clearInterval(intervalId);
 
-                // Закрытие позиций через 60 секунд
-                setTimeout(async () => {
-                    await closeOrder(platform1, symbol1, 'sell', amount); // закрываем "buy"
-                    await closeOrder(platform2, symbol2, 'buy', amount);  // закрываем "sell"
-                    console.log(`✅ Позиции на ${platform1} и ${platform2} закрыты через 60 сек`);
-                }, 60000);
+                // Ожидание выравнивания цен для закрытия ордеров
+                const closeIntervalId = setInterval(async () => {
+                    const updatedMp1Ask = parseFloat(marketPrice1.bestAskPrice);
+                    const updatedMp2Bid = parseFloat(marketPrice2.bestBidPrice);
+
+                    if (updatedMp1Ask === updatedMp2Bid) {
+                        await closeOrder(platform1, symbol1, 'sell', amount); // Закрытие на MEXC
+                        await closeOrder(platform2, symbol2, 'buy', amount);  // Закрытие на LBank
+                        console.log(`✅ Позиции на ${platform1} и ${platform2} закрыты, спред выровнялся`);
+                        clearInterval(closeIntervalId);
+                    }
+                }, 5000); // Проверка цен для закрытия каждые 5 секунд
             } else if (profit2 >= userSpread) {
                 result += `</br>✅ Возможность:\n</br> Купить на ${platform2} по ${mp2Ask}, </br> Продать на ${platform1} по ${mp1Bid},\n</br></br>Профит: ${profit2.toFixed(2)}%\n`;
-                await openOrder(platform2, symbol2, 'buy', amount);
-                await openOrder(platform1, symbol1, 'sell', amount);
+                await openOrder(platform2, symbol2, 'buy', amount);  // Открываем на LBank
+                await openOrder(platform1, symbol1, 'sell', amount); // Открываем на MEXC
                 clearInterval(intervalId);
 
-                setTimeout(async () => {
-                    await closeOrder(platform2, symbol2, 'sell', amount);
-                    await closeOrder(platform1, symbol1, 'buy', amount);
-                    console.log(`✅ Позиции на ${platform2} и ${platform1} закрыты через 60 сек`);
-                }, 60_000);
+                // Ожидание выравнивания цен для закрытия ордеров
+                const closeIntervalId = setInterval(async () => {
+                    const updatedMp2Ask = parseFloat(marketPrice2.bestAskPrice);
+                    const updatedMp1Bid = parseFloat(marketPrice1.bestBidPrice);
+
+                    if (updatedMp1Bid === updatedMp2Ask) {
+                        await closeOrder(platform1, symbol1, 'buy', amount);  // Закрытие на MEXC
+                        await closeOrder(platform2, symbol2, 'sell', amount); // Закрытие на LBank
+                        console.log(`✅ Позиции на ${platform1} и ${platform2} закрыты, спред выровнялся`);
+                        clearInterval(closeIntervalId);
+                    }
+                }, 5000); // Проверка цен для закрытия каждые 5 секунд
             } else {
                 result += `</br>❌ Нет подходящего спреда.\n</br> Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
             }
-        }, 5000); // Проверка каждые 5 сек
+        }, 5000); // Проверка цен каждые 5 секунд
 
     } catch (err) {
         result += `</br>❌ Ошибка при проверке цен: </br>${err.message}\n`;
