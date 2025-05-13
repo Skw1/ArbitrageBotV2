@@ -29,6 +29,8 @@ let platform1;
 let platform2;
 let arbitrageType;
 let orderType;
+let symbol1;
+let symbol2;
 
 buttonsPlatform1.forEach(btn => {
     btn.addEventListener('click', () =>{
@@ -120,29 +122,33 @@ startButton.addEventListener('click' , async(e) => {
             if (data) {
                        console.log(data)
                 if (data.success === false) {
-                    Notify.error('something went wrong')
-                    resultDiv.innerHTML = data.message;
+                    Notify.error('something went wrong');
+                    //resultDiv.innerHTML = data.message;
                     return;
                 }
                 if (!data.service1Api || !data.service1Key) {
-                    resultDiv.innerHTML = `Заповніть api/ключи для ${platform1}`
+                    Notify.error(`Заполните API и Secret ключи для ${platform1}`)
+                   // resultDiv.innerHTML = `Заповніть api/ключи для ${platform1}`
                     return;
                 }
                 if (!data.service2Api || !data.service2Key) {
-                    resultDiv.innerHTML = `Заповніть api/ключи для ${platform2}`
+                    Notify.error(`Заполните API и Secret ключи для ${platform2}`)
+                  // resultDiv.innerHTML = `Заповніть api/ключи для ${platform2}`
                     return;
                 }
                 if (platform1.trim().toLowerCase() == 'kucoin' && !data.service1Pass) {
-                    resultDiv.innerHTML = `Заповніть passphase для ${platform1}`
+                    Notify.error(`Заполните passphase для ${platform1}`)
+                  //  resultDiv.innerHTML = `Заповніть passphase для ${platform1}`
                     return;
                 }
                 if (platform2.trim().toLowerCase() == 'kucoin' && !data.service2Pass) {
-                    resultDiv.innerHTML = `Заповніть passphase для ${platform2}`
+                    Notify.error(`Заполните passphase для ${platform2}`)
+                   // resultDiv.innerHTML = `Заповніть passphase для ${platform2}`
                     return;
                 }
                 
         Notify.success('Бот запущен!');
-        let symbol1, symbol2;
+        
         if (orderType == 'Limit' && arbitrageType == 'Spot'){
             switch (platform1) {
                 case 'MEXC':
@@ -347,9 +353,8 @@ startButton.addEventListener('click' , async(e) => {
        Notify.error('Ошибка');
        resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
    }
-}   }
-  catch(e) {
+}  
+ catch(e) {
     Notify.error(e)
- }}
-
+ }} 
 });
