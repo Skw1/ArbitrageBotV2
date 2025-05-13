@@ -2,7 +2,7 @@
 
 import { Notify } from 'https://unpkg.com/clean-toasts?module';
 
-// choosing platforms/arbitrageTypes
+// Choosing platforms / arbitrageType / orderType
 const buttonsPlatform1 = document.querySelectorAll('.platform1');
 const buttonsPlatform2 = document.querySelectorAll('.platform2');
 const buttonsArbitrageType = document.querySelectorAll('.trade-item-button');
