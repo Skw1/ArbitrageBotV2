@@ -67,6 +67,8 @@ module.exports = async function checkPrices({
 
 // Prices
 // Order Book Prices 
+// Было
+/*
 module.exports = async function checkPrices({ 
     platform1, platform2, 
     orderBook1, orderBook2, 
@@ -121,4 +123,4 @@ module.exports = async function checkPrices({
     return result;
 }
 
-
+*/
