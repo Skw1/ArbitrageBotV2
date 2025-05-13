@@ -8,7 +8,7 @@ module.exports = async function checkPrices({
 }) {
     let result = '';
     try {
-        result += `📈 Arbitrage Type: ${arbitrageType.toUpperCase()} </br> Order Type: ${orderType.toUpperCase()}\n</br>`;
+        result += `📈 Arbitrage Type: ${arbitrageType.toUpperCase()} </br> </br>Order Type: ${orderType.toUpperCase()}\n</br>`;
 
         // 🔒 Блокируем лимитные ордера
         if (orderType.toLowerCase() === 'limit') {
@@ -36,7 +36,7 @@ module.exports = async function checkPrices({
             const mp2Ask = parseFloat(marketPrice2.bestAskPrice);
             const mp2Bid = parseFloat(marketPrice2.bestBidPrice);
 
-            result += `🔍 Рыночные цены:\n</br>`;
+            result += `</br>🔍 Рыночные цены:\n</br>`;
             result += `${platform1}: Ask ${mp1Ask}, Bid ${mp1Bid}\n</br>`;
             result += `${platform2}: Ask ${mp2Ask}, Bid ${mp2Bid}\n</br>`;
 
@@ -48,7 +48,7 @@ module.exports = async function checkPrices({
         } 
         else if (orderType.toLowerCase() === 'orderbook') {
             if (!orderBook1 || !orderBook2) {
-                result += '❌ Ордербуки недоступны\n</br>';
+                result += '</br>❌ Ордербуки недоступны\n</br>';
                 return result;
             }
 
@@ -57,7 +57,7 @@ module.exports = async function checkPrices({
             const bestAsk2 = parseFloat(orderBook2.asks[0][0]);
             const bestBid2 = parseFloat(orderBook2.bids[0][0]);
 
-            result += `🔍 Лучшая цена покупки и продажи:\n</br>`;
+            result += `</br>🔍 Лучшая цена покупки и продажи:\n</br>`;
             result += `${platform1}: Ask ${bestAsk1} / Bid ${bestBid1}\n</br>`;
             result += `${platform2}: Ask ${bestAsk2} / Bid ${bestBid2}\n</br>`;
 
@@ -67,7 +67,7 @@ module.exports = async function checkPrices({
             priceSell2 = bestAsk2;
         } 
         else {
-            result += '❌ Неверный тип ордера\n</br>';
+            result += '</br>❌ Неверный тип ордера\n</br>';
             return result;
         }
 
@@ -83,29 +83,29 @@ module.exports = async function checkPrices({
             profit2 = (priceSell1 - priceBuy2) / priceBuy2 * 100;
         } 
         else {
-            result += '❌ Неверный тип арбитража\n';
+            result += '</br>❌ Неверный тип арбитража\n';
             return result;
         }
 
         // Оценка спреда и вывод
         if (profit1 >= userSpread) {
-            result += `✅ Возможность:\n</br> Купить на ${platform1} по ${priceBuy1}, </br> Продать на ${platform2} по ${priceSell2},\n</br> Профит: ${profit1.toFixed(2)}%\n`;
-            result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
-            result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
+            result += `</br>✅ Возможность:\n</br> Купить на ${platform1} по ${priceBuy1}, </br> Продать на ${platform2} по ${priceSell2},\n</br> </br>Профит: ${profit1.toFixed(2)}%\n`;
+            //result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
+            //result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
         } 
         else if (profit2 >= userSpread) {
-            result += `✅ Возможность:\n</br> Купить на ${platform2} по ${priceBuy2}, </br> Продать на ${platform1} по ${priceSell1},\n</br> Профит: ${profit2.toFixed(2)}%\n`;
-            result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
-            result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
+            result += `</br>✅ Возможность:\n</br> Купить на ${platform2} по ${priceBuy2}, </br> Продать на ${platform1} по ${priceSell1},\n</br> </br>Профит: ${profit2.toFixed(2)}%\n`;
+            //result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
+            //result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
         } 
         else {
-            result += `❌ Нет подходящего спреда.\n</br> Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
-            result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
-            result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
+            result += `</br>❌ Нет подходящего спреда.\n</br> Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
+            //result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
+            //result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
         }
 
     } catch (err) {
-        result += `❌ Ошибка при проверке цен: </br>${err.message}\n`;
+        result += `</br>❌ Ошибка при проверке цен: </br>${err.message}\n`;
     }
 
     return result;
