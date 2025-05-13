@@ -21,8 +21,8 @@ async function getBitunixFuturesPrice(symbol) {
     const orderBook = response.data.data[0];
 
     // Получаем маркерную цену (markPrice) как лучшую цену
-    const bestAskPrice = orderBook.markPrice || null;
-    const bestBidPrice = orderBook.lastPrice || null; 
+    const bestAskPrice = parseFloat(orderBook.markPrice) || null;  // Преобразуем в float
+    const bestBidPrice = parseFloat(orderBook.lastPrice) || null;  // Преобразуем в float
 
     if (!bestAskPrice || !bestBidPrice) {
       console.error('Нет доступных ордеров для символа', symbol);

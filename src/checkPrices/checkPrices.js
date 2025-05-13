@@ -23,23 +23,28 @@ module.exports = async function checkPrices({
             console.log('Market Price 1:', marketPrice1);
             console.log('Market Price 2:', marketPrice2);
 
-            if (!marketPrice1 || !marketPrice2 || !marketPrice1.lastPrice || !marketPrice2.lastPrice) {
+            // Проверяем, что данные о ценах существуют и содержат bestAskPrice и bestBidPrice
+            if (!marketPrice1 || !marketPrice2 || !marketPrice1.bestAskPrice || !marketPrice2.bestAskPrice) {
+                console.error('Market data missing or incomplete:', marketPrice1, marketPrice2);
                 result += '❌ Рыночные цены недоступны\n</br>';
                 return result;
             }
 
             // Преобразуем строковые значения в числа
-            const mp1 = parseFloat(marketPrice1.lastPrice);
-            const mp2 = parseFloat(marketPrice2.lastPrice);
+            const mp1Ask = parseFloat(marketPrice1.bestAskPrice);
+            const mp1Bid = parseFloat(marketPrice1.bestBidPrice);
+            const mp2Ask = parseFloat(marketPrice2.bestAskPrice);
+            const mp2Bid = parseFloat(marketPrice2.bestBidPrice);
 
             result += `🔍 Рыночные цены:\n</br>`;
-            result += `${platform1}: ${mp1}\n</br>`;
-            result += `${platform2}: ${mp2}\n</br>`;
+            result += `${platform1}: Ask ${mp1Ask}, Bid ${mp1Bid}\n</br>`;
+            result += `${platform2}: Ask ${mp2Ask}, Bid ${mp2Bid}\n</br>`;
 
-            priceBuy1 = mp1;
-            priceSell1 = mp1;
-            priceBuy2 = parseFloat(marketPrice2.bestBidPrice); // Преобразование строки в число
-            priceSell2 = parseFloat(marketPrice2.bestAskPrice); // Преобразование строки в число
+            priceBuy1 = mp1Bid;
+            priceSell1 = mp1Ask;
+
+            priceBuy2 = mp2Bid;
+            priceSell2 = mp2Ask;
         } 
         else if (orderType.toLowerCase() === 'orderbook') {
             if (!orderBook1 || !orderBook2) {
