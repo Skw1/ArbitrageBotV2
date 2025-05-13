@@ -65,12 +65,13 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
     userQuantity = req.body.userQuantity;
     userSpread = req.body.userSpread;
     arbitrageType = req.body.arbitrageType;
-    symbol1 = req.body.symbol1
-    symbol2 = req.body.symbol2
-    platform1 = req.body.platform1
-    platform2 = req.body.platform2
-    console.log(symbol1,symbol2,platform1,platform2, arbitrageType)
-    
+    orderType = req.body.orderType;
+    symbol1 = req.body.symbol1;
+    symbol2 = req.body.symbol2;
+    platform1 = req.body.platform1;
+    platform2 = req.body.platform2;
+    console.log(symbol1,symbol2,platform1,platform2,orderType, arbitrageType);
+    if (orderType == 'Limit'){
     switch (arbitrageType) {
         case 'Spot':
             
@@ -129,7 +130,6 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 break;
             case 'BITUNIX':
                 orderBook1 = await getBitunixFuturesOrderBook(symbol1);
-                merketPrice1 = await getBitunixPrice(symbol1);
                 break;
                 
         }
@@ -149,10 +149,92 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 break;
             case 'BITUNIX':
                 orderBook2 = await getBitunixFuturesOrderBook(symbol2);
+                break;
+    }}
+    }
+    else if(orderType == 'Market'){
+        switch (arbitrageType) {
+        case 'Spot':
+            
+            switch (platform1) {
+                case 'MEXC':
+                    getMEXCSpotOrderBook(symbol1);
+                    break;
+                case 'LBANK':
+                    getLBankSpotOrderBook(symbol1);
+                    break;
+                case 'BYBIT':
+                    getBybitSpotOrderBook(symbol1);
+                    break;
+                case 'KUCOIN':
+                    getKucoinSpotOrderBook(symbol1);
+                    break;
+                case 'BITUNIX':
+                    getBitunixSpotOrderBook(symbol1);
+                    break;
+                
+            }
+
+            switch (platform2) {
+                case 'MEXC':
+                    getMEXCSpotOrderBook(symbol2);
+                    break;
+                case 'LBANK':
+                    getLBankSpotOrderBook(symbol2);
+                    break;
+                case 'BYBIT':
+                    getBybitSpotOrderBook(symbol2);
+                    break;
+                case 'KUCOIN':
+                    getKucoinSpotOrderBook(symbol2);
+                    break;
+                case 'BITUNIX':
+                    getBitunixSpotOrderBook(symbol2);
+                    break;
+            }
+
+            break;
+
+        case 'Futures':
+
+        switch (platform1) {
+            case 'MEXC':
+                merketPrice1 = await getBitunixPrice(symbol1);
+                break;
+            case 'LBANK':
+                merketPrice1 = await getBitunixPrice(symbol1);
+                break;
+            case 'BYBIT':
+                merketPrice1 = await getBitunixPrice(symbol1);
+                break;
+            case 'KUCOIN':
+                merketPrice1 = await getBitunixPrice(symbol1);
+                break;
+            case 'BITUNIX':
+                merketPrice1 = await getBitunixPrice(symbol1);
+                break;
+                
+        }
+
+        switch (platform2) {
+            case 'MEXC':
+                merketPrice2 = await getBitunixPrice(symbol2);
+                break;
+            case 'LBANK':
+                merketPrice2 = await getBitunixPrice(symbol2);
+                break;
+            case 'BYBIT':
+                merketPrice2 = await getBitunixPrice(symbol2);
+                break;
+            case 'KUCOIN':
+                merketPrice2 = await getBitunixPrice(symbol2);
+                break;
+            case 'BITUNIX':
+                
                 merketPrice2 = await getBitunixPrice(symbol2);
                 break;
     }}
-    
+    }
      // compare price here
      if (orderBook1 && orderBook2) {
         console.log(orderBook1, orderBook2);
