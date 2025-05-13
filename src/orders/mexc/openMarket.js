@@ -1,21 +1,25 @@
 const ccxt = require('ccxt');
-const dotenv = require('dotenv')
-const path = require('path')
-
+const dotenv = require('dotenv');
+const path = require('path');
 
 const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
-dotenv.config(envPath)
+dotenv.config(envPath);
 
 const mexc = new ccxt.mexc({
     apiKey: process.env.MEXC_ApiKey,
     secret: process.env.MEXC_SecretKey,
-    options: { defaultType: 'swap' },
     enableRateLimit: true,
 });
 
-async function openMarketMEXC(symbol, side, amount) {
+async function openMarketMexc(symbol, side, amount) {
     try {
-        const order = await mexc.createMarketOrder(symbol, side, amount);
+        // Добавим вывод параметров для отладки
+        console.log('Opening market order on MEXC: ', { symbol, side, amount });
+
+        // Создание маркет-ордера на MEXC
+        const order = await mexc.createMarketOrder(symbol, side, {
+            amount: amount,
+        });
         console.log('✅ Opened market order on MEXC:', order);
         return order;
     } catch (e) {
@@ -23,4 +27,4 @@ async function openMarketMEXC(symbol, side, amount) {
     }
 }
 
-module.exports = openMarketMEXC;
+module.exports = openMarketMexc;
