@@ -6,6 +6,7 @@ import { Notify } from 'https://unpkg.com/clean-toasts?module';
 const buttonsPlatform1 = document.querySelectorAll('.platform1');
 const buttonsPlatform2 = document.querySelectorAll('.platform2');
 const buttonsArbitrageType = document.querySelectorAll('.trade-item-button');
+const buttonsOrderType = document.querySelectorAll('.order-item-button');
 
 // Inputs
 const tickerInput = document.getElementById('ticker-input');
@@ -27,6 +28,7 @@ const stopButton = document.getElementById('stop-btn');
 let platform1;
 let platform2;
 let arbitrageType;
+let orderType;
 
 buttonsPlatform1.forEach(btn => {
     btn.addEventListener('click', () =>{
@@ -49,6 +51,13 @@ buttonsArbitrageType.forEach(btn => {
         buttonsArbitrageType.forEach(butt => {butt.classList.remove('active')})
         btn.classList.add('active');
         arbitrageType = btn.innerText
+    })
+})
+buttonsOrderType.forEach(btn => {
+    btn.addEventListener('click', () =>{
+        buttonsOrderType.forEach(butt => {butt.classList.remove('active')})
+        btn.classList.add('active');
+        orderType = btn.innerText
     })
 })
 
@@ -96,6 +105,8 @@ startButton.addEventListener('click' , async(e) => {
         Notify.warning('Вы не можете выбрать одинаковые платформы');
     } else if (!arbitrageType) {
         Notify.warning('Вы не выбрали тип торговли');
+    } else if (!orderType) {
+        Notify.warning('Вы не выбрали тип ордеров');
     } else {
         try {
             const response = await fetch('/checking-keys', {
@@ -128,132 +139,215 @@ startButton.addEventListener('click' , async(e) => {
                     resultDiv.innerHTML = `Заповніть passphase для ${platform2}`
                     return;
                 }
-                Notify.success('Бот запущен!');
-                let symbol1, symbol2;
-
-                    if (arbitrageType == 'Spot') {
-
-                        switch (platform1) {
-                            case 'MEXC':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                            case 'LBANK':
-                                symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
-                                break;
-                            case 'BYBIT':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                            case 'KUCOIN':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
-                                break;
-                            case 'OURBIT':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
-                                break;
-                            case 'BITUNIX':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                        }
-                        switch (platform2) {
-                            case 'MEXC':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                            case 'LBANK':
-                                symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
-                            case 'BYBIT':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                            case 'KUCOIN':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
-                                break;
-                            case 'OURBIT':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
-                                break;
-                            case 'BITUNIX':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                        }
-                    }
-                    // Futures
-                    else {
-                        switch (platform1) {
-                            case 'MEXC':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT 
-                                break;
-                            case 'LBANK':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
-                                break;
-                            case 'BYBIT':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
-                                break;
-                            case 'KUCOIN':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
-                                break;
-                            case 'OURBIT':
-                                symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
-                                break;
-                            case 'BITUNIX':
-                                symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
-                                break;
-                        }
-                        switch (platform2) {
-                            case 'MEXC':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
-                                break;
-                            case 'LBANK':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
-                                break;
-                            case 'BYBIT':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                            case 'KUCOIN':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
-                                break;
-                            case 'OURBIT':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                            case 'BITUNIX':
-                                symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
-                                break;
-                        }
-                    }
-                        // FormData
-                        const formData = new FormData();
-                        formData.append('symbol1', symbol1);
-                        formData.append('symbol2', symbol2);
-                        formData.append('userSpread', spread);
-                        formData.append('userQuantity', quantity);
-                        formData.append('arbitrageType', arbitrageType);
-                        formData.append('platform1', platform1);
-                        formData.append('platform2', platform2);
-
-                        try {
-                            const response = await fetch('/sendingInfo', {
-                                method: 'POST',
-                                body: formData
-                            });
-
-                            if (!response.ok) {
-                                throw new Error('Не удалось получить данные');
-                            }
-
-                            const data = await response.json();
-
-                            
-                            resultDiv.innerHTML = `
-                                <div class="log-message">
-                                    <p>${data.message}</p>
-                                </div>
-                            `;
-                            resultDiv.scrollTop = resultDiv.scrollHeight;
-                        } catch (error) {
-                            console.error('Ошибка:', error);
-                            Notify.error('Ошибка');
-                            resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
-                        }
                 
-            }}
-            catch(e) {
+        Notify.success('Бот запущен!');
+        let symbol1, symbol2;
+        if (orderType == 'Limit' && arbitrageType == 'Spot'){
+            switch (platform1) {
+                case 'MEXC':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'LBANK':
+                    symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
+                    break;
+                case 'BYBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'KUCOIN':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
+                    break;
+                case 'OURBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
+                    break;
+                case 'BITUNIX':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+            }
+            switch (platform2) {
+                case 'MEXC':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'LBANK':
+                    symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
+                case 'BYBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'KUCOIN':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
+                    break;
+                case 'OURBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
+                    break;
+                case 'BITUNIX':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+            }
+        }
+        // Futures
+        else if (orderType == 'Limit' && arbitrageType == 'Futures') {
+            switch (platform1) {
+                case 'MEXC':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT 
+                    break;
+                case 'LBANK':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    break;
+                case 'BYBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    break;
+                case 'KUCOIN':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
+                    break;
+                case 'OURBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    break;
+                case 'BITUNIX':
+                    symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    break;
+            }
+            switch (platform2) {
+                case 'MEXC':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    break;
+                case 'LBANK':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    break;
+                case 'BYBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'KUCOIN':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
+                    break;
+                case 'OURBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'BITUNIX':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+            }
+        }
+        else if (orderType == 'Market' && arbitrageType == 'Spot') {
+            switch (platform1) {
+                case 'MEXC':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'LBANK':
+                    symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
+                    break;
+                case 'BYBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'KUCOIN':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
+                    break;
+                case 'OURBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
+                    break;
+                case 'BITUNIX':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+            }
+            switch (platform2) {
+                case 'MEXC':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'LBANK':
+                    symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
+                case 'BYBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'KUCOIN':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
+                    break;
+                case 'OURBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
+                    break;
+                case 'BITUNIX':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+            }
+        }
+        else if(orderType == 'Market' && arbitrageType == 'Futures'){
+            switch (platform1) {
+                case 'MEXC':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC_USDT 
+                    break;
+                case 'LBANK':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    break;
+                case 'BYBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    break;
+                case 'KUCOIN':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
+                    break;
+                case 'OURBIT':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    break;
+                case 'BITUNIX':
+                    symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    break;
+            }
+            switch (platform2) {
+                case 'MEXC':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
+                    break;
+                case 'LBANK':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    break;
+                case 'BYBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'KUCOIN':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
+                    break;
+                case 'OURBIT':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'BITUNIX':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+            }
+        }
+
+   // FormData
+   const formData = new FormData();
+   formData.append('symbol1', symbol1);
+   formData.append('symbol2', symbol2);
+   formData.append('userSpread', spread);
+   formData.append('userQuantity', quantity);
+   formData.append('arbitrageType', arbitrageType);
+   formData.append('orderType', orderType);
+   formData.append('platform1', platform1);
+   formData.append('platform2', platform2);
+
+   try {
+       const response = await fetch('/sendingInfo', {
+           method: 'POST',
+           body: formData
+       });
+
+       if (!response.ok) {
+           throw new Error('Не удалось получить данные');
+       }
+
+       const data = await response.json();
+
+      
+       resultDiv.innerHTML = `
+           <div class="log-message">
+               <p>${data.message}</p>
+           </div>
+       `;
+       resultDiv.scrollTop = resultDiv.scrollHeight;
+   } catch (error) {
+       console.error('Ошибка:', error);
+       Notify.error('Ошибка');
+       resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
+   }
+  catch(e) {
                 Notify.error(e)
             }
+
 }   
 });

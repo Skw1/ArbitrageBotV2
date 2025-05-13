@@ -1,6 +1,6 @@
 const ccxt = require('ccxt');
 
-async function getKucoinPrice(symbol = 'BTC/USDT:USDT') {
+async function getKucoinFuturesPrice(symbol) { // symbol = 'BTC/USDT:USDT'
   const exchange = new ccxt.kucoinfutures(); // фьючерсы KuCoin
   try {
     await exchange.loadMarkets();
@@ -12,4 +12,6 @@ async function getKucoinPrice(symbol = 'BTC/USDT:USDT') {
   }
 }
 
-module.exports = getKucoinPrice;
+module.exports ={
+  getKucoinFuturesPrice,
+};
