@@ -1,20 +1,22 @@
 const ccxt = require('ccxt');
 
-const mexc = new ccxt.mexc({
-    apiKey: 'your_api_key',
-    secret: 'your_secret_key',
-    options: { defaultType: 'swap' },
+const lbank = new ccxt.lbank({
+    apiKey: 'your_api_key',  // Ваш API ключ для LBank
+    secret: 'your_secret_key', // Ваш секретный ключ для LBank
     enableRateLimit: true,
 });
 
-async function openMarketMEXC(symbol, side, amount) {
+async function openMarketLBank(symbol, side, amount) {
     try {
-        const order = await mexc.createMarketOrder(symbol, side, amount);
-        console.log('✅ Opened market order on MEXC:', order);
+        // Создание маркет-ордера на LBank
+        const order = await lbank.createMarketOrder(symbol, side, {
+            amount: amount
+        });
+        console.log('✅ Opened market order on LBank:', order);
         return order;
     } catch (e) {
-        console.error('❌ Open Market Error on MEXC:', e.message);
+        console.error('❌ Open Market Error on LBank:', e.message);
     }
 }
 
-module.exports = openMarketMEXC;
+module.exports = openMarketLBank;
