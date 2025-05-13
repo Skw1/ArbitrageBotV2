@@ -122,7 +122,7 @@ startButton.addEventListener('click' , async(e) => {
             if (data) {
                        console.log(data)
                 if (data.success === false) {
-                    Notify.error('something went wrong');
+                    Notify.error('Something went wrong');
                     //resultDiv.innerHTML = data.message;
                     return;
                 }
