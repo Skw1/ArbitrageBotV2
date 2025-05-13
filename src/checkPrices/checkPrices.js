@@ -1,5 +1,3 @@
-// Prices
-// Market Prices
 module.exports = async function checkPrices({ 
     platform1, platform2, 
     orderBook1, orderBook2, 
@@ -21,11 +19,16 @@ module.exports = async function checkPrices({
         let priceBuy1, priceSell1, priceBuy2, priceSell2;
 
         if (orderType.toLowerCase() === 'market') {
+            // Отладочная информация для рыночных цен
+            console.log('Market Price 1:', marketPrice1);
+            console.log('Market Price 2:', marketPrice2);
+
             if (!marketPrice1 || !marketPrice2 || !marketPrice1.lastPrice || !marketPrice2.lastPrice) {
                 result += '❌ Рыночные цены недоступны\n</br>';
                 return result;
             }
 
+            // Преобразуем строковые значения в числа
             const mp1 = parseFloat(marketPrice1.lastPrice);
             const mp2 = parseFloat(marketPrice2.lastPrice);
 
@@ -35,8 +38,28 @@ module.exports = async function checkPrices({
 
             priceBuy1 = mp1;
             priceSell1 = mp1;
-            priceBuy2 = mp2;
-            priceSell2 = mp2;
+            priceBuy2 = parseFloat(marketPrice2.bestBidPrice); // Преобразование строки в число
+            priceSell2 = parseFloat(marketPrice2.bestAskPrice); // Преобразование строки в число
+        } 
+        else if (orderType.toLowerCase() === 'orderbook') {
+            if (!orderBook1 || !orderBook2) {
+                result += '❌ Ордербуки недоступны\n</br>';
+                return result;
+            }
+
+            const bestAsk1 = parseFloat(orderBook1.asks[0][0]);
+            const bestBid1 = parseFloat(orderBook1.bids[0][0]);
+            const bestAsk2 = parseFloat(orderBook2.asks[0][0]);
+            const bestBid2 = parseFloat(orderBook2.bids[0][0]);
+
+            result += `🔍 Лучшая цена покупки и продажи:\n</br>`;
+            result += `${platform1}: Ask ${bestAsk1} / Bid ${bestBid1}\n</br>`;
+            result += `${platform2}: Ask ${bestAsk2} / Bid ${bestBid2}\n</br>`;
+
+            priceBuy1 = bestBid1;
+            priceSell1 = bestAsk1;
+            priceBuy2 = bestBid2;
+            priceSell2 = bestAsk2;
         } 
         else {
             result += '❌ Неверный тип ордера\n</br>';
@@ -44,17 +67,36 @@ module.exports = async function checkPrices({
         }
 
         // Profit calculation
-        const profit1 = (priceSell2 - priceBuy1) / priceBuy1 * 100;
-        const profit2 = (priceSell1 - priceBuy2) / priceBuy2 * 100;
+        let profit1, profit2;
 
+        if (arbitrageType.toLowerCase() === 'spot') {
+            profit1 = (priceSell2 - priceBuy1) / priceBuy1 * 100;
+            profit2 = (priceSell1 - priceBuy2) / priceBuy2 * 100;
+        } 
+        else if (arbitrageType.toLowerCase() === 'futures') {
+            profit1 = (priceSell2 - priceBuy1) / priceBuy1 * 100;
+            profit2 = (priceSell1 - priceBuy2) / priceBuy2 * 100;
+        } 
+        else {
+            result += '❌ Неверный тип арбитража\n';
+            return result;
+        }
+
+        // Оценка спреда и вывод
         if (profit1 >= userSpread) {
             result += `✅ Возможность:\n</br> Купить на ${platform1} по ${priceBuy1}, </br> Продать на ${platform2} по ${priceSell2},\n</br> Профит: ${profit1.toFixed(2)}%\n`;
+            result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
+            result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
         } 
         else if (profit2 >= userSpread) {
             result += `✅ Возможность:\n</br> Купить на ${platform2} по ${priceBuy2}, </br> Продать на ${platform1} по ${priceSell1},\n</br> Профит: ${profit2.toFixed(2)}%\n`;
+            result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
+            result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
         } 
         else {
             result += `❌ Нет подходящего спреда.\n</br> Профит макс: ${Math.max(profit1, profit2).toFixed(2)}%\n`;
+            result += `🔴 Цены:\n</br> ${platform1} - Покупка: ${priceBuy1}, Продажа: ${priceSell1}\n</br>`;
+            result += `🔴 ${platform2} - Покупка: ${priceBuy2}, Продажа: ${priceSell2}\n</br>`;
         }
 
     } catch (err) {
