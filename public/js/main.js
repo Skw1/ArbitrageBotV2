@@ -118,6 +118,7 @@ startButton.addEventListener('click' , async(e) => {
             const data = await response.json()
 
             if (data) {
+                       console.log(data)
                 if (data.success === false) {
                     Notify.error('something went wrong')
                     resultDiv.innerHTML = data.message;
@@ -333,7 +334,7 @@ startButton.addEventListener('click' , async(e) => {
 
        const data = await response.json();
 
-      
+
        resultDiv.innerHTML = `
            <div class="log-message">
                <p>${data.message}</p>
@@ -345,9 +346,8 @@ startButton.addEventListener('click' , async(e) => {
        Notify.error('Ошибка');
        resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
    }
+}   }
   catch(e) {
-                Notify.error(e)
-            }
-
-}   
+    Notify.error(e)
+ }}
 });

@@ -8,7 +8,6 @@ const PORT = 3000;
 const app = express();
 
 const envPath = path.resolve(__dirname, 'src', 'userData', '.env')
-const envContent = fs.readFileSync(envPath, 'utf-8');
 
 app.use('/', require('./src/routes/settings'))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -273,7 +272,8 @@ if (isLimitReady || isMarketReady) {
 app.post('/checking-keys', async(req,res) => {
     let service1 = req.body.service1;
     let service2 = req.body.service2;
-    
+
+    envContent = fs.readFileSync(envPath, 'utf-8');
     try {
         const lines = envContent.split('\n');
         // fisrt platform
@@ -364,7 +364,7 @@ app.post('/checking-keys', async(req,res) => {
                     Keyservice2 = KeyLineservice2.split('=')[1].trim()
                     break;
             }
-
+        console.log({service1Api: Apiservice1, service1Key:Keyservice1, service2Api: Apiservice2, service2Key: Keyservice2, service1Pass: Passphrase1, service2Pass:Passphrase2})
         return res.json({service1Api: Apiservice1, service1Key:Keyservice1, service2Api: Apiservice2, service2Key: Keyservice2, service1Pass: Passphrase1, service2Pass:Passphrase2})
     }
     catch(e) {
