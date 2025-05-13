@@ -16,4 +16,6 @@ async function getBitunixFuturesPrice(symbol) {
   }
 }
 
-module.exports = getBitunixFuturesPrice;
+module.exports ={
+  getBitunixFuturesPrice,
+};

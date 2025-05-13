@@ -238,7 +238,7 @@ startButton.addEventListener('click' , async(e) => {
         else if(orderType == 'Market' && arbitrageType == 'Futures'){
             switch (platform1) {
                 case 'MEXC':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC_USDT 
                     break;
                 case 'LBANK':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
@@ -258,7 +258,7 @@ startButton.addEventListener('click' , async(e) => {
             }
             switch (platform2) {
                 case 'MEXC':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'LBANK':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
@@ -285,6 +285,7 @@ startButton.addEventListener('click' , async(e) => {
    formData.append('userSpread', spread);
    formData.append('userQuantity', quantity);
    formData.append('arbitrageType', arbitrageType);
+   formData.append('orderType', orderType);
    formData.append('platform1', platform1);
    formData.append('platform2', platform2);
 

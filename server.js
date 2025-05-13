@@ -23,7 +23,7 @@ const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api
 const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
 
 // getting market prices functions
-const  {getMEXCSpotPrice, getMEXCFuturesPrice}  = require('./src/market/mexc.js');
+const  {getMexcSpotPrice, getMexcFuturesPrice}  = require('./src/market/mexc.js');
 const  {getLBankSpotPrice, getLBankFuturesPrice}  = require('./src/market/lbank.js');
 const  {getBybitSpotPrice, getBybitFuturesPrice}  = require('./src/market/bybit.js');
 const  {getKucoinSpotPrice, getKucoinFuturesPrice}  = require('./src/market/kucoin.js');
@@ -40,6 +40,7 @@ const { runFundingAnalysis } = require('./src/utilits/funding');
 let userQuantity;
 let userSpread;
 let arbitrageType;
+let orderType;
 let lastComparisonTime = 0;
 
 // platforms/platform`s symbols
@@ -162,7 +163,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             
             switch (platform1) {
                 case 'MEXC':
-                    getMEXCSpotPrice(symbol1);
+                    getMexcSpotPrice(symbol1);
                     break;
                 case 'LBANK':
                     getLBankSpotPrice(symbol1);
@@ -181,7 +182,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
             switch (platform2) {
                 case 'MEXC':
-                    getMEXCSpotPrice(symbol2);
+                    getMexcSpotPrice(symbol2);
                     break;
                 case 'LBANK':
                     getLBankSpotPrice(symbol2);
@@ -203,7 +204,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
         switch (platform1) {
             case 'MEXC':
-                merketPrice1 = await getMEXCFuturesPrice(symbol1);
+                merketPrice1 = await getMexcFuturesPrice(symbol1);
                 break;
             case 'LBANK':
                 merketPrice1 = await getLBankFuturesPrice(symbol1);
@@ -222,7 +223,7 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
         switch (platform2) {
             case 'MEXC':
-                merketPrice2 = await getMEXCFuturesPrice(symbol2);
+                merketPrice2 = await getMexcFuturesPrice(symbol2);
                 break;
             case 'LBANK':
                 merketPrice2 = await getLBankFuturesPrice(symbol2);
