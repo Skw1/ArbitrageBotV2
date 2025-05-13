@@ -6,6 +6,7 @@ import { Notify } from 'https://unpkg.com/clean-toasts?module';
 const buttonsPlatform1 = document.querySelectorAll('.platform1');
 const buttonsPlatform2 = document.querySelectorAll('.platform2');
 const buttonsArbitrageType = document.querySelectorAll('.trade-item-button');
+const buttonsOrderType = document.querySelectorAll('.order-item-button');
 
 // Inputs
 const tickerInput = document.getElementById('ticker-input');
@@ -47,6 +48,13 @@ buttonsPlatform2.forEach(btn => {
 buttonsArbitrageType.forEach(btn => {
     btn.addEventListener('click', () =>{
         buttonsArbitrageType.forEach(butt => {butt.classList.remove('active')})
+        btn.classList.add('active');
+        arbitrageType = btn.innerText
+    })
+})
+buttonsOrderType.forEach(btn => {
+    btn.addEventListener('click', () =>{
+        buttonsOrderType.forEach(butt => {butt.classList.remove('active')})
         btn.classList.add('active');
         arbitrageType = btn.innerText
     })
