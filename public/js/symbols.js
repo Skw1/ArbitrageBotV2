@@ -2,7 +2,7 @@
   // Example Ticker 
   const ticker = 'TRON usdt';
 
-  // Spot Symbols 
+  // Spot Symbols for OrderBook
   const mexcSpotSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
   const lbankSpotSymbol = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
   const bybitSpotSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
@@ -10,7 +10,7 @@
   const ourbitSpotSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT // ?
   const bitunixSpotSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
 
-  // Futures Symbols 
+  // Futures Symbols for OrderBook
   const mexcFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
   const lbankFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
   const bybitFuturesSymbol = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT

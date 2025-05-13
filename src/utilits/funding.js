@@ -1,5 +1,6 @@
-
 // Funding
+
+/*
 const axios = require('axios');
 
 // Статические значения по умолчанию (если API недоступен)
@@ -57,3 +58,4 @@ async function runFundingAnalysis(symbol, spread) {
 module.exports = {
     runFundingAnalysis
 };
+*/
