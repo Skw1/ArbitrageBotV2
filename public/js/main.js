@@ -310,6 +310,7 @@ startButton.addEventListener('click' , async(e) => {
                     break;
             }
         }
+    }
 
    // FormData
    const formData = new FormData();
@@ -350,4 +351,5 @@ startButton.addEventListener('click' , async(e) => {
   catch(e) {
     Notify.error(e)
  }}
+
 });
