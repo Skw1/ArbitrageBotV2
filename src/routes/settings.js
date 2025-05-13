@@ -26,10 +26,9 @@ app.post('/settings', upload.none(), (req,res) => {
     let api = req.body.api;
     let key = req.body.key;
     let platform = req.body.platform;
-    let passphrase = req.body.passphrase;
+    let passphrase;
    if(platform == 'KUCOIN'){
-        //let passphrase = req.body.passphrase;
-        //console.log(passphrase);
+        passphrase = req.body.passphrase;
     }
 
     switch (platform) {

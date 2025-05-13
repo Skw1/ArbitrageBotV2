@@ -2,9 +2,13 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const zlib = require('zlib'); 
+const fs = require('fs');
 
 const PORT = 3000;
 const app = express();
+
+const envPath = path.resolve(__dirname, 'src', 'userData', '.env')
+const envContent = fs.readFileSync(envPath, 'utf-8');
 
 app.use('/', require('./src/routes/settings'))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -178,6 +182,108 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
         res.status(400).json({ message: 'Ошибка при получении данных ордербуков.' });
     }
 });
+
+app.post('/checking-keys', async(req,res) => {
+    let service1 = req.body.service1;
+    let service2 = req.body.service2;
+    
+    try {
+        const lines = envContent.split('\n');
+        // fisrt platform
+        let ApiLineservice1;
+        let Apiservice1;
+
+        let KeyLineservice1;
+        let Keyservice1;
+
+        let PassphraseLine1;
+        let Passphrase1;
+
+        // second platform
+        let ApiLineservice2;
+        let Apiservice2;
+
+        let KeyLineservice2;
+        let Keyservice2;
+
+        let PassphraseLine2;
+        let Passphrase2;
+        switch (service1) {
+                case 'MEXC':
+                    ApiLineservice1 = lines.find(line => line.startsWith('MEXC_ApiKey='))
+                    Apiservice1 = ApiLineservice1.split('=')[1].trim()
+                    KeyLineservice1 = lines.find(line => line.startsWith('MEXC_SecretKey='))
+                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    break;
+                case 'LBANK':
+                    ApiLineservice1 = lines.find(line => line.startsWith('LBANK_ApiKey='))
+                    Apiservice1 = ApiLineservice1.split('=')[1].trim()
+                    KeyLineservice1 = lines.find(line => line.startsWith('LBANK_SecretKey='))
+                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    break;
+                case 'BYBIT':
+                    ApiLineservice1 = lines.find(line => line.startsWith('BYBIT_ApiKey='))
+                    Apiservice1 = ApiLineservice1.split('=')[1].trim()
+                    KeyLineservice1 = lines.find(line => line.startsWith('BYBIT_SecretKey='))
+                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    break;
+                case 'KUCOIN':
+                    ApiLineservice1 = lines.find(line => line.startsWith('KUCOIN_ApiKey='))
+                    Apiservice1 = ApiLineservice1.split('=')[1].trim();
+                    KeyLineservice1 = lines.find(line => line.startsWith('KUCOIN_SecretKey='))
+                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    PassphraseLine1 = lines.find(line => line.startsWith('KUCOIN_Passphrase'))
+                    Passphrase1 = PassphraseLine1.split('=')[1].trim()
+                    break;
+                case 'BITUNIX':
+                    ApiLineservice1 = lines.find(line => line.startsWith('BITUNIX_ApiKey='))
+                    Apiservice1 = ApiLineservice1.split('=')[1].trim()
+                    KeyLineservice1 = lines.find(line => line.startsWith('BITUNIX_SecretKey='))
+                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    break;
+            }
+
+        switch (service2) {
+                case 'MEXC':
+                    ApiLineservice2 = lines.find(line => line.startsWith('MEXC_ApiKey='))
+                    Apiservice2 = ApiLineservice2.split('=')[1].trim()
+                    KeyLineservice2 = lines.find(line => line.startsWith('MEXC_SecretKey='))
+                    Keyservice2 = KeyLineservice2.split('=')[1].trim()
+                    break;
+                case 'LBANK':
+                    ApiLineservice2 = lines.find(line => line.startsWith('LBANK_ApiKey='))
+                    Apiservice2 = ApiLineservice2.split('=')[1].trim()
+                    KeyLineservice2 = lines.find(line => line.startsWith('LBANK_SecretKey='))
+                    Keyservice2 = KeyLineservice2.split('=')[1].trim()
+                    break;
+                case 'BYBIT':
+                    ApiLineservice1 = lines.find(line => line.startsWith('BYBIT_ApiKey='))
+                    Apiservice1 = ApiLineservice1.split('=')[1].trim();
+                    KeyLineservice1 = lines.find(line => line.startsWith('BYBIT_SecretKey='))
+                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    break;
+                case 'KUCOIN':
+                    ApiLineservice2 = lines.find(line => line.startsWith('KUCOIN_ApiKey='))
+                    Apiservice2 = ApiLineservice2.split('=')[1].trim();
+                    KeyLineservice2 = lines.find(line => line.startsWith('KUCOIN_SecretKey='))
+                    Keyservice2 = KeyLineservice2.split('=')[1].trim()
+                    PassphraseLine2 = lines.find(line => line.startsWith('KUCOIN_Passphrase'))
+                    Passphrase2 = PassphraseLine2.split('=')[1].trim()
+                    break;
+                case 'BITUNIX':
+                    ApiLineservice2 = lines.find(line => line.startsWith('BITUNIX_ApiKey='))
+                    Apiservice2 = ApiLineservice2.split('=')[1].trim()
+                    KeyLineservice2 = lines.find(line => line.startsWith('BITUNIX_SecretKey='))
+                    Keyservice2 = KeyLineservice2.split('=')[1].trim()
+                    break;
+            }
+
+        return res.json({service1Api: Apiservice1, service1Key:Keyservice1, service2Api: Apiservice2, service2Key: Keyservice2, service1Pass: Passphrase1, service2Pass:Passphrase2})
+    }
+    catch(e) {
+        return res.json({success: false, message:`something went wrong ${e}`})
+    }
+})
 
 
 app.listen(PORT, () => {
