@@ -1,20 +1,23 @@
 const ccxt = require('ccxt');
 
-const mexc = new ccxt.mexc({
-    apiKey: 'your_api_key',
-    secret: 'your_secret_key',
-    options: { defaultType: 'swap' },
+const kucoin = new ccxt.kucoin({
+    apiKey: 'your_api_key',  // Ваш API ключ для KuCoin
+    secret: 'your_secret_key', // Ваш секретный ключ для KuCoin
+    passphrase: 'your_passphrase', // Пароль для API KuCoin
     enableRateLimit: true,
 });
 
-async function openMarketMEXC(symbol, side, amount) {
+async function openMarketKuCoin(symbol, side, amount) {
     try {
-        const order = await mexc.createMarketOrder(symbol, side, amount);
-        console.log('✅ Opened market order on MEXC:', order);
+        // Создание маркет-ордера на KuCoin
+        const order = await kucoin.createMarketOrder(symbol, side, {
+            amount: amount
+        });
+        console.log('✅ Opened market order on KuCoin:', order);
         return order;
     } catch (e) {
-        console.error('❌ Open Market Error on MEXC:', e.message);
+        console.error('❌ Open Market Error on KuCoin:', e.message);
     }
 }
 
-module.exports = openMarketMEXC;
+module.exports = openMarketKuCoin;

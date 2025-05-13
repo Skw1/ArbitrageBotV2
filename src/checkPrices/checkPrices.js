@@ -66,7 +66,11 @@ module.exports = async function checkPrices({
                 }
             }, 5000); // Проверка каждые 5 секунд
 
-        } else {
+        } 
+        else if (orderType.toLowerCase() === 'limit') {
+            result += `</br>⚠️ Лимитные ордера не поддерживаются.\n</br>`;
+            return result;}
+        else {
             result += '</br>❌ Неверный тип ордера\n</br>';
             return result;
         }
