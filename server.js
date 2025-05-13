@@ -23,11 +23,11 @@ const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api
 const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
 
 // getting market prices functions
-// const { getMEXCFuturesOrderBook, } = require('./src/market/mexc.js');
-// const { connectLBankFuturesOrderBook } = require('./src/market/lbank.js');
-// const { getBybitFuturesOrderBook } = require('./src/market/bybit.js');
-// const { getKucoinFuturesOrderBook } = require('./src/market/kucoin.js');
-const getBitunixPrice = require('./src/market/bitunix.js');
+const  {getMEXCSpotPrice, getMEXCFuturesPrice}  = require('./src/market/mexc.js');
+const  {getLBankSpotPrice, getLBankFuturesPrice}  = require('./src/market/lbank.js');
+const  {getBybitSpotPrice, getBybitFuturesPrice}  = require('./src/market/bybit.js');
+const  {getKucoinSpotPrice, getKucoinFuturesPrice}  = require('./src/market/kucoin.js');
+const  {getBitunixSpotPrice, getBitunixFuturesPrice} = require('./src/market/bitunix.js');
 
 // checking prices function
 const checkPrices = require('./src/checkPrices/checkPrices.js')
@@ -47,8 +47,12 @@ let symbol1
 let symbol2
 let platform1
 let platform2
+
+// For Limit Orders
 let orderBook1
 let orderBook2
+
+//For Market Orders
 let merketPrice1
 let merketPrice2
 
@@ -158,38 +162,38 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             
             switch (platform1) {
                 case 'MEXC':
-                    getMEXCSpotOrderBook(symbol1);
+                    getMEXCSpotPrice(symbol1);
                     break;
                 case 'LBANK':
-                    getLBankSpotOrderBook(symbol1);
+                    getLBankSpotPrice(symbol1);
                     break;
                 case 'BYBIT':
-                    getBybitSpotOrderBook(symbol1);
+                    getBybitSpotPrice(symbol1);
                     break;
                 case 'KUCOIN':
-                    getKucoinSpotOrderBook(symbol1);
+                    getKucoinSpotPrice(symbol1);
                     break;
                 case 'BITUNIX':
-                    getBitunixSpotOrderBook(symbol1);
+                    getBitunixSpotPrice(symbol1);
                     break;
                 
             }
 
             switch (platform2) {
                 case 'MEXC':
-                    getMEXCSpotOrderBook(symbol2);
+                    getMEXCSpotPrice(symbol2);
                     break;
                 case 'LBANK':
-                    getLBankSpotOrderBook(symbol2);
+                    getLBankSpotPrice(symbol2);
                     break;
                 case 'BYBIT':
-                    getBybitSpotOrderBook(symbol2);
+                    getBybitSpotPrice(symbol2);
                     break;
                 case 'KUCOIN':
-                    getKucoinSpotOrderBook(symbol2);
+                    getKucoinSpotPrice(symbol2);
                     break;
                 case 'BITUNIX':
-                    getBitunixSpotOrderBook(symbol2);
+                    getBitunixSpotPrice(symbol2);
                     break;
             }
 
@@ -199,39 +203,38 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
         switch (platform1) {
             case 'MEXC':
-                merketPrice1 = await getBitunixPrice(symbol1);
+                merketPrice1 = await getMEXCFuturesPrice(symbol1);
                 break;
             case 'LBANK':
-                merketPrice1 = await getBitunixPrice(symbol1);
+                merketPrice1 = await getLBankFuturesPrice(symbol1);
                 break;
             case 'BYBIT':
-                merketPrice1 = await getBitunixPrice(symbol1);
+                merketPrice1 = await getBybitFuturesPrice(symbol1);
                 break;
             case 'KUCOIN':
-                merketPrice1 = await getBitunixPrice(symbol1);
+                merketPrice1 = await getKucoinFuturesPrice(symbol1);
                 break;
             case 'BITUNIX':
-                merketPrice1 = await getBitunixPrice(symbol1);
+                merketPrice1 = await getBitunixFuturesPrice(symbol1);
                 break;
                 
         }
 
         switch (platform2) {
             case 'MEXC':
-                merketPrice2 = await getBitunixPrice(symbol2);
+                merketPrice2 = await getMEXCFuturesPrice(symbol2);
                 break;
             case 'LBANK':
-                merketPrice2 = await getBitunixPrice(symbol2);
+                merketPrice2 = await getLBankFuturesPrice(symbol2);
                 break;
             case 'BYBIT':
-                merketPrice2 = await getBitunixPrice(symbol2);
+                merketPrice2 = await getBybitFuturesPrice(symbol2);
                 break;
             case 'KUCOIN':
-                merketPrice2 = await getBitunixPrice(symbol2);
+                merketPrice2 = await getKucoinFuturesPrice(symbol2);
                 break;
             case 'BITUNIX':
-                
-                merketPrice2 = await getBitunixPrice(symbol2);
+                merketPrice2 = await getBitunixFuturesPrice(symbol2);
                 break;
     }}
     }

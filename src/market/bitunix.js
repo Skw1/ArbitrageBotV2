@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-async function getBitunixPrice(symbol) {
+async function getBitunixFuturesPrice(symbol) {
   try {
     const res = await axios.get(`https://fapi.bitunix.com/api/v1/futures/market/tickers?symbols=${symbol}`);
     const ticker = res.data.data?.find(item => item.symbol === symbol);
@@ -16,4 +16,4 @@ async function getBitunixPrice(symbol) {
   }
 }
 
-module.exports = getBitunixPrice;
+module.exports = getBitunixFuturesPrice;
