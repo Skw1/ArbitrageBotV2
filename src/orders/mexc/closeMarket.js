@@ -3,8 +3,8 @@ const dotenv = require('dotenv')
 const path = require('path')
 
 
-const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
-dotenv.config(envPath)
+const envPath = path.resolve(__dirname, '..', '..', 'userData', '.env');
+dotenv.config({ path: envPath });
 
 const mexc = new ccxt.mexc({
     apiKey: process.env.MEXC_ApiKey,

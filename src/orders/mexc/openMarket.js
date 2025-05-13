@@ -2,8 +2,10 @@ const ccxt = require('ccxt');
 const dotenv = require('dotenv');
 const path = require('path');
 
-const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
-dotenv.config(envPath);
+
+const envPath = path.resolve(__dirname, '..', '..', 'userData', '.env');
+
+dotenv.config({ path: envPath });
 
 const mexc = new ccxt.mexc({
     apiKey: process.env.MEXC_ApiKey,
@@ -13,13 +15,14 @@ const mexc = new ccxt.mexc({
 
 async function openMarketMexc(symbol, side, amount) {
     try {
-        // Добавим вывод параметров для отладки
-        console.log('Opening market order on MEXC: ', { symbol, side, amount });
+        const parsedAmount = parseFloat(amount);
+        if (isNaN(parsedAmount)) {
+            throw new Error(`❌ Invalid amount: ${amount}`);
+        }
 
-        // Создание маркет-ордера на MEXC
-        const order = await mexc.createMarketOrder(symbol, side, {
-            amount: amount,
-        });
+        console.log('Opening market order on MEXC:', { symbol, side, amount: parsedAmount });
+
+        const order = await mexc.createMarketOrder(symbol, side, parsedAmount);
         console.log('✅ Opened market order on MEXC:', order);
         return order;
     } catch (e) {

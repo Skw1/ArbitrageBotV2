@@ -252,11 +252,14 @@ if (isLimitReady || isMarketReady) {
         platform2, 
         orderBook1, 
         orderBook2, 
-        userSpread, 
         arbitrageType,
+        userSpread: parseFloat(userSpread), 
         marketPrice1: merketPrice1, // передаем как marketPrice1
         marketPrice2: merketPrice2, // передаем как marketPrice2
         orderType,
+        symbol1, 
+        symbol2,
+        amount:parseFloat(userQuantity)
     }).then((message) => {
         res.json({ message });
     }).catch((err) => {

@@ -3,8 +3,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 // Загружаем настройки из .env
-const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
-dotenv.config(envPath);
+const envPath = path.resolve(__dirname, '..', '..', 'userData', '.env');
+dotenv.config({ path: envPath });
 
 async function closeMarketBitunix(symbol, side, amount) {
     try {
