@@ -59,7 +59,8 @@ clearLogsBtn.addEventListener('click', () => {
 });
 
 // Stop Button
-stopButton.addEventListener('click', () => {
+stopButton.addEventListener('click', (e) => {
+    //e.preventDefault();
     Notify.error('Бот Остановлен');
 });
 
@@ -97,7 +98,6 @@ startButton.addEventListener('click' , async(e) => {
         Notify.warning('Вы не выбрали тип торговли');
     } else {
         Notify.success('Бот запущен!');
-
         let symbol1, symbol2;
 
         if (arbitrageType == 'Spot') {

@@ -27,7 +27,7 @@ const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/a
 // const { connectLBankFuturesOrderBook } = require('./src/market/lbank.js');
 // const { getBybitFuturesOrderBook } = require('./src/market/bybit.js');
 // const { getKucoinFuturesOrderBook } = require('./src/market/kucoin.js');
-// const { getBitunixFuturesOrderBook } = require('./src/market/bitunix.js');
+const getBitunixPrice = require('./src/market/bitunix.js');
 
 // checking prices function
 const checkPrices = require('./src/checkPrices/checkPrices.js')
@@ -49,6 +49,8 @@ let platform1
 let platform2
 let orderBook1
 let orderBook2
+let merketPrice1
+let merketPrice2
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -74,16 +76,16 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             
             switch (platform1) {
                 case 'MEXC':
-                    getMEXCSpotOrderBook(symbol1)
+                    getMEXCSpotOrderBook(symbol1);
                     break;
                 case 'LBANK':
-                    getLBankSpotOrderBook(symbol1)
+                    getLBankSpotOrderBook(symbol1);
                     break;
                 case 'BYBIT':
-                    getBybitSpotOrderBook(symbol1)
+                    getBybitSpotOrderBook(symbol1);
                     break;
                 case 'KUCOIN':
-                    getKucoinSpotOrderBook(symbol1)
+                    getKucoinSpotOrderBook(symbol1);
                     break;
                 case 'BITUNIX':
                     getBitunixSpotOrderBook(symbol1);
@@ -93,16 +95,16 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
             switch (platform2) {
                 case 'MEXC':
-                    getMEXCSpotOrderBook(symbol2)
+                    getMEXCSpotOrderBook(symbol2);
                     break;
                 case 'LBANK':
-                    getLBankSpotOrderBook(symbol2)
+                    getLBankSpotOrderBook(symbol2);
                     break;
                 case 'BYBIT':
-                    getBybitSpotOrderBook(symbol2)
+                    getBybitSpotOrderBook(symbol2);
                     break;
                 case 'KUCOIN':
-                    getKucoinSpotOrderBook(symbol2)
+                    getKucoinSpotOrderBook(symbol2);
                     break;
                 case 'BITUNIX':
                     getBitunixSpotOrderBook(symbol2);
@@ -114,38 +116,40 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             
         switch (platform1) {
             case 'MEXC':
-                orderBook1 = await getMEXCFuturesOrderBook(symbol1)
+                orderBook1 = await getMEXCFuturesOrderBook(symbol1);
                 break;
             case 'LBANK':
-                orderBook1 = await connectLBankFuturesOrderBook(symbol1)
+                orderBook1 = await connectLBankFuturesOrderBook(symbol1);
                 break;
             case 'BYBIT':
-                orderBook1 = await getBybitFuturesOrderBook(symbol1)
+                orderBook1 = await getBybitFuturesOrderBook(symbol1);
                 break;
             case 'KUCOIN':
-                orderBook1 = await getKucoinFuturesOrderBook(symbol1)
+                orderBook1 = await getKucoinFuturesOrderBook(symbol1);
                 break;
             case 'BITUNIX':
                 orderBook1 = await getBitunixFuturesOrderBook(symbol1);
+                merketPrice1 = await getBitunixPrice(symbol1);
                 break;
                 
         }
 
         switch (platform2) {
             case 'MEXC':
-                orderBook2 = await getMEXCFuturesOrderBook(symbol2)
+                orderBook2 = await getMEXCFuturesOrderBook(symbol2);
                 break;
             case 'LBANK':
-                orderBook2 = await connectLBankFuturesOrderBook(symbol2)
+                orderBook2 = await connectLBankFuturesOrderBook(symbol2);
                 break;
             case 'BYBIT':
-                orderBook2 = await getBybitFuturesOrderBook(symbol2)
+                orderBook2 = await getBybitFuturesOrderBook(symbol2);
                 break;
             case 'KUCOIN':
-                orderBook2 = await getKucoinFuturesOrderBook(symbol2)
+                orderBook2 = await getKucoinFuturesOrderBook(symbol2);
                 break;
             case 'BITUNIX':
                 orderBook2 = await getBitunixFuturesOrderBook(symbol2);
+                merketPrice2 = await getBitunixPrice(symbol2);
                 break;
     }}
     
