@@ -6,21 +6,24 @@ const path = require('path')
 const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
 dotenv.config(envPath)
 
-const mexc = new ccxt.mexc({
+const kucoin = new ccxt.kucoin({
     apiKey: process.env.MEXC_ApiKey,
     secret: process.env.MEXC_SecretKey,
-    options: { defaultType: 'swap' },
+    passphrase: process.env.KUCOIN_Passphrase, 
     enableRateLimit: true,
 });
 
-async function openMarketMEXC(symbol, side, amount) {
+async function openMarketKuCoin(symbol, side, amount) {
     try {
-        const order = await mexc.createMarketOrder(symbol, side, amount);
-        console.log('✅ Opened market order on MEXC:', order);
+        // Создание маркет-ордера на KuCoin
+        const order = await kucoin.createMarketOrder(symbol, side, {
+            amount: amount
+        });
+        console.log('✅ Opened market order on KuCoin:', order);
         return order;
     } catch (e) {
-        console.error('❌ Open Market Error on MEXC:', e.message);
+        console.error('❌ Open Market Error on KuCoin:', e.message);
     }
 }
 
-module.exports = openMarketMEXC;
+module.exports = openMarketKuCoin;

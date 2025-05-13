@@ -5,21 +5,24 @@ const path = require('path')
 
 const envPath = path.resolve(__dirname, 'src', 'userData', '.env');
 dotenv.config(envPath)
-const mexc = new ccxt.mexc({
+
+const lbank = new ccxt.lbank({
     apiKey: process.env.LBANK_ApiKey,
-    secret: process.env.LBANK_SecretKey,
-    options: { defaultType: 'swap' },
+    secret: process.env.LBANK_SecretKey, 
     enableRateLimit: true,
 });
 
-async function openMarketMEXC(symbol, side, amount) {
+async function openMarketLBank(symbol, side, amount) {
     try {
-        const order = await mexc.createMarketOrder(symbol, side, amount);
-        console.log('✅ Opened market order on MEXC:', order);
+        // Создание маркет-ордера на LBank
+        const order = await lbank.createMarketOrder(symbol, side, {
+            amount: amount
+        });
+        console.log('✅ Opened market order on LBank:', order);
         return order;
     } catch (e) {
-        console.error('❌ Open Market Error on MEXC:', e.message);
+        console.error('❌ Open Market Error on LBank:', e.message);
     }
 }
 
-module.exports = openMarketMEXC;
+module.exports = openMarketLBank;
