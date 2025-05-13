@@ -102,7 +102,9 @@ document.querySelector('.save-btn').addEventListener('click', async(e)=> {
         //alert('fill all fields');
         Notify.warning('Заполните все поля!');
     }
-
+    else if (platform === 'KUCOIN' && passphrase.trim() === '') {
+        Notify.warning('Введите passphrase для KuCoin!');
+    }
     else {
         const formData = new FormData()
         formData.append('api', api)
