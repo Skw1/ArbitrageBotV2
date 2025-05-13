@@ -239,34 +239,31 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 break;
     }}
     }
-     // compare price here
-     if (orderBook1 && orderBook2) {
-        console.log(orderBook1, orderBook2);
-/*
-        if (
-            arbitrageType === 'Futures' &&
-            ((platform1 === 'MEXC' && platform2 === 'KUCOIN') || (platform1 === 'KUCOIN' && platform2 === 'MEXC'))
-          ) {
-            const fundingInfo = await runFundingAnalysis({ symbol: symbol1, spread: userSpread });
-            console.log('📊 Funding info:', fundingInfo);
-            userSpread = fundingInfo.adjustedSpread;
-          }
-*/
-        await checkPrices({
-            platform1, 
-            platform2, 
-            orderBook1, 
-            orderBook2, 
-            userSpread, 
-            arbitrageType
-        }).then((message) => {
-            res.json({ message });
-        }).catch((err) => {
-            res.status(500).json({ message: 'Ошибка при проверке цен.' });
-        });
-    } else {
-        res.status(400).json({ message: 'Ошибка при получении данных ордербуков.' });
-    }
+ // Проверка данных перед сравнением
+const isLimitReady = orderType === 'Limit' && orderBook1 && orderBook2;
+const isMarketReady = orderType === 'Market' && merketPrice1 && merketPrice2;
+
+if (isLimitReady || isMarketReady) {
+    await checkPrices({
+        platform1, 
+        platform2, 
+        orderBook1, 
+        orderBook2, 
+        userSpread, 
+        arbitrageType,
+        marketPrice1: merketPrice1, // передаем как marketPrice1
+        marketPrice2: merketPrice2, // передаем как marketPrice2
+        orderType,
+    }).then((message) => {
+        res.json({ message });
+    }).catch((err) => {
+        res.status(500).json({ message: 'Ошибка при проверке цен.' });
+    });
+} else {
+    res.status(400).json({ message: 'Ошибка: недостаточно данных для проверки цен.' });
+}
+
+
 });
 
 
