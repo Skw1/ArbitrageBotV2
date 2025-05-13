@@ -1,35 +1,38 @@
 const ccxt = require('ccxt');
 
-async function getMexcFuturesPrice(symbol) { // Наприклад: 'AERGO/USDT'
+async function getMexcFuturesPrice(symbol) { 
   const exchange = new ccxt.mexc();
   try {
-    await exchange.loadMarkets(); // Завантажуємо всі ринки
-   // console.log('Доступні ринки:', Object.keys(exchange.markets)); // Логуємо доступні ринки
+    await exchange.loadMarkets(); // Загружаем все рынки
 
     if (!exchange.markets[symbol]) {
-      console.error('Символ не знайдений на MEXC:', symbol);
+      console.error('Символ не найден на MEXC:', symbol);
       return null;
     }
 
-    const ticker = await exchange.fetchTicker(symbol);
-    console.log('Отриманий тикер:', ticker); // Логуємо тикер
+    const orderBook = await exchange.fetchOrderBook(symbol);
+    
+    // Получаем лучшую цену для покупки (best ask) и продажи (best bid)
+    const bestAskPrice = orderBook.asks[0] ? orderBook.asks[0][0] : null; // Цена продажи
+    const bestBidPrice = orderBook.bids[0] ? orderBook.bids[0][0] : null; // Цена покупки
+    
+    if (!bestAskPrice || !bestBidPrice) {
+      console.error('Нет доступных ордеров для символа', symbol);
+      return null;
+    }
 
-    // Формуємо відповідь
-    const response = {
-      symbol: ticker.symbol,
-      markPrice: ticker.info.markPrice || null,
-      lastPrice: ticker.last,
-      open: ticker.open || null,
-      last: ticker.last,
-      quoteVol: ticker.quoteVolume || null,
-      baseVol: ticker.baseVolume || null,
-      high: ticker.high || null,
-      low: ticker.low || null
+    console.log('Лучшие цены для маркет ордера:');
+    console.log('MEXC Best Ask (цена продажи):', bestAskPrice);
+    console.log('MEXC Best Bid (цена покупки):', bestBidPrice);
+    
+    // Вы можете выбрать, какую цену использовать в зависимости от того, хотите ли вы купить или продать
+    return {
+      bestAskPrice,
+      bestBidPrice
     };
 
-    return response;
   } catch (err) {
-    console.error('Помилка при отриманні даних з MEXC:', err.message);
+    console.error('Ошибка при получении данных с MEXC:', err.message);
     return null;
   }
 }

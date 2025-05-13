@@ -277,16 +277,16 @@ startButton.addEventListener('click' , async(e) => {
         else if(orderType == 'Market' && arbitrageType == 'Futures'){
             switch (platform1) {
                 case 'MEXC':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC_USDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT 
                     break;
                 case 'LBANK':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'BYBIT':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
                     break;
                 case 'KUCOIN':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
                     break;
                 case 'OURBIT':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
@@ -300,13 +300,13 @@ startButton.addEventListener('click' , async(e) => {
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'LBANK':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'BYBIT':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
                 case 'KUCOIN':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
                     break;
                 case 'OURBIT':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
