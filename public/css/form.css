@@ -200,13 +200,13 @@
     color: var(--primary-white-color);
 }
 /* Limit не активен, пока что */
-/*
+
 .limit-button {
     border-color: var(--noactive-black-color);
     color: var(--noactive-black-color);
     pointer-events: none;
 }
-*/
+
 
 /* Ticker */
 .ticker-section{

@@ -35,11 +35,11 @@ module.exports = async function checkPrices({
         async function openOrder(platform, symbol, action, amount) {
             if (platform === 'MEXC') {
                 return openMarketMEXC(symbol, action, amount);
-            } else if (platform === 'LBank') {
+            } else if (platform === 'LBANK') {
                 return openMarketLBank(symbol, action, amount);
-            } else if (platform === 'KuCoin') {
+            } else if (platform === 'KUCOIN') {
                 return openMarketKuCoin(symbol, action, amount);
-            } else if (platform === 'Bitunix') {
+            } else if (platform === 'BITUNIX') {
                 return openMarketBitunix(symbol, action, amount);
             }
         }
@@ -48,11 +48,11 @@ module.exports = async function checkPrices({
         async function closeOrder(platform, symbol, action, amount) {
             if (platform === 'MEXC') {
                 return closeMarketMEXC(symbol, action, amount);
-            } else if (platform === 'LBank') {
+            } else if (platform === 'LBANK') {
                 return closeMarketLBank(symbol, action, amount);
-            } else if (platform === 'KuCoin') {
+            } else if (platform === 'KUCOIN') {
                 return closeMarketKuCoin(symbol, action, amount);
-            } else if (platform === 'Bitunix') {
+            } else if (platform === 'BITUNIX') {
                 return closeMarketBitunix(symbol, action, amount);
             }
         }
