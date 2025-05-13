@@ -62,14 +62,15 @@ buttonsOrderType.forEach(btn => {
 })
 
 // Clear Logs
-clearLogsBtn.addEventListener('click', () => {
+clearLogsBtn.addEventListener('click', (e) => {
+    e.preventDefault()
     resultDiv.innerHTML = 'No Data';
     Notify.warning('⚠️ Logs Cleared');
 });
 
 // Stop Button
 stopButton.addEventListener('click', (e) => {
-    //e.preventDefault();
+    e.preventDefault()
     Notify.error('Бот Остановлен');
 });
 
@@ -100,7 +101,6 @@ startButton.addEventListener('click' , async(e) => {
     const spread = spreadInput.value;
     const quantity = quantityInput.value;
     resultDiv.innerHTML = '<p>Загрузка...</p>'; 
-
     if (platform1 == platform2) {
         Notify.warning('Вы не можете выбрать одинаковые платформы');
     } else if (!arbitrageType) {
@@ -108,6 +108,38 @@ startButton.addEventListener('click' , async(e) => {
     } else if (!orderType) {
         Notify.warning('Вы не выбрали тип ордеров');
     } else {
+        try {
+            const response = await fetch('/checking-keys', {
+                method: 'post',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify({service1:platform1, service2:platform2})
+            })
+
+            const data = await response.json()
+
+            if (data) {
+                if (data.success === false) {
+                    Notify.error('something went wrong')
+                    resultDiv.innerHTML = data.message;
+                    return;
+                }
+                if (!data.service1Api || !data.service1Key) {
+                    resultDiv.innerHTML = `Заповніть api/ключи для ${platform1}`
+                    return;
+                }
+                if (!data.service2Api || !data.service2Key) {
+                    resultDiv.innerHTML = `Заповніть api/ключи для ${platform2}`
+                    return;
+                }
+                if (platform1.trim().toLowerCase() == 'kucoin' && !data.service1Pass) {
+                    resultDiv.innerHTML = `Заповніть passphase для ${platform1}`
+                    return;
+                }
+                if (platform2.trim().toLowerCase() == 'kucoin' && !data.service2Pass) {
+                    resultDiv.innerHTML = `Заповніть passphase для ${platform2}`
+                    return;
+                }
+                
         Notify.success('Бот запущен!');
         let symbol1, symbol2;
         if (orderType == 'Limit' && arbitrageType == 'Spot'){
@@ -313,6 +345,9 @@ startButton.addEventListener('click' , async(e) => {
        Notify.error('Ошибка');
        resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
    }
-}   
+  catch(e) {
+                Notify.error(e)
+            }
 
+}   
 });
