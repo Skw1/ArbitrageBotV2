@@ -59,7 +59,7 @@ module.exports = async function checkPrices({
             } else if (platform === 'BITUNIX') {
                 return closeMarketBitunix(symbol, action, amount);
             } else if (platform === 'BINANCE') {
-                return closeMarketBitunix(symbol, action, amount);
+                return closeMarketBinance(symbol, action, amount);
             }
         }
 
