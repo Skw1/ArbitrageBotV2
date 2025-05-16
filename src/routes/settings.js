@@ -50,6 +50,9 @@ app.post('/settings', upload.none(), (req,res) => {
         case 'BITUNIX':
             envContent = envContent.replace(/^BITUNIX_ApiKey=.*/m, `BITUNIX_ApiKey=${api}`).replace(/^BITUNIX_SecretKey=.*/m, `BITUNIX_SecretKey=${key}`)
             break;
+        case 'BINANCE':
+            envContent = envContent.replace(/^BINANCE_ApiKey=.*/m, `BINANCE_ApiKey=${api}`).replace(/^BINANCE_SecretKey=.*/m, `BINANCE_SecretKey=${key}`)
+            break;
     }       
     fs.writeFileSync(envPath, envContent);
     res.json({
@@ -78,6 +81,9 @@ app.post('/deleting', upload.none(), (req,res) => {
             break;
         case 'BITUNIX':
             envContent = envContent.replace(/^BITUNIX_ApiKey=.*/m, `BITUNIX_ApiKey=`).replace(/^BITUNIX_SecretKey=.*/m, `BITUNIX_SecretKey=`)
+            break;
+        case 'BINANCE':
+            envContent = envContent.replace(/^BINANCE_ApiKey=.*/m, `BINANCE_ApiKey=`).replace(/^BINANCE_SecretKey=.*/m, `BINANCE_SecretKey=`)
             break;
     }       
     fs.writeFileSync(envPath, envContent);
@@ -135,6 +141,12 @@ app.post('/get-keys', async(req,res) => {
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
             break;
+        case 'BINANCE':
+            ApiLine = lines.find(line => line.startsWith('BINANCE_ApiKey='))
+            KeyLine = lines.find(line => line.startsWith('BINANCE_SecretKey='))
+            Api = ApiLine.split('=')[1].trim()
+            Key = KeyLine.split('=')[1].trim()
+            break
     }
     res.json({api:Api, key:Key, passphrase:Passphrase});
 })
