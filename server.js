@@ -59,8 +59,8 @@ let orderBook1
 let orderBook2
 
 //For Market Orders
-let merketPrice1
-let merketPrice2
+let marketPrice1
+let marketPrice2
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -225,50 +225,51 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 
         switch (platform1) {
             case 'MEXC':
-                merketPrice1 = await getMexcFuturesPrice(symbol1);
+                marketPrice1 = await getMexcFuturesPrice(symbol1);
                 break;
             case 'LBANK':
-                merketPrice1 = await getLBankFuturesPrice(symbol1);
+                marketPrice1 = await getLBankFuturesPrice(symbol1);
                 break;
             case 'BYBIT':
-                merketPrice1 = await getBybitFuturesPrice(symbol1);
+                marketPrice1 = await getBybitFuturesPrice(symbol1);
                 break;
             case 'KUCOIN':
-                merketPrice1 = await getKucoinFuturesPrice(symbol1);
+                marketPrice1 = await getKucoinFuturesPrice(symbol1);
                 break;
             case 'BITUNIX':
-                merketPrice1 = await getBitunixFuturesPrice(symbol1);
+                marketPrice1 = await getBitunixFuturesPrice(symbol1);
                 break;
             case 'BINANCE':
-                merketPrice1 = await getBinanceFuturesPrice(symbol1);
+                marketPrice1 = await getBinanceFuturesPrice(symbol1);
                 break;    
                 
         }
 
         switch (platform2) {
             case 'MEXC':
-                merketPrice2 = await getMexcFuturesPrice(symbol2);
+                marketPrice2 = await getMexcFuturesPrice(symbol2);
                 break;
             case 'LBANK':
-                merketPrice2 = await getLBankFuturesPrice(symbol2);
+                marketPrice2 = await getLBankFuturesPrice(symbol2);
                 break;
             case 'BYBIT':
-                merketPrice2 = await getBybitFuturesPrice(symbol2);
+                marketPrice2 = await getBybitFuturesPrice(symbol2);
                 break;
             case 'KUCOIN':
-                merketPrice2 = await getKucoinFuturesPrice(symbol2);
+                marketPrice2 = await getKucoinFuturesPrice(symbol2);
                 break;
             case 'BITUNIX':
-                merketPrice2 = await getBitunixFuturesPrice(symbol2);
+                marketPrice2 = await getBitunixFuturesPrice(symbol2);
                 break;
             case 'BINANCE':
-                merketPrice2 = await getBinanceFuturesPrice(symbol2);
+                marketPrice2 = await getBinanceFuturesPrice(symbol2);
                 break;    
     }}
     }
- // Проверка данных перед сравнением
+
+// Проверка данных перед сравнением
 const isLimitReady = orderType === 'Limit' && orderBook1 && orderBook2;
-const isMarketReady = orderType === 'Market' && merketPrice1 && merketPrice2;
+const isMarketReady = orderType === 'Market' && marketPrice1 && marketPrice2;
 
 if (isLimitReady || isMarketReady) {
     await checkPrices({
@@ -278,12 +279,12 @@ if (isLimitReady || isMarketReady) {
         orderBook2, 
         arbitrageType,
         userSpread: parseFloat(userSpread), 
-        marketPrice1: merketPrice1, // передаем как marketPrice1
-        marketPrice2: merketPrice2, // передаем как marketPrice2
+        marketPrice1,
+        marketPrice2,
         orderType,
         symbol1, 
         symbol2,
-        amount:parseFloat(userQuantity)
+        amount: parseFloat(userQuantity)
     }).then((message) => {
         res.json({ message });
     }).catch((err) => {
@@ -292,6 +293,7 @@ if (isLimitReady || isMarketReady) {
 } else {
     res.status(400).json({ message: 'Ошибка: недостаточно данных для проверки цен.' });
 }
+
 
 
 });

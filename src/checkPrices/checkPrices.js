@@ -71,7 +71,7 @@ module.exports = async function checkPrices({
             const { profit1, profit2 } = calculateProfit(mp1Ask, mp1Bid, mp2Ask, mp2Bid);
 
             // Выводим текущий спред в консоль
-            console.log(`Текущий спред: ${profit1.toFixed(4)}%`);
+            console.log(`Текущий спред: ${profit1.toFixed(4)}% (первый вариант), ${profit2.toFixed(4)}% (второй вариант)`);
 
             // Добавим в результат тоже, если надо
             result += `</br>🔍 Текущий спред:</br> ${platform1}→${platform2}: ${profit1.toFixed(4)}% </br> ${platform2}→${platform1}: ${profit2.toFixed(4)}% </br>`;
