@@ -24,6 +24,7 @@ const { getLBankSpotOrderBook, connectLBankFuturesOrderBook } = require('./src/a
 const { getBybitSpotOrderBook, getBybitFuturesOrderBook } = require('./src/api/bybit.js');
 const { getKucoinSpotOrderBook, getKucoinFuturesOrderBook } = require('./src/api/kucoin.js');
 const { getBitunixSpotOrderBook, getBitunixFuturesOrderBook } = require('./src/api/bitunix.js');
+const { getBinanceSpotOrderBook, getBinanceFuturesOrderBook } = require('./src/api/binance.js');
 
 // getting market prices functions
 const  {getMexcSpotPrice, getMexcFuturesPrice}  = require('./src/market/mexc.js');
@@ -31,6 +32,7 @@ const  {getLBankSpotPrice, getLBankFuturesPrice}  = require('./src/market/lbank.
 const  {getBybitSpotPrice, getBybitFuturesPrice}  = require('./src/market/bybit.js');
 const  {getKucoinSpotPrice, getKucoinFuturesPrice}  = require('./src/market/kucoin.js');
 const  {getBitunixSpotPrice, getBitunixFuturesPrice} = require('./src/market/bitunix.js');
+const  {getBinanceSpotPrice, getBinanceFuturesPrice} = require('./src/market/binance.js');
 
 // checking prices function
 const checkPrices = require('./src/checkPrices/checkPrices.js')
@@ -99,7 +101,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 case 'BITUNIX':
                     getBitunixSpotOrderBook(symbol1);
                     break;
-                
+                case 'BINANCE':
+                    getBinanceSpotOrderBook(symbol1);
+                    break;
             }
 
             switch (platform2) {
@@ -117,6 +121,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                     break;
                 case 'BITUNIX':
                     getBitunixSpotOrderBook(symbol2);
+                    break;
+                case 'BINANCE':
+                    getBinanceSpotOrderBook(symbol2);
                     break;
             }
 
@@ -139,7 +146,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             case 'BITUNIX':
                 orderBook1 = await getBitunixFuturesOrderBook(symbol1);
                 break;
-                
+            case 'BINANCE':
+                orderBook1 = await getBinanceFuturesOrderBook(symbol1);
+                break;    
         }
 
         switch (platform2) {
@@ -157,6 +166,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 break;
             case 'BITUNIX':
                 orderBook2 = await getBitunixFuturesOrderBook(symbol2);
+                break;
+                case 'BINANCE':
+                orderBook2 = await getBinanceFuturesOrderBook(symbol2);
                 break;
     }}
     }
@@ -180,6 +192,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 case 'BITUNIX':
                     getBitunixSpotPrice(symbol1);
                     break;
+                case 'BINANCE':
+                    getBinanceSpotPrice(symbol1);
+                    break;    
                 
             }
 
@@ -199,6 +214,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 case 'BITUNIX':
                     getBitunixSpotPrice(symbol2);
                     break;
+                case 'BINANCE':
+                    getBinanceSpotPrice(symbol2);
+                    break;    
             }
 
             break;
@@ -221,6 +239,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             case 'BITUNIX':
                 merketPrice1 = await getBitunixFuturesPrice(symbol1);
                 break;
+            case 'BINANCE':
+                merketPrice1 = await getBinanceFuturesPrice(symbol1);
+                break;    
                 
         }
 
@@ -240,6 +261,9 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
             case 'BITUNIX':
                 merketPrice2 = await getBitunixFuturesPrice(symbol2);
                 break;
+            case 'BINANCE':
+                merketPrice2 = await getBinanceFuturesPrice(symbol2);
+                break;    
     }}
     }
  // Проверка данных перед сравнением
@@ -331,6 +355,12 @@ app.post('/checking-keys', async(req,res) => {
                     KeyLineservice1 = lines.find(line => line.startsWith('BITUNIX_SecretKey='))
                     Keyservice1 = KeyLineservice1.split('=')[1].trim()
                     break;
+                case 'BINANCE':
+                    ApiLineservice1 = lines.find(line => line.startsWith('BINANCE_ApiKey='))
+                    Apiservice1 = ApiLineservice1.split('=')[1].trim()
+                    KeyLineservice1 = lines.find(line => line.startsWith('BINANCE_SecretKey='))
+                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    break;
             }
 
         switch (service2) {
@@ -364,6 +394,12 @@ app.post('/checking-keys', async(req,res) => {
                     ApiLineservice2 = lines.find(line => line.startsWith('BITUNIX_ApiKey='))
                     Apiservice2 = ApiLineservice2.split('=')[1].trim()
                     KeyLineservice2 = lines.find(line => line.startsWith('BITUNIX_SecretKey='))
+                    Keyservice2 = KeyLineservice2.split('=')[1].trim()
+                    break;
+                case 'BINANCE':
+                    ApiLineservice2 = lines.find(line => line.startsWith('BINANCE_ApiKey='))
+                    Apiservice2 = ApiLineservice2.split('=')[1].trim()
+                    KeyLineservice2 = lines.find(line => line.startsWith('BINANCE_SecretKey='))
                     Keyservice2 = KeyLineservice2.split('=')[1].trim()
                     break;
             }

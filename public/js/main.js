@@ -169,6 +169,9 @@ startButton.addEventListener('click' , async(e) => {
                 case 'BITUNIX':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
+                case 'BINANCE':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
+                    break;    
             }
             switch (platform2) {
                 case 'MEXC':
@@ -188,6 +191,9 @@ startButton.addEventListener('click' , async(e) => {
                 case 'BITUNIX':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
+                case 'BINANCE':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
+                    break;    
             }
         }
         // Futures
@@ -211,6 +217,9 @@ startButton.addEventListener('click' , async(e) => {
                 case 'BITUNIX':
                     symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
                     break;
+                case 'BINANCE':
+                    symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT 
+                    break;    
             }
             switch (platform2) {
                 case 'MEXC':
@@ -230,6 +239,9 @@ startButton.addEventListener('click' , async(e) => {
                     break;
                 case 'BITUNIX':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'BINANCE':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
             }
         }
@@ -253,6 +265,9 @@ startButton.addEventListener('click' , async(e) => {
                 case 'BITUNIX':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
                     break;
+                case 'BINANCE':
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
+                    break;
             }
             switch (platform2) {
                 case 'MEXC':
@@ -271,6 +286,9 @@ startButton.addEventListener('click' , async(e) => {
                     break;
                 case 'BITUNIX':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'BINANCE':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
             }
         }
@@ -294,6 +312,9 @@ startButton.addEventListener('click' , async(e) => {
                 case 'BITUNIX':
                     symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
                     break;
+                case 'BINANCE':
+                    symbol1 =  ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT 
+                    break;
             }
             switch (platform2) {
                 case 'MEXC':
@@ -313,6 +334,9 @@ startButton.addEventListener('click' , async(e) => {
                     break;
                 case 'BITUNIX':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    break;
+                case 'BINANCE':
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
             }
         }

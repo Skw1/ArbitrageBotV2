@@ -146,7 +146,7 @@ app.post('/get-keys', async(req,res) => {
             KeyLine = lines.find(line => line.startsWith('BINANCE_SecretKey='))
             Api = ApiLine.split('=')[1].trim()
             Key = KeyLine.split('=')[1].trim()
-            break
+            break;
     }
     res.json({api:Api, key:Key, passphrase:Passphrase});
 })
