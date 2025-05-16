@@ -111,6 +111,12 @@
 .bitunix-image {
 }
 */
+/* Binance No Active */
+#binance{
+   border-color: var(--noactive-black-color);
+    color: var(--noactive-black-color);
+    pointer-events: none; 
+}
 
 .platform-two-label {
     font-size: 10px;
