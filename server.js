@@ -271,8 +271,8 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
 const isLimitReady = orderType === 'Limit' && orderBook1 && orderBook2;
 const isMarketReady = orderType === 'Market' && marketPrice1 && marketPrice2;
 
-if (isLimitReady || isMarketReady) {
-    await checkPrices({
+try {
+    const message = await checkPrices({
         platform1, 
         platform2, 
         orderBook1, 
@@ -285,14 +285,14 @@ if (isLimitReady || isMarketReady) {
         symbol1, 
         symbol2,
         amount: parseFloat(userQuantity)
-    }).then((message) => {
-        res.json({ message });
-    }).catch((err) => {
-        res.status(500).json({ message: 'Ошибка при проверке цен.' });
     });
-} else {
-    res.status(400).json({ message: 'Ошибка: недостаточно данных для проверки цен.' });
+
+    res.json({ message });
+} catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Ошибка при проверке цен.' });
 }
+
 
 
 
