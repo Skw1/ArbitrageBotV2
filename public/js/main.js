@@ -100,7 +100,7 @@ const biunixUserSecretKey = document.getElementById('biunix-secretkey-input');
 startButton.addEventListener('click' , async(e) => {
     e.preventDefault();
     const ticker = tickerInput.value;
-    const spread = spreadInput.value;
+    const spread = spreadInput.value.replace('%','');
     const quantity = quantityInput.value;
     resultDiv.innerHTML = '<p>Загрузка...</p>'; 
     if (platform1 == platform2) {

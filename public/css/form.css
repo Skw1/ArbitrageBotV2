@@ -252,33 +252,33 @@
     border: none;
     height: 15px;
     position: relative;
-    bottom: 1px;
     transition: .5s;
 }
 
-.addition-info-btn:hover {
-    transform: scale(1.05);
-}
+
 .addition-info-btn {
     position: relative;
 }
 
 .info-block {
+    z-index: 999;
     position: absolute;
-    background-color: var(--primary-white-color);
+    background-color: var(--primary-black-color);
     color: var(--primary-black-color);
-    text-align: center;
-    padding: 3px;
-    border: 2px solid var(--primary-black-color);
-    border-radius: 10px;
-    left: 20px;
-    top: 20px;
+    padding: 5px;
+    border: 1px solid var(--primary-black-color);
+    border-radius: 5px;
     transform: scale(0);
     transition: .5s;
-    min-width: 60px;
+    left: 20px;
+    bottom: 0px;
+    width: 200px;
 
 }
-
+.info-block-text{
+    color: var(--primary-white-color);
+    font-size: 10px;
+}
 .quantity-section{
     display: flex;
     width:100%;
