@@ -247,6 +247,38 @@
 
 }
 
+.addition-info-btn {
+    background-color: transparent;
+    border: none;
+    height: 15px;
+    position: relative;
+    bottom: 1px;
+    transition: .5s;
+}
+
+.addition-info-btn:hover {
+    transform: scale(1.05);
+}
+.addition-info-btn {
+    position: relative;
+}
+
+.info-block {
+    position: absolute;
+    background-color: var(--primary-white-color);
+    color: var(--primary-black-color);
+    text-align: center;
+    padding: 3px;
+    border: 2px solid var(--primary-black-color);
+    border-radius: 10px;
+    left: 20px;
+    top: 20px;
+    transform: scale(0);
+    transition: .5s;
+    min-width: 60px;
+
+}
+
 .quantity-section{
     display: flex;
     width:100%;
@@ -257,6 +289,10 @@
 .quantity-label {
     font-size: 10px;
     font-weight: 600;
+}
+
+.addition-info-btn:hover .info-block{
+    transform: scale(1);
 }
 
 .quantity-input {
@@ -357,3 +393,4 @@
     }
 }
 */
+
