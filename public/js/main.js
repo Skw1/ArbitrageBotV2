@@ -206,7 +206,7 @@ startButton.addEventListener('click' , async(e) => {
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'BYBIT':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
                     break;
                 case 'KUCOIN':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
@@ -229,7 +229,7 @@ startButton.addEventListener('click' , async(e) => {
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'BYBIT':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
                     break;
                 case 'KUCOIN':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
@@ -301,7 +301,7 @@ startButton.addEventListener('click' , async(e) => {
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'BYBIT':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT .replace('USDT', '/USDT:USDT')
                     break;
                 case 'KUCOIN':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
@@ -324,7 +324,7 @@ startButton.addEventListener('click' , async(e) => {
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'BYBIT':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
                     break;
                 case 'KUCOIN':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
