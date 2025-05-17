@@ -1,14 +1,28 @@
+// Check Prices
+
+// Parsing Prices Functions
+const getMexcFuturesPrice = require('../market/mexc.js');
+const getLBankFuturesPrice = require('../market/lbank.js');
+const getKucoinFuturesPrice = require('../market/kucoin.js');
+const getBitunixFuturesPrice = require('../market/bitunix.js');
+const getBinanceFuturesPrice = require('../market/binance.js');
+const getBybitFuturesPrice = require('../market/bybit.js');
+
+// Open Market Order Functions
 const openMarketMEXC = require('../orders/mexc/openMarket.js');
 const openMarketLBank = require('../orders/lbank/openMarket.js');
 const openMarketKuCoin = require('../orders/kucoin/openMarket.js');
 const openMarketBitunix = require('../orders/bitunix/openMarket.js');
 const openMarketBinance = require('../orders/binance/openMarket.js');
 
+// Close Market Order Functions
 const closeMarketMEXC = require('../orders/mexc/closeMarket.js');
 const closeMarketLBank = require('../orders/lbank/closeMarket.js');
 const closeMarketKuCoin = require('../orders/kucoin/closeMarket.js');
 const closeMarketBitunix = require('../orders/bitunix/closeMarket.js');
 const closeMarketBinance = require('../orders/binance/closeMarket.js');
+
+
 
 module.exports = function checkPrices({
   platform1, platform2,

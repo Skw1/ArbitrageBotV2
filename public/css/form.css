@@ -250,15 +250,12 @@
 .addition-info-btn {
     background-color: transparent;
     border: none;
-    height: 15px;
+    width:12px;
+    height: 12px;
     position: relative;
     transition: .5s;
 }
 
-
-.addition-info-btn {
-    position: relative;
-}
 
 .info-block {
     z-index: 999;
