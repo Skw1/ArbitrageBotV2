@@ -379,10 +379,10 @@ app.post('/checking-keys', async(req,res) => {
                     Keyservice2 = KeyLineservice2.split('=')[1].trim()
                     break;
                 case 'BYBIT':
-                    ApiLineservice1 = lines.find(line => line.startsWith('BYBIT_ApiKey='))
-                    Apiservice1 = ApiLineservice1.split('=')[1].trim();
-                    KeyLineservice1 = lines.find(line => line.startsWith('BYBIT_SecretKey='))
-                    Keyservice1 = KeyLineservice1.split('=')[1].trim()
+                    ApiLineservice2 = lines.find(line => line.startsWith('BYBIT_ApiKey='))
+                    Apiservice2 = ApiLineservice2.split('=')[1].trim();
+                    KeyLineservice2 = lines.find(line => line.startsWith('BYBIT_SecretKey='))
+                    Keyservice2 = KeyLineservice2.split('=')[1].trim()
                     break;
                 case 'KUCOIN':
                     ApiLineservice2 = lines.find(line => line.startsWith('KUCOIN_ApiKey='))

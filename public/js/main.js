@@ -200,13 +200,13 @@ startButton.addEventListener('click' , async(e) => {
         else if (orderType == 'Limit' && arbitrageType == 'Futures') {
             switch (platform1) {
                 case 'MEXC':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('TAP','TAPS').replace('USDT', '_USDT'); // BTC_USDT 
                     break;
                 case 'LBANK':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'BYBIT':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT:USDT
                     break;
                 case 'KUCOIN':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
@@ -223,13 +223,13 @@ startButton.addEventListener('click' , async(e) => {
             }
             switch (platform2) {
                 case 'MEXC':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('TAP','TAPS').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'LBANK':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '_USDT'); // BTC_USDT
                     break;
                 case 'BYBIT':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT:USDT
                     break;
                 case 'KUCOIN':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', 'USDM'); // BTCUSDM
@@ -248,7 +248,7 @@ startButton.addEventListener('click' , async(e) => {
         else if (orderType == 'Market' && arbitrageType == 'Spot') {
             switch (platform1) {
                 case 'MEXC':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('TAP','TAPS'); // BTCUSDT
                     break;
                 case 'LBANK':
                     symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
@@ -271,7 +271,7 @@ startButton.addEventListener('click' , async(e) => {
             }
             switch (platform2) {
                 case 'MEXC':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('TAP','TAPS'); // BTCUSDT
                     break;
                 case 'LBANK':
                     symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
@@ -295,13 +295,13 @@ startButton.addEventListener('click' , async(e) => {
         else if(orderType == 'Market' && arbitrageType == 'Futures'){
             switch (platform1) {
                 case 'MEXC':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('TAP','TAPS').replace('USDT', '/USDT'); // BTC/USDT 
                     break;
                 case 'LBANK':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'BYBIT':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT 
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT:USDT .replace('USDT', '/USDT:USDT')
                     break;
                 case 'KUCOIN':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
@@ -318,13 +318,13 @@ startButton.addEventListener('click' , async(e) => {
             }
             switch (platform2) {
                 case 'MEXC':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('TAP','TAPS').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'LBANK':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT
                     break;
                 case 'BYBIT':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT'); // BTC/USDT:USDT
                     break;
                 case 'KUCOIN':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '/USDT:USDT'); // BTC/USDT:USDT
