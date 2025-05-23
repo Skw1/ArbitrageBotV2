@@ -254,7 +254,7 @@ startButton.addEventListener('click' , async(e) => {
                     symbol1 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
                     break;
                 case 'BYBIT':
-                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT','/USDT'); // BTCUSDT
                     break;
                 case 'KUCOIN':
                     symbol1 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
@@ -276,7 +276,7 @@ startButton.addEventListener('click' , async(e) => {
                 case 'LBANK':
                     symbol2 = ticker.toLowerCase().replace('usdt', '_usdt').replace(' ','').replace('tron','trx'); // btc_usdt
                 case 'BYBIT':
-                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX'); // BTCUSDT
+                    symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT','/USDT'); // BTCUSDT
                     break;
                 case 'KUCOIN':
                     symbol2 = ticker.toUpperCase().replace(' ','').replace('TRON','TRX').replace('USDT', '-USDT'); // BTC-USDT
@@ -354,29 +354,34 @@ startButton.addEventListener('click' , async(e) => {
    formData.append('platform2', platform2);
 
    try {
-       const response = await fetch('/sendingInfo', {
-           method: 'POST',
-           body: formData
-       });
+    const response = await fetch('/sendingInfo', {
+        method: 'POST',
+        body: formData
+    });
 
-       if (!response.ok) {
-           throw new Error('Не удалось получить данные');
-       }
+    if (!response.ok) {
+        throw new Error('Не удалось получить данные');
+    }
 
-       const data = await response.json();
+    const data = await response.json();
 
+    // Добавляем новое сообщение в resultDiv, не затирая старые
+    resultDiv.innerHTML += `
+        <div class="log-message">
+            <p>${data.message}</p>
+        </div>
+    `;
 
-       resultDiv.innerHTML = `
-           <div class="log-message">
-               <p>${data.message}</p>
-           </div>
-       `;
-       resultDiv.scrollTop = resultDiv.scrollHeight;
-   } catch (error) {
-       console.error('Ошибка:', error);
-       Notify.error('Ошибка');
-       resultDiv.innerHTML = `<p class="error">Произошла ошибка. </br> Попробуйте снова.</p>`;
-   }
+    // Автоскролл вниз
+    resultDiv.scrollTop = resultDiv.scrollHeight;
+
+} catch (error) {
+    console.error('Ошибка:', error);
+    Notify.error('Ошибка');
+    resultDiv.innerHTML += `<p class="error">Произошла ошибка.<br>Попробуйте снова.</p>`;
+    resultDiv.scrollTop = resultDiv.scrollHeight;
+}
+
 }  
  catch(e) {
     Notify.error(e)

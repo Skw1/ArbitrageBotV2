@@ -40,7 +40,8 @@ const checkPrices = require('./src/checkPrices/checkPrices.js')
 // Funding Analysis
 const { runFundingAnalysis } = require('./src/utilits/funding');
 
-
+// Store for result updates
+let resultUpdates = {};
 
 let userQuantity;
 let userSpread;
@@ -70,6 +71,20 @@ app.get("/settings", (req,res) => {
     res.sendFile(path.join(__dirname , "public","settings.html"))
 })
 
+// Add endpoint to get result updates
+app.get('/getResultUpdates/:sessionId', (req, res) => {
+    const sessionId = req.params.sessionId;
+    const updates = resultUpdates[sessionId] || '';
+    res.json({ content: updates });
+});
+
+// Add endpoint to clear result updates
+app.post('/clearResults/:sessionId', (req, res) => {
+    const sessionId = req.params.sessionId;
+    resultUpdates[sessionId] = '';
+    res.json({ success: true });
+});
+
 app.post('/sendingInfo', upload.none(), async (req, res) => {
 
     userQuantity = req.body.userQuantity;
@@ -80,6 +95,27 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
     symbol2 = req.body.symbol2;
     platform1 = req.body.platform1;
     platform2 = req.body.platform2;
+    
+    // Generate session ID for this request
+    const sessionId = Date.now().toString();
+    resultUpdates[sessionId] = '';
+    
+    // Create a mock resultDiv object that stores updates
+    const resultDiv = {
+        innerHTML: '',
+        scrollTop: 0,
+        scrollHeight: 0
+    };
+    
+    // Override the innerHTML setter to capture updates
+    Object.defineProperty(resultDiv, 'innerHTML', {
+        get: function() { return this._innerHTML || ''; },
+        set: function(value) {
+            this._innerHTML = value;
+            resultUpdates[sessionId] = value;
+        }
+    });
+    
     console.log(symbol1,symbol2,platform1,platform2,orderType, arbitrageType);
     if (orderType == 'Limit'){
     switch (arbitrageType) {
@@ -284,17 +320,15 @@ try {
         orderType,
         symbol1, 
         symbol2,
-        amount: parseFloat(userQuantity)
+        amount: parseFloat(userQuantity),
+        resultDiv // Pass the mock resultDiv to capture updates
     });
 
-    res.json({ message });
+    res.json({ message, sessionId });
 } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Ошибка при проверке цен.' });
 }
-
-
-
 
 });
 
