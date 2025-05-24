@@ -32,12 +32,12 @@ module.exports = async function checkPrices({
   symbol1,
   symbol2,
   amount,
-  resultDiv 
+  resultDiv,
+  monitoringActive = () => true
 }) {
   userSpread = (userSpread == null || isNaN(userSpread)) ? 2 : userSpread;
   let result = '';
   let isTradeOpen = false;
-  let monitoringActive = true;
 
   // Map platform names to price functions - Fixed to use properly imported functions
   const priceMap = {
@@ -139,9 +139,9 @@ module.exports = async function checkPrices({
     result += timeoutLog + '<br>';
     updateResultDiv(result);
 
-    while (monitoringActive) {
-      if (Date.now() - start > timeout) {
-        const timeoutMsg = '⏳ Время мониторинга истекло.';
+    while (monitoringActive()) {
+      if (Date.now() - start > timeout || !monitoringActive()) {
+        const timeoutMsg = !monitoringActive() ? '🛑 Мониторинг остановлен пользователем.' : '⏳ Время мониторинга истекло.';
         console.log(timeoutMsg);
         result += timeoutMsg + '<br>';
         updateResultDiv(result);
@@ -172,7 +172,15 @@ module.exports = async function checkPrices({
   async function monitorSpread() {
     let cycleCount = 0;
     
-    while (monitoringActive) {
+    while (monitoringActive()) {
+      if (!monitoringActive()) {
+        const stopMsg = '🛑 Мониторинг остановлен пользователем.';
+        console.log(stopMsg);
+        result += stopMsg + '<br>';
+        updateResultDiv(result);
+        break;
+      }
+
       try {
         cycleCount++;
         const timestamp = new Date().toLocaleTimeString();
@@ -301,8 +309,8 @@ module.exports = async function checkPrices({
         result += errLog + '<br>';
         updateResultDiv(result);
         
-        // Don't break on errors, continue monitoring
-        await delay(5000); // Wait a bit longer on errors
+        
+        await delay(5000); 
         continue;
       }
 

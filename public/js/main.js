@@ -31,6 +31,38 @@ let arbitrageType;
 let orderType;
 let symbol1;
 let symbol2;
+let currentSessionId = null;
+let pollingInterval = null;
+
+
+async function pollForUpdates(sessionId) {
+    try {
+        const response = await fetch(`/getResultUpdates/${sessionId}`);
+        const data = await response.json();
+        
+        if (data.content && data.content !== resultDiv.innerHTML) {
+            resultDiv.innerHTML = data.content;
+            resultDiv.scrollTop = resultDiv.scrollHeight;
+        }
+    } catch (error) {
+        console.error('Error polling for updates:', error);
+    }
+}
+
+function startPolling(sessionId) {
+    currentSessionId = sessionId;
+    pollingInterval = setInterval(() => {
+        pollForUpdates(sessionId);
+    }, 500);
+}
+
+function stopPolling() {
+    if (pollingInterval) {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
+    }
+    currentSessionId = null;
+}
 
 buttonsPlatform1.forEach(btn => {
     btn.addEventListener('click', () =>{
@@ -65,14 +97,25 @@ buttonsOrderType.forEach(btn => {
 
 // Clear Logs
 clearLogsBtn.addEventListener('click', (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    stopPolling();
+    // Clear current session results
+    if (currentSessionId) {
+        fetch(`/clearResults/${currentSessionId}`, { method: 'POST' });
+    }
+    
     resultDiv.innerHTML = 'No Data';
     Notify.warning('⚠️ Logs Cleared');
 });
 
 // Stop Button
 stopButton.addEventListener('click', (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    stopPolling();
+    if (currentSessionId) {
+        fetch(`/clearResults/${currentSessionId}`, { method: 'POST' });
+    }
+    
     Notify.error('Бот Остановлен');
 });
 
@@ -364,15 +407,17 @@ startButton.addEventListener('click' , async(e) => {
     }
 
     const data = await response.json();
+    
+    // Start polling for real-time updates
+    if (data.sessionId) {
+        startPolling(data.sessionId);
+    }
 
-    // Добавляем новое сообщение в resultDiv, не затирая старые
-    resultDiv.innerHTML += `
+    // Initial message display
+    resultDiv.innerHTML = `
         <div class="log-message">
-            <p>${data.message}</p>
-        </div>
-    `;
-
-    // Автоскролл вниз
+            <p>Бот запущен! Мониторинг начат...</p>
+        </div>`;
     resultDiv.scrollTop = resultDiv.scrollHeight;
 
 } catch (error) {

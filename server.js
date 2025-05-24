@@ -50,18 +50,21 @@ let orderType;
 let lastComparisonTime = 0;
 
 // platforms/platform`s symbols
-let symbol1
-let symbol2
-let platform1
-let platform2
+let symbol1;
+let symbol2;
+let platform1;
+let platform2;
 
 // For Limit Orders
-let orderBook1
-let orderBook2
+let orderBook1;
+let orderBook2;
 
 //For Market Orders
-let marketPrice1
-let marketPrice2
+let marketPrice1;
+let marketPrice2;
+
+// Monitoring
+let monitoringActive = true;
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -86,7 +89,7 @@ app.post('/clearResults/:sessionId', (req, res) => {
 });
 
 app.post('/sendingInfo', upload.none(), async (req, res) => {
-
+    monitoringActive = true;
     userQuantity = req.body.userQuantity;
     userSpread = req.body.userSpread;
     arbitrageType = req.body.arbitrageType;
@@ -302,7 +305,10 @@ app.post('/sendingInfo', upload.none(), async (req, res) => {
                 break;    
     }}
     }
-
+app.post('/stopMonitoring', (req, res) => {
+    monitoringActive = false;
+    res.json({ success: true, message: 'Monitoring stopped' });
+});
 // Проверка данных перед сравнением
 const isLimitReady = orderType === 'Limit' && orderBook1 && orderBook2;
 const isMarketReady = orderType === 'Market' && marketPrice1 && marketPrice2;
@@ -321,7 +327,8 @@ try {
         symbol1, 
         symbol2,
         amount: parseFloat(userQuantity),
-        resultDiv // Pass the mock resultDiv to capture updates
+        resultDiv,
+        monitoringActive: () => monitoringActive
     });
 
     res.json({ message, sessionId });
